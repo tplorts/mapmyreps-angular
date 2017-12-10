@@ -5,14 +5,16 @@ version 3.1.1
 
 # Getting started
 
-1. Go to project folder and install dependencies:
+1. Install [yarn](https://yarnpkg.com/) if you don't already have it.
+
+2. Go to project folder and install dependencies:
  ```sh
- npm install
+ yarn install
  ```
  
-2. Launch development server, and open `localhost:4200` in your browser:
+3. Launch development server, and open `localhost:4200` in your browser:
  ```sh
- npm start
+ yarn start
  ```
  
 # Project structure
@@ -48,32 +50,31 @@ Task automation is based on [NPM scripts](https://docs.npmjs.com/misc/scripts).
 
 Task                            | Description
 --------------------------------|--------------------------------------------------------------------------------------
-`npm start`                     | Run development server on `http://localhost:4200/`
-`npm run build [-- --env=prod]` | Lint code and build web app for production (with [AOT](https://angular.io/guide/aot-compiler)) in `dist/` folder
-`npm test`                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
-`npm run test:ci`               | Lint code and run unit tests once for continuous integration
-`npm run e2e`                   | Run e2e tests using [Protractor](http://www.protractortest.org)
-`npm run lint`                  | Lint code
-`npm run translations:extract`  | Extract strings from code and templates to `src/app/translations/template.json`
-`npm run docs`                  | Display project documentation
+`yarn start`                     | Run development server on `http://localhost:4200/`
+`yarn run build [--env=prod]` | Lint code and build web app for production (with [AOT](https://angular.io/guide/aot-compiler)) in `dist/` folder
+`yarn test`                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
+`yarn run test:ci`               | Lint code and run unit tests once for continuous integration
+`yarn run e2e`                   | Run e2e tests using [Protractor](http://www.protractortest.org)
+`yarn run lint`                  | Lint code
+`yarn run translations:extract`  | Extract strings from code and templates to `src/app/translations/template.json`
+`yarn run docs`                  | Display project documentation
 
-When building the application, you can specify the target environment using the additional flag `--env <name>` (do not
-forget to prepend `--` to pass arguments to npm scripts).
+When building the application, you can specify the target environment using the additional flag `--env <name>`.
 
 The default build environment is `prod`.
 
 ## Development server
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
+Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
 any of the source files.
 You should not use `ng serve` directly, as it does not use the backend proxy configuration by default.
 
 ## Code scaffolding
 
-Run `npm run generate -- component <name>` to generate a new component. You can also use
-`npm run generate -- directive|pipe|service|class|module`.
+Run `yarn run generate component <name>` to generate a new component. You can also use
+`yarn run generate directive|pipe|service|class|module`.
 
-If you have installed [angular-cli](https://github.com/angular/angular-cli) globally with `npm install -g @angular/cli`,
+If you have installed [angular-cli](https://github.com/angular/angular-cli) globally with `yarn global install @angular/cli`,
 you can also use the command `ng generate` directly.
 
 ## Additional tools
