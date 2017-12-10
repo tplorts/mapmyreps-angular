@@ -30,7 +30,9 @@ import { LoginModule } from './login/login.module';
     LoginModule,
     AppRoutingModule
   ],
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   providers: [
   ],
   bootstrap: [AppComponent]
