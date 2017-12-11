@@ -52,3 +52,11 @@ export const States = {
 
   DC: 'District of Columbia',
 };
+
+
+export const StateNames = Object.values(States).sort();
+
+export const StateAbbreviations = {};
+for (const [ abbrevation, name ] of Object.entries(States)) {
+  StateAbbreviations[name] = abbrevation;
+}

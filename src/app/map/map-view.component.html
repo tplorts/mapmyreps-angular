@@ -1,24 +1,25 @@
 <div *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>
-<div class="states"></div>
-<p>{{ selectedStateName }}</p>
+
 <svg #svg [attr.width]="width" [attr.height]="height">
-<!--   <rect class="background" [attr.width]="width" [attr.height]="height"></rect> -->
   <g class="states">
     <svg:path
-      *ngFor="let geo of stateGeometries"
+      *ngFor="let state of stateFeatures"
       class="state-path"
-      [ngClass]="{ 'selected': isSelected(geo) }"
-      [attr.d]="geo.pathData"
-      (click)="selectState(geo)"
+      [ngClass]="{ 'selected': isSelected(state) }"
+      [attr.d]="state.pathData"
+      [matTooltip]="state.name"
+      (click)="selectState(state)"
     ></svg:path>
   </g>
   <svg:path class="state-borders" [attr.d]="bordersData"></svg:path>
 </svg>
 
-<pre>
-  {{ usaStatesGeoDataJson }}
-</pre>
 
-<!-- <tree-root [nodes]="[usaStatesGeoData]"></tree-root> -->
+<mat-card class="state-info-card">
+  <mat-card-content>
+    <h3>{{ selectedStateName || 'No State Selected' }}</h3>
+    
+  </mat-card-content>
+</mat-card>

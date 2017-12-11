@@ -14,7 +14,7 @@ import { json } from 'd3-request';
 import { feature, mesh } from 'topojson';
 
 import { Logger } from '../core/logger.service';
-import { States } from './usa-states';
+import { StateNames, StateAbbreviations } from './usa-states';
 
 
 
@@ -24,10 +24,10 @@ const log = new Logger('MapViewComponent');
 
 type SVGSelection = Selection<SVGElement, {}, null, undefined>;
 
-interface IStateGeometry {
-  pathData: string;
-  feature: any;
-}
+// interface IStateGeometry {
+//   pathData: string;
+//   feature: any;
+// }
 
 @Component({
   selector: 'app-map-view',
@@ -46,7 +46,8 @@ export class MapViewComponent implements OnInit {
   statesGroup: SVGSelection;
   dataPromise: Promise<any>;
   bordersData: string;
-  stateGeometries: IStateGeometry[];
+  // stateGeometries: IStateGeometry[];
+  stateFeatures: any[];
   selectedState: any;
 
   constructor(private myElement: ElementRef) {
@@ -60,7 +61,7 @@ export class MapViewComponent implements OnInit {
           throw error;
         }
         this.usaStatesGeoData = data;
-        this.isLoading = false;
+        // this.isLoading = false;
         resolve();
       });
     });
@@ -91,15 +92,16 @@ export class MapViewComponent implements OnInit {
     const byFeatureId = (a: any, b: any) => a.id - b.id;
     features.sort(byFeatureId);
 
-    const StateNames = Object.values(States).sort();
     let index = 0;
     for (const f of features) {
       f.name = StateNames[index++];
-      f.abbreviation = null;
+      f.abbreviation = StateAbbreviations[f.name];
+      f.pathData = this.path(f);
     }
 
-    // log.debug(features);
-    this.stateGeometries = features.map(f => ({ pathData: this.path(f), feature: f }));
+    this.stateFeatures = features;
+
+    this.isLoading = false;
   }
 
   public selectState(state: any) {
@@ -112,7 +114,7 @@ export class MapViewComponent implements OnInit {
 
   public get selectedStateName(): string {
     const state = this.selectedState;
-    return state === null ? 'None' : state.feature.name;
+    return state && `${state.name} (${state.abbreviation})`;
   }
 
   @HostListener('window:resize', ['$event'])
