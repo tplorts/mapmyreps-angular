@@ -15,6 +15,7 @@ import { feature, mesh } from 'topojson';
 
 import { Logger } from '../core/logger.service';
 import { StateNames, StateAbbreviations } from './usa-states';
+import { LegislatorsService, Senator, Representative } from '../data/legislators.service';
 
 
 
@@ -50,7 +51,14 @@ export class MapViewComponent implements OnInit {
   stateFeatures: any[];
   selectedState: any;
 
-  constructor(private myElement: ElementRef) {
+  private static isOfState(state: string) {
+    return (x: any) => state === x.state;
+  }
+
+  constructor(
+    private myElement: ElementRef,
+    private legislators: LegislatorsService,
+  ) {
     this.selectedState = null;
 
     this.isLoading = true;
@@ -133,5 +141,17 @@ export class MapViewComponent implements OnInit {
 
   public get height(): number {
     return this._options.height;
+  }
+
+  private legislatorsOfState<T>(legislators: T[]) {
+    return legislators.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
+  }
+
+  public get senatorsOfState(): Senator[] {
+    return this.legislatorsOfState(this.legislators.senators);
+  }
+
+  public get representativesOfState(): Representative[] {
+    return this.legislatorsOfState(this.legislators.representatives);
   }
 }

@@ -5,12 +5,14 @@ import { TreeModule } from 'angular-tree-component';
 
 import { MaterialModule } from '../material.module';
 import { MapViewComponent } from './map-view.component';
+import { DataModule } from '../data/data.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TreeModule,
     MaterialModule,
+    DataModule,
   ],
   declarations: [
     MapViewComponent,

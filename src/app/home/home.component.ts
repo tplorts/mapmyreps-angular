@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+
 
 
 @Component({
@@ -8,9 +8,9 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

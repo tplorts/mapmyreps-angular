@@ -20,6 +20,27 @@
 <mat-card class="state-info-card">
   <mat-card-content>
     <h3>{{ selectedStateName || 'No State Selected' }}</h3>
-    
+    <div *ngIf="selectedState">
+      <div>
+        <h4>Senators</h4>
+        <ul>
+          <li *ngFor="let senator of senatorsOfState">
+            {{ senator.givenName }}
+            {{ senator.surname }}
+            ({{ senator.party }})
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4>Representatives</h4>
+        <ul>
+          <li *ngFor="let representative of representativesOfState">
+            {{ representative.givenName }}
+            {{ representative.surname }}
+            ({{ representative.party }})
+          </li>
+        </ul>
+      </div>
+    </div>
   </mat-card-content>
 </mat-card>
