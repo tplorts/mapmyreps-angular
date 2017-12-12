@@ -1,3 +1,5 @@
+@import "src/theme/theme-variables";
+
 :host {
   display: flex;
   flex: 1;
@@ -26,4 +28,17 @@
 
 .menu-button {
   margin-right: 1rem;
+}
+
+// Navbar
+.navbar {
+  height: 96px;
+  background: white;
+  border-bottom: 1px solid $color-border;
+  box-shadow: none;
+  display: flex;
+  justify-content: space-around;
+  .navbar-link {
+    font-weight: 100;
+  }
 }

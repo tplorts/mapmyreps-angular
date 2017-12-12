@@ -2,7 +2,7 @@
   <mat-sidenav-container fxFill>
     <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="false" [disableClose]="!isMobile"
                  ngClass.gt-sm="has-border">
-      <mat-toolbar color="primary">
+      <mat-toolbar class="navbar">
         <span translate>AppShortName</span>
         <div fxFlex></div>
         <div>
@@ -51,11 +51,14 @@
       </nav>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary" class="mat-elevation-z6">
-        <button class="menu-button" mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span>{{title}}</span>
+      <mat-toolbar class="navbar mat-elevation-z6">
+        <!-- <button class="menu-button" mat-icon-button (click)="sidenav.toggle()">
+          About
+        </button> -->
+        <!-- <h1>{{title}}</h1> -->
+        <span class="navbar-link about">More</span>
+        <h1>Map My Reps</h1>
+        <span class="navbar-link share">Share</span>
       </mat-toolbar>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
