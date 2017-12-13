@@ -55,6 +55,7 @@ export class MapViewComponent implements OnInit {
   // stateGeometries: IStateGeometry[];
   stateFeatures: any[];
   selectedState: any;
+  private shuffleIntervalId: number;
 
   private static isOfState(state: string) {
     return (x: any) => state === x.state;
@@ -66,8 +67,9 @@ export class MapViewComponent implements OnInit {
     private legislators: LegislatorsService,
   ) {
     this.selectedState = null;
-
+    this.shuffleIntervalId = null;
     this.isLoading = true;
+
     this.dataPromise = new Promise<any>((resolve, reject) => {
       json('https://d3js.org/us-10m.v1.json', (error, data: any) => {
         if (error) {
@@ -118,8 +120,37 @@ export class MapViewComponent implements OnInit {
     this.isLoading = false;
   }
 
+  public shuffle(): void {
+    this.shuffleIntervalId = window.setInterval(() => this.selectRandomState(), 150);
+    const time = Math.round(Math.random() * 5e3);
+    const stop = () => {
+      window.clearInterval(this.shuffleIntervalId);
+      this.shuffleIntervalId = null;
+    };
+    window.setTimeout(stop, time);
+  }
+
+  public isShuffling(): boolean {
+    return !!this.shuffleIntervalId;
+  }
+
+  public selectRandomState(): void {
+    this.selectState(this.randomStateFeature());
+  }
+
+  public randomStateFeature(): any {
+    const abbr = this.randomStateAbbrevation();
+    return this.stateFeatures.find(sf => sf.abbreviation === abbr);
+  }
+
+  public randomStateAbbrevation(): string {
+    const abbreviations = Object.values(StateAbbreviations);
+    return abbreviations[Math.floor(Math.random() * abbreviations.length)];
+  }
+
   public selectState(state: any) {
     this.selectedState = this.selectedState === state ? null : state;
+    log.debug(`selected: ${this.selectedStateName}`);
   }
 
   public isSelected(state: any): boolean {

@@ -1,4 +1,8 @@
-export const States = {
+interface StringObject {
+  [key: string]: string;
+}
+
+export const States: StringObject = {
   AL: 'Alabama',
   AK: 'Alaska',
   AZ: 'Arizona',
@@ -56,7 +60,7 @@ export const States = {
 
 export const StateNames = Object.values(States).sort();
 
-export const StateAbbreviations = {};
+export const StateAbbreviations: StringObject = {};
 for (const [ abbrevation, name ] of Object.entries(States)) {
   StateAbbreviations[name] = abbrevation;
 }
