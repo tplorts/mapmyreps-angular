@@ -22,9 +22,15 @@ const log = new Logger('HttpService');
 @Injectable()
 export class HttpService extends Http {
 
-  constructor(backend: ConnectionBackend,
-              private defaultOptions: RequestOptions,
-              private httpCacheService: HttpCacheService) {
+  private static fullUrl(url: string) {
+    return url.startsWith('http') ? url : (environment.serverUrl + url);
+  }
+
+  constructor(
+    backend: ConnectionBackend,
+    private defaultOptions: RequestOptions,
+    private httpCacheService: HttpCacheService
+  ) {
     // Customize default options here if needed
     super(backend, defaultOptions);
   }
@@ -33,16 +39,16 @@ export class HttpService extends Http {
    * Performs any type of http request.
    * You can customize this method with your own extended behavior.
    */
-  request(request: string|Request, options?: RequestOptionsArgs): Observable<Response> {
+  request(request: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     const requestOptions = options || {};
     let url: string;
 
     if (typeof request === 'string') {
       url = request;
-      request = environment.serverUrl + url;
+      request = HttpService.fullUrl(url);
     } else {
       url = request.url;
-      request.url = environment.serverUrl + url;
+      request.url = HttpService.fullUrl(url);
     }
 
     if (!requestOptions.cache) {
@@ -51,7 +57,7 @@ export class HttpService extends Http {
     } else {
       return new Observable((subscriber: Subscriber<Response>) => {
         const cachedData = requestOptions.cache === HttpCachePolicy.Update ?
-        null : this.httpCacheService.getCacheData(url);
+          null : this.httpCacheService.getCacheData(url);
         if (cachedData !== null) {
           // Create new response to avoid side-effects
           subscriber.next(new Response(cachedData));
@@ -116,7 +122,7 @@ export class HttpService extends Http {
   }
 
   // Customize the default behavior for all http requests here if needed
-  private httpRequest(request: string|Request, options: RequestOptionsArgs): Observable<Response> {
+  private httpRequest(request: string | Request, options: RequestOptionsArgs): Observable<Response> {
     let req = super.request(request, options);
     if (!options.skipErrorHandler) {
       req = req.pipe(catchError((error: any) => this.errorHandler(error)));
