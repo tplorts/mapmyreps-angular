@@ -18,8 +18,4 @@ export class BackendService {
       );
   }
 
-  fetchAllClass(modelClass: Function): Observable<any> {
-    return this.fetchAll(plural(modelClass.name));
-  }
-
 }

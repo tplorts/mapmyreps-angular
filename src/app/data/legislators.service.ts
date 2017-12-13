@@ -50,8 +50,8 @@ export class LegislatorsService {
   }
 
   fetchAll() {
-    this.backend.fetchAllClass(Senator).subscribe(this.senatorsSubscriber);
-    this.backend.fetchAllClass(Representative).subscribe(this.representativesSubscriber);
+    this.backend.fetchAll('Senators').subscribe(this.senatorsSubscriber);
+    this.backend.fetchAll('Representatives').subscribe(this.representativesSubscriber);
   }
 
   setSenators(data: Senator[]) {

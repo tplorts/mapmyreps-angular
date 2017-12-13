@@ -13,7 +13,7 @@ class DataState {
 export class DataStateService {
 
   constructor(private backend: BackendService) {
-    this.backend.fetchAllClass(DataState).subscribe(next => console.log(next));
+    this.backend.fetchAll('DataStates').subscribe(next => console.log(next));
   }
 
 }
