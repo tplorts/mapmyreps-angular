@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subscriber } from 'rxjs/Subscriber';
 import { NextObserver } from 'rxjs/Observer';
-import { plural } from 'pluralize';
 
 import { BackendService } from './backend.service';
 
@@ -12,8 +11,8 @@ export class Representative {}
 
 
 class SSubscriber<T> extends Subscriber<T> {
-  constructor(next: any) {
-    super(next, e => console.error(e), () => console.log(`completed`));
+  constructor(onNext: any, onError: any) {
+    super(onNext, onError, () => console.log(`completed`));
   }
 }
 
@@ -30,8 +29,14 @@ export class LegislatorsService {
 
 
   constructor(private backend: BackendService) {
-    this.senatorsSubscriber = new SSubscriber((data: Senator[]) => this.setSenators(data));
-    this.representativesSubscriber = new SSubscriber((data: Representative[]) => this.setRepresentatives(data));
+    this.senatorsSubscriber = new SSubscriber(
+      (data: Senator[]) => this.setSenators(data),
+      () => this.setSenators(null),
+    );
+    this.representativesSubscriber = new SSubscriber(
+      (data: Representative[]) => this.setRepresentatives(data),
+      () => this.setRepresentatives(null),
+    );
 
     this.fetchAll();
   }
@@ -45,8 +50,8 @@ export class LegislatorsService {
   }
 
   fetchAll() {
-    this.backend.fetchAll(plural(Senator.name)).subscribe(this.senatorsSubscriber);
-    this.backend.fetchAll(plural(Representative.name)).subscribe(this.representativesSubscriber);
+    this.backend.fetchAllClass(Senator).subscribe(this.senatorsSubscriber);
+    this.backend.fetchAllClass(Representative).subscribe(this.representativesSubscriber);
   }
 
   setSenators(data: Senator[]) {

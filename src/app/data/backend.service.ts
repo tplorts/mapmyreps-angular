@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { plural } from 'pluralize';
 
 
 
@@ -15,8 +15,11 @@ export class BackendService {
     return this.http.get(`/${modelNamePlural}`, { cache: true })
       .pipe(
         map((res: Response) => res.json()),
-        catchError(() => of(`Error in requesting ${modelNamePlural}`))
       );
+  }
+
+  fetchAllClass(modelClass: Function): Observable<any> {
+    return this.fetchAll(plural(modelClass.name));
   }
 
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CoreModule } from '../core/core.module';
 import { BackendService } from './backend.service';
 import { LegislatorsService } from './legislators.service';
+import { DataStateService } from './data-state.service';
 
 
 
@@ -15,7 +16,8 @@ import { LegislatorsService } from './legislators.service';
   declarations: [],
   providers: [
     BackendService,
-    LegislatorsService
+    LegislatorsService,
+    DataStateService
   ]
 })
 export class DataModule { }

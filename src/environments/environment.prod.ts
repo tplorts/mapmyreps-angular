@@ -4,7 +4,7 @@ import * as env from './.env.json';
 export const environment = {
   production: true,
   version: env.npm_package_version,
-  serverUrl: 'https://localhost:3000/api',
+  serverUrl: 'https://usa-government-info-backend.herokuapp.com/api',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

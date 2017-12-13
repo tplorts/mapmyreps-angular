@@ -16,6 +16,7 @@ import { feature, mesh } from 'topojson';
 import { Logger } from '../core/logger.service';
 import { StateNames, StateAbbreviations } from './usa-states';
 import { LegislatorsService, Senator, Representative } from '../data/legislators.service';
+// import { DataStateService } from '../data/data-state.service';
 
 
 
@@ -57,6 +58,7 @@ export class MapViewComponent implements OnInit {
 
   constructor(
     private myElement: ElementRef,
+    // private dataState: DataStateService, // maybe later
     private legislators: LegislatorsService,
   ) {
     this.selectedState = null;
@@ -144,7 +146,7 @@ export class MapViewComponent implements OnInit {
   }
 
   private legislatorsOfState<T>(legislators: T[]) {
-    return legislators.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
+    return legislators && legislators.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
   }
 
   public get senatorsOfState(): Senator[] {
