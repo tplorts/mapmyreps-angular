@@ -9,7 +9,11 @@ import {
 import { toNumber } from 'lodash';
 
 import { select, selectAll, Selection } from 'd3-selection';
-import { geoPath, geoAlbersUsa, GeoProjection, GeoPath } from 'd3-geo';
+import {
+  GeoPath,
+  geoPath,
+  geoAlbersUsa,
+} from 'd3-geo';
 import { json } from 'd3-request';
 import { feature, mesh } from 'topojson';
 
@@ -78,7 +82,7 @@ export class MapViewComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.matchWindowSize();
+    // this.matchWindowSize();
 
     const unequal = (a: any, b: any) => a !== b;
 
@@ -86,9 +90,9 @@ export class MapViewComponent implements OnInit {
     this.svg = select(svgElement);
     this.statesGroup = this.svg.select('g.states');
 
-    const projection = geoAlbersUsa()
-      .scale(1070)
-      .translate([this.width / 2, this.height / 2]);
+    // const projection = geoAlbersUsa()
+    //   .scale(1070)
+    //   .translate([this.width / 2, this.height / 2]);
 
     this.path = geoPath(/*projection*/);
 
@@ -99,8 +103,8 @@ export class MapViewComponent implements OnInit {
       f.key = f.id;
       f.id = toNumber(f.key) - 1;
     }
-    const byFeatureId = (a: any, b: any) => a.id - b.id;
-    features.sort(byFeatureId);
+    const byId = (a: any, b: any) => a.id - b.id;
+    features.sort(byId);
 
     let index = 0;
     for (const f of features) {
@@ -127,15 +131,15 @@ export class MapViewComponent implements OnInit {
     return state && `${state.name} (${state.abbreviation})`;
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.matchWindowSize();
-  }
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event: any) {
+  //   this.matchWindowSize();
+  // }
 
-  private matchWindowSize(): void {
-    this._options.width = window.innerWidth;
-    this._options.height = window.innerHeight;
-  }
+  // private matchWindowSize(): void {
+  //   this._options.width = window.innerWidth;
+  //   this._options.height = window.innerHeight;
+  // }
 
   public get width(): number {
     return this._options.width;
@@ -145,15 +149,23 @@ export class MapViewComponent implements OnInit {
     return this._options.height;
   }
 
+  public get allSenators(): Senator[] {
+    return this.legislators.senators;
+  }
+
+  public get allRepresentatives(): Representative[] {
+    return this.legislators.representatives;
+  }
+
   private legislatorsOfState<T>(legislators: T[]) {
     return legislators && legislators.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
   }
 
   public get senatorsOfState(): Senator[] {
-    return this.legislatorsOfState(this.legislators.senators);
+    return this.legislatorsOfState(this.allSenators);
   }
 
   public get representativesOfState(): Representative[] {
-    return this.legislatorsOfState(this.legislators.representatives);
+    return this.legislatorsOfState(this.allRepresentatives);
   }
 }

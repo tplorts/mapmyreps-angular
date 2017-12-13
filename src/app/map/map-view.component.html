@@ -22,6 +22,10 @@
     <div *ngIf="selectedState">
       <div>
         <h4>Senators</h4>
+        <div *ngIf="!allSenators" class="inline-waiting-message">
+          <mat-spinner [diameter]="20"></mat-spinner>
+          <p>still awaiting the list of senators</p>
+        </div>
         <ul>
           <li *ngFor="let senator of senatorsOfState">
             {{ senator.givenName }}
@@ -32,6 +36,10 @@
       </div>
       <div>
         <h4>Representatives</h4>
+        <div *ngIf="!allRepresentatives" class="inline-waiting-message">
+          <mat-spinner [diameter]="20"></mat-spinner>
+          <p>still awaiting the list of representatives</p>
+        </div>
         <ul>
           <li *ngFor="let representative of representativesOfState">
             {{ representative.givenName }}

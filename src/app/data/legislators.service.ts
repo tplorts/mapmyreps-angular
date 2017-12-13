@@ -6,13 +6,27 @@ import { BackendService } from './backend.service';
 
 
 
-export class Senator {}
-export class Representative {}
+abstract class Legislator {
+  public static apiName(): string {
+    return null;
+  }
+}
+export class Senator extends Legislator {
+  public static apiName(): string {
+    return 'Senators';
+  }
+}
+export class Representative extends Legislator {
+  public static apiName(): string {
+    return 'Representatives';
+  }
+}
+
 
 
 class SSubscriber<T> extends Subscriber<T> {
-  constructor(onNext: any, onError: any) {
-    super(onNext, onError, () => console.log(`completed`));
+  constructor(onNext: any) {
+    super(onNext, e => console.error(e), () => console.log(`completed`));
   }
 }
 
@@ -29,14 +43,11 @@ export class LegislatorsService {
 
 
   constructor(private backend: BackendService) {
-    this.senatorsSubscriber = new SSubscriber(
-      (data: Senator[]) => this.setSenators(data),
-      () => this.setSenators(null),
-    );
-    this.representativesSubscriber = new SSubscriber(
-      (data: Representative[]) => this.setRepresentatives(data),
-      () => this.setRepresentatives(null),
-    );
+    this._senators = null;
+    this._representatives = null;
+
+    this.senatorsSubscriber = new SSubscriber((data: Senator[]) => this.setSenators(data));
+    this.representativesSubscriber = new SSubscriber((data: Representative[]) => this.setRepresentatives(data));
 
     this.fetchAll();
   }
@@ -50,6 +61,7 @@ export class LegislatorsService {
   }
 
   fetchAll() {
+    Senator.apiName();
     this.backend.fetchAll('Senators').subscribe(this.senatorsSubscriber);
     this.backend.fetchAll('Representatives').subscribe(this.representativesSubscriber);
   }

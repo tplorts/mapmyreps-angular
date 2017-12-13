@@ -31,3 +31,23 @@ $state-color: $color-black;
 .state-info-card {
   text-align: left;
 }
+
+.inline-waiting-message {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  opacity: 0.5;
+
+  .mat-spinner {
+    $space: 1em;
+
+    &:first-child {
+      margin-right: $space;
+    }
+
+    &:last-child {
+      margin-left: $space;
+    }
+  }
+}
