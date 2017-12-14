@@ -10,3 +10,9 @@ declare var module: NodeModule;
 interface NodeModule {
   id: string;
 }
+
+interface UsaRegion {
+  abbreviation: string;
+  name: string;
+  type: string;
+}

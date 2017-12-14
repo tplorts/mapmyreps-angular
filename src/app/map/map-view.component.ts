@@ -11,8 +11,15 @@ import { feature, mesh } from 'topojson';
 import { Logger } from '../core/logger.service';
 import { LegislatorsService, Senator, Representative } from '../data/legislators.service';
 
-import { StateNames, StateAbbreviations } from './usa-states';
 import * as UsaTopology from 'us-atlas/us/10m.json';
+import * as _UsaRegions from 'usa-regions.json';
+
+
+const UsaRegions = <UsaRegion[]> _UsaRegions;
+// The USA Regions imported from json are already sorted by name.
+// The map here does not include territories, so filter those out.
+const typeExp = /^(state|district)$/;
+const StatesAndDistricts = UsaRegions.filter(r => typeExp.test(r.type));
 
 
 
@@ -55,18 +62,29 @@ export class MapViewComponent implements OnInit {
     const StateGeometries = UsaTopology.objects.states;
     const borders = path(mesh(UsaTopology, StateGeometries, unequal));
     const features = feature(UsaTopology, StateGeometries).features;
+
+    // The features come with a numeric id, in string form
     for (const f of features) {
       f.identifier = toNumber(f.id);
     }
+    // Once sorted by this numeric id, the state features are ordered by
+    // the name of the state/distric.
     const byIdentifier = (a: any, b: any) => a.identifier - b.identifier;
     features.sort(byIdentifier);
 
+    // Now, each element of features and StatesAndDistricts arrays should
+    // line up according to index.
     let index = 0;
     for (const f of features) {
-      f.name = StateNames[index++];
-      f.abbreviation = StateAbbreviations[f.name];
+      const Region = StatesAndDistricts[index++];
+      f.name = Region.name;
+      f.abbreviation = Region.abbreviation;
+      f.regionType = Region.type;
       f.pathData = path(f);
+      f.centroid = path.centroid(f);
     }
+
+    log.debug('keys of a feature', Object.keys(features[0]));
 
     this.stateFeatures = features;
     this.stateBordersPathData = borders;
@@ -154,12 +172,11 @@ export class MapViewComponent implements OnInit {
   }
 
   public randomStateFeature(): any {
-    return this.stateFeatureForAbbreviation(this.randomStateAbbrevation());
+    return this.stateFeatureForAbbreviation(this.randomAbbrevation());
   }
 
-  public randomStateAbbrevation(): string {
-    const abbreviations = Object.values(StateAbbreviations);
-    return abbreviations[Math.floor(Math.random() * abbreviations.length)];
+  public randomAbbrevation(): string {
+    return StatesAndDistricts[Math.floor(Math.random() * StatesAndDistricts.length)].abbreviation;
   }
 
   public stateFeatureForAbbreviation(abbreviation: string) {
@@ -168,7 +185,8 @@ export class MapViewComponent implements OnInit {
 
   public selectState(state: any) {
     this.selectedState = (state && this.selectedState === state) ? null : state;
-    log.debug(`selected: ${this.selectedStateName}`);
+    const [ x, y ] = this.selectedState.centroid;
+    log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
   }
 
   public isSelected(state: any): boolean {
