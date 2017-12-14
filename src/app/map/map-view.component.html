@@ -1,7 +1,3 @@
-<div *ngIf="isLoading">
-  <mat-spinner></mat-spinner>
-</div>
-
 <button (click)="selectForLocation()">Use my location</button>
 
 <svg [attr.width]="width" [attr.height]="height">
@@ -15,7 +11,7 @@
       (click)="selectState(state)"
     ></svg:path>
   </g>
-  <svg:path class="state-borders" [attr.d]="bordersData"></svg:path>
+  <svg:path class="state-borders" [attr.d]="stateBordersPathData"></svg:path>
 </svg>
 
 <mat-card class="state-info-card">
