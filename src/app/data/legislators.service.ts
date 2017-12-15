@@ -25,8 +25,8 @@ export class Representative extends Legislator {
 
 
 class SSubscriber<T> extends Subscriber<T> {
-  constructor(onNext: any) {
-    super(onNext, e => console.error(e), () => console.log(`completed`));
+  constructor(private onData: any) {
+    super(onData, e => console.error(e), () => console.log(`completed`));
   }
 }
 
@@ -61,7 +61,6 @@ export class LegislatorsService {
   }
 
   fetchAll() {
-    Senator.apiName();
     this.backend.fetchAll('Senators').subscribe(this.senatorsSubscriber);
     this.backend.fetchAll('Representatives').subscribe(this.representativesSubscriber);
   }

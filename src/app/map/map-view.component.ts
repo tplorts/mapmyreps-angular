@@ -84,7 +84,7 @@ export class MapViewComponent implements OnInit {
       f.centroid = path.centroid(f);
     }
 
-    log.debug('keys of a feature', Object.keys(features[0]));
+    // log.debug('keys of a feature', Object.keys(features[0]));
 
     this.stateFeatures = features;
     this.stateBordersPathData = borders;
