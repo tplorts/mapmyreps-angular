@@ -26,9 +26,21 @@
         </div>
         <ul>
           <li *ngFor="let senator of senatorsOfState">
-            {{ senator.givenName }}
-            {{ senator.surname }}
+            <span
+              [matTooltip]="senator.isVacant ? 'This office is presently vacant' : null"
+              matTooltipPosition="right"
+            >
+              <a href="{{ senator.websiteUrl }}"
+                 target="_blank"
+              >{{ senator.fullName }}</a>
+            </span>
             ({{ senator.party }})
+            <span *ngIf="senator.leadershipPosition"
+              class="senator-leadership-position"
+            >
+              &mdash;
+              {{ senator.leadershipPosition }}
+            </span>
           </li>
         </ul>
       </div>
@@ -39,10 +51,28 @@
           <p>still awaiting the list of representatives</p>
         </div>
         <ul>
-          <li *ngFor="let representative of representativesOfState">
-            {{ representative.givenName }}
-            {{ representative.surname }}
-            ({{ representative.party }})
+          <li *ngFor="let representative of representativesOfState"
+              class="representative-list-item"
+              [ngClass]="{ 'vacant': representative.isVacant }"
+          >
+            <span
+              [matTooltip]="representative.isVacant ? 'This office is presently vacant' : null"
+              matTooltipPosition="right"
+            >
+              {{ representative.district }}: 
+              <a href="{{ representative.websiteUrl }}"
+                 target="_blank"
+              >{{ representative.fullName }}</a>
+              ({{ representative.party }})
+              <span *ngIf="hasCommittees(representative)">
+                &mdash;
+                <span *ngFor="let committee of representative.committees; last as isLast">
+                  <a href="{{ committee.websiteUrl }}" 
+                     target="_blank"
+                  >{{ committee.name }}</a><span *ngIf="!isLast">, </span>
+                </span>
+              </span>
+            </span>
           </li>
         </ul>
       </div>

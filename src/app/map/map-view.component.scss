@@ -51,3 +51,14 @@ $state-color: $color-black;
     }
   }
 }
+
+.senator-leadership-position {
+  font-style: italic;
+}
+
+.representative-list-item {
+  &.vacant {
+    font-style: italic;
+    opacity: 0.7;
+  }
+}

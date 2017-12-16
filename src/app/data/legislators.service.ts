@@ -7,16 +7,33 @@ import { BackendService } from './backend.service';
 
 
 abstract class Legislator {
+  public givenName: string;
+  public surname: string;
+
+  constructor (obj: any) {
+    Object.assign(this, obj);
+  }
+
   public static apiName(): string {
     return null;
   }
+
+  public get fullName(): string {
+    return `${this.givenName} ${this.surname}`;
+  }
 }
+
+
 export class Senator extends Legislator {
   public static apiName(): string {
     return 'Senators';
   }
 }
+
+
 export class Representative extends Legislator {
+  public committees: string[];
+
   public static apiName(): string {
     return 'Representatives';
   }
@@ -66,10 +83,10 @@ export class LegislatorsService {
   }
 
   setSenators(data: Senator[]) {
-    this._senators = data;
+    this._senators = data.map(s => new Senator(s));
   }
 
   setRepresentatives(data: Representative[]) {
-    this._representatives = data;
+    this._representatives = data.map(r => new Representative(r));
   }
 }

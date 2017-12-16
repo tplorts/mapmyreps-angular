@@ -225,4 +225,13 @@ export class MapViewComponent implements OnInit {
   public get representativesOfState(): Representative[] {
     return this.legislatorsOfState(this.allRepresentatives);
   }
+
+  public hasCommittees(representative: Representative): boolean {
+    const {committees} = representative;
+    return committees && committees.length > 0;
+  }
+
+  public committeeList(representative: Representative): string {
+    return this.hasCommittees(representative) ? representative.committees.join(', ') : 'Member of no committees';
+  }
 }
