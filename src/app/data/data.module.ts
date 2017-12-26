@@ -5,6 +5,7 @@ import { CoreModule } from '../core/core.module';
 import { BackendService } from './backend.service';
 import { LegislatorsService } from './legislators.service';
 import { DataStateService } from './data-state.service';
+import { StaticDataService } from './static-data.service';
 
 
 
@@ -17,7 +18,8 @@ import { DataStateService } from './data-state.service';
   providers: [
     BackendService,
     LegislatorsService,
-    DataStateService
+    DataStateService,
+    StaticDataService
   ]
 })
 export class DataModule { }

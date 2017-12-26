@@ -7,6 +7,7 @@ import { CoreModule } from '../core/core.module';
 import { MaterialModule } from '../material.module';
 import { MapViewComponent } from './map-view.component';
 import { DataModule } from '../data/data.module';
+import { DistrictPipe } from './district.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { DataModule } from '../data/data.module';
   ],
   declarations: [
     MapViewComponent,
+    DistrictPipe,
   ],
   exports: [
     MapViewComponent,

@@ -18,64 +18,62 @@
   <mat-card-content>
     <h3>{{ selectedStateName || 'No State Selected' }}</h3>
     <div *ngIf="selectedState">
-      <div>
-        <h4>Senators</h4>
-        <div *ngIf="!allSenators" class="inline-waiting-message">
-          <mat-spinner [diameter]="20"></mat-spinner>
-          <p>still awaiting the list of senators</p>
-        </div>
-        <ul>
-          <li *ngFor="let senator of senatorsOfState">
-            <span
-              [matTooltip]="senator.isVacant ? 'This office is presently vacant' : null"
-              matTooltipPosition="right"
-            >
-              <a href="{{ senator.websiteUrl }}"
-                 target="_blank"
-              >{{ senator.fullName }}</a>
-            </span>
-            ({{ senator.party }})
-            <span *ngIf="senator.leadershipPosition"
-              class="senator-leadership-position"
-            >
-              &mdash;
-              {{ senator.leadershipPosition }}
-            </span>
-          </li>
-        </ul>
+      <div *ngIf="!allReps; else repList" class="inline-waiting-message">
+        <mat-spinner [diameter]="20"></mat-spinner>
+        <p>still downloading your reps</p>
       </div>
-      <div>
-        <h4>Representatives</h4>
-        <div *ngIf="!allRepresentatives" class="inline-waiting-message">
-          <mat-spinner [diameter]="20"></mat-spinner>
-          <p>still awaiting the list of representatives</p>
-        </div>
-        <ul>
-          <li *ngFor="let representative of representativesOfState"
-              class="representative-list-item"
-              [ngClass]="{ 'vacant': representative.isVacant }"
-          >
-            <span
-              [matTooltip]="representative.isVacant ? 'This office is presently vacant' : null"
-              matTooltipPosition="right"
-            >
-              {{ representative.district }}: 
-              <a href="{{ representative.websiteUrl }}"
-                 target="_blank"
-              >{{ representative.fullName }}</a>
-              ({{ representative.party }})
-              <span *ngIf="hasCommittees(representative)">
+      <ng-template #repList>
+        <div>
+          <h4>Senators</h4>
+          <ul>
+            <li *ngFor="let senator of senatorsOfState">
+              <span
+                [matTooltip]="senator.isVacant ? 'This office is presently vacant' : null"
+                matTooltipPosition="right"
+              >
+                <a href="{{ senator.mainUrl }}"
+                   target="_blank"
+                >{{ senator.fullName }}</a>
+              </span>
+              ({{ senator.party }})
+              <span *ngIf="senator.leadershipPosition"
+                class="senator-leadership-position"
+              >
                 &mdash;
-                <span *ngFor="let committee of representative.committees; last as isLast">
-                  <a href="{{ committee.websiteUrl }}" 
-                     target="_blank"
-                  >{{ committee.name }}</a><span *ngIf="!isLast">, </span>
+                {{ senator.leadershipPosition }}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4>Representatives</h4>
+          <ul>
+            <li *ngFor="let rep of representativesOfState"
+                class="rep-list-item"
+                [ngClass]="{ 'vacant': rep.isVacant }"
+            >
+              <span
+                [matTooltip]="rep.isVacant ? 'This office is presently vacant' : null"
+                matTooltipPosition="right"
+              >
+                {{ rep.district | district }}: 
+                <a href="{{ rep.mainUrl }}"
+                   target="_blank"
+                >{{ rep.fullName }}</a>
+                ({{ rep.party }})
+                <span *ngIf="hasCommittees(rep)">
+                  &mdash;
+                  <span *ngFor="let committee of rep.committees; last as isLast">
+                    <a href="{{ committee.websiteUrl }}" 
+                       target="_blank"
+                    >{{ committee.name }}</a><span *ngIf="!isLast">, </span>
+                  </span>
                 </span>
               </span>
-            </span>
-          </li>
-        </ul>
-      </div>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
     </div>
   </mat-card-content>
 </mat-card>

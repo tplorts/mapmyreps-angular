@@ -3,13 +3,14 @@ import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { toNumber, isEqual } from 'lodash';
+import { toNumber, isEqual, sortBy } from 'lodash';
 
 import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
 
 import { Logger } from '../core/logger.service';
-import { LegislatorsService, Senator, Representative } from '../data/legislators.service';
+import { LegislatorsService } from '../data/legislators.service';
+import { Legislator, Senator, Representative } from '../data/legislator';
 
 import * as UsaTopology from 'us-atlas/us/10m.json';
 import * as _UsaRegions from 'usa-regions.json';
@@ -44,8 +45,11 @@ export class MapViewComponent implements OnInit {
   public stateFeatures: any[];
   public selectedState: any;
 
+  private activeStateRepresentatives: Representative[];
+  private activeStateSenators: Senator[];
+
   private static isOfState(state: string) {
-    return (x: any) => state === x.state;
+    return (x: Legislator) => state === x.state;
   }
 
   constructor(
@@ -187,6 +191,12 @@ export class MapViewComponent implements OnInit {
     this.selectedState = (state && this.selectedState === state) ? null : state;
     const [ x, y ] = this.selectedState.centroid;
     log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
+    const reps = this.activeStateLegislators();
+    log.debug(reps);
+    this.activeStateSenators = <Senator[]> reps.filter(z => z.isSenator());
+    log.debug(this.activeStateSenators);
+    const houseReps = <Representative[]> reps.filter(z => z.isRepresentative());
+    this.activeStateRepresentatives = sortBy(houseReps, ['district']);
   }
 
   public isSelected(state: any): boolean {
@@ -206,32 +216,29 @@ export class MapViewComponent implements OnInit {
     return this._options.height;
   }
 
-  public get allSenators(): Senator[] {
-    return this.legislators.senators;
+  public get allReps(): Legislator[] {
+    return this.legislators.reps;
   }
 
-  public get allRepresentatives(): Representative[] {
-    return this.legislators.representatives;
-  }
-
-  private legislatorsOfState<T>(legislators: T[]) {
-    return legislators && legislators.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
-  }
-
-  public get senatorsOfState(): Senator[] {
-    return this.legislatorsOfState(this.allSenators);
+  private activeStateLegislators(): Legislator[] {
+    return this.allReps && this.allReps.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
   }
 
   public get representativesOfState(): Representative[] {
-    return this.legislatorsOfState(this.allRepresentatives);
+    return this.activeStateRepresentatives;
   }
 
-  public hasCommittees(representative: Representative): boolean {
-    const {committees} = representative;
-    return committees && committees.length > 0;
+  public get senatorsOfState(): Senator[] {
+    return this.activeStateSenators;
   }
 
-  public committeeList(representative: Representative): string {
-    return this.hasCommittees(representative) ? representative.committees.join(', ') : 'Member of no committees';
+  public hasCommittees(representative: Legislator): boolean {
+    // const {committees} = representative;
+    // return committees && committees.length > 0;
+    return false;
   }
+
+  // public committeeList(representative: Representative): string {
+  //   return this.hasCommittees(representative) ? representative.committees.join(', ') : 'Member of no committees';
+  // }
 }
