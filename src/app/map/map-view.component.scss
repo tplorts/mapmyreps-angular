@@ -14,7 +14,8 @@ $state-color: $color-black;
     }
 
     &:hover {
-      fill: hsl(hue($state-color), saturation($state-color), lightness($state-color) * 1.25);
+      // fill: hsl(hue($state-color), saturation($state-color), lightness($state-color) * 1.25);
+      fill: lighten($state-color, 20%);
     }
   }
 }
@@ -56,9 +57,51 @@ $state-color: $color-black;
   font-style: italic;
 }
 
-.representative-list-item {
+.rep-list-item {
   &.vacant {
     font-style: italic;
     opacity: 0.7;
   }
 }
+
+
+$party-colors: (
+  republican: red,
+  democrat: blue,
+  independent: green,
+);
+
+.rep-grid-tile {
+  .rep-grid-tile-footer {
+    background-color: white;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover {
+    .rep-grid-tile-footer {
+      opacity: 1;
+    }
+  }
+
+  $size: 96px;
+
+  .rep-image {
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    border: 5px solid;
+    border-color: rgba(100, 100, 100, 0.8);
+    background-size: cover;
+    background-color: lightgrey;
+  }
+
+  @each $party, $color in $party-colors {
+    &.rep-party-#{$party} {
+      .rep-image {
+        border-color: transparentize($color, 0.1);
+      }
+    }
+  }
+}
+

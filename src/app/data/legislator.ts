@@ -188,7 +188,9 @@ export class Legislator {
   }
 
   public get imageUrl(): string {
-    return `https://www.congress.gov/img/member/${this.identifiers.bioguide.toLowerCase()}.jpg`;
+    const imageSize = '225x275';
+    const filename = this.identifiers.bioguide;
+    return `https://theunitedstates.io/images/congress/${imageSize}/${filename}.jpg`;
   }
 
   public get fullName(): string {
@@ -223,6 +225,10 @@ export class Legislator {
 
   public isRepresentative(): boolean {
     return false;
+  }
+
+  public get partyStyleClass(): string {
+    return `rep-party-${this.party.toLowerCase()}`;
   }
 }
 

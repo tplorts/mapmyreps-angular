@@ -23,55 +23,24 @@
         <p>still downloading your reps</p>
       </div>
       <ng-template #repList>
-        <div>
-          <h4>Senators</h4>
-          <ul>
-            <li *ngFor="let senator of senatorsOfState">
-              <span
-                [matTooltip]="senator.isVacant ? 'This office is presently vacant' : null"
-                matTooltipPosition="right"
-              >
-                <a href="{{ senator.mainUrl }}"
-                   target="_blank"
-                >{{ senator.fullName }}</a>
-              </span>
-              ({{ senator.party }})
-              <span *ngIf="senator.leadershipPosition"
-                class="senator-leadership-position"
-              >
-                &mdash;
-                {{ senator.leadershipPosition }}
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4>Representatives</h4>
-          <ul>
-            <li *ngFor="let rep of representativesOfState"
-                class="rep-list-item"
-                [ngClass]="{ 'vacant': rep.isVacant }"
+        <div *ngFor="let repSet of repSets">
+          <h4>{{ repSet.title }}</h4>
+          <mat-grid-list cols="8" class="rep-grid-list">
+            <mat-grid-tile 
+              *ngFor="let rep of repSet.reps"
+              class="rep-grid-tile"
+              [ngClass]="rep.partyStyleClass"
             >
-              <span
-                [matTooltip]="rep.isVacant ? 'This office is presently vacant' : null"
-                matTooltipPosition="right"
-              >
-                {{ rep.district | district }}: 
+              <div class="rep-image"
+                [ngStyle]="repImageStyle(rep)"
+              ></div>
+              <mat-grid-tile-footer class="rep-grid-tile-footer">
                 <a href="{{ rep.mainUrl }}"
                    target="_blank"
                 >{{ rep.fullName }}</a>
-                ({{ rep.party }})
-                <span *ngIf="hasCommittees(rep)">
-                  &mdash;
-                  <span *ngFor="let committee of rep.committees; last as isLast">
-                    <a href="{{ committee.websiteUrl }}" 
-                       target="_blank"
-                    >{{ committee.name }}</a><span *ngIf="!isLast">, </span>
-                  </span>
-                </span>
-              </span>
-            </li>
-          </ul>
+              </mat-grid-tile-footer>
+            </mat-grid-tile>
+          </mat-grid-list>
         </div>
       </ng-template>
     </div>

@@ -31,6 +31,11 @@ interface IGeoCodeResults {
   results: any[];
 }
 
+interface IRepSet {
+  title: string;
+  reps: Legislator[];
+}
+
 @Component({
   selector: 'app-map-view',
   templateUrl: './map-view.component.html',
@@ -45,8 +50,9 @@ export class MapViewComponent implements OnInit {
   public stateFeatures: any[];
   public selectedState: any;
 
-  private activeStateRepresentatives: Representative[];
-  private activeStateSenators: Senator[];
+  // private activeStateRepresentatives: Representative[];
+  // private activeStateSenators: Senator[];
+  private _repSets: IRepSet[];
 
   private static isOfState(state: string) {
     return (x: Legislator) => state === x.state;
@@ -189,14 +195,21 @@ export class MapViewComponent implements OnInit {
 
   public selectState(state: any) {
     this.selectedState = (state && this.selectedState === state) ? null : state;
-    const [ x, y ] = this.selectedState.centroid;
-    log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
-    const reps = this.activeStateLegislators();
-    log.debug(reps);
-    this.activeStateSenators = <Senator[]> reps.filter(z => z.isSenator());
-    log.debug(this.activeStateSenators);
-    const houseReps = <Representative[]> reps.filter(z => z.isRepresentative());
-    this.activeStateRepresentatives = sortBy(houseReps, ['district']);
+    if (this.selectedState) {
+      const [ x, y ] = this.selectedState.centroid;
+      log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
+      const reps = this.activeStateLegislators();
+      this._repSets = [
+        {
+          title: 'Senators',
+          reps: <Senator[]> reps.filter(z => z.isSenator()),
+        },
+        {
+          title: 'Representatives',
+          reps: sortBy(<Representative[]> reps.filter(z => z.isRepresentative()), ['district']),
+        }
+      ];
+    }
   }
 
   public isSelected(state: any): boolean {
@@ -224,12 +237,8 @@ export class MapViewComponent implements OnInit {
     return this.allReps && this.allReps.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
   }
 
-  public get representativesOfState(): Representative[] {
-    return this.activeStateRepresentatives;
-  }
-
-  public get senatorsOfState(): Senator[] {
-    return this.activeStateSenators;
+  public get repSets(): IRepSet[] {
+    return this._repSets;
   }
 
   public hasCommittees(representative: Legislator): boolean {
@@ -241,4 +250,10 @@ export class MapViewComponent implements OnInit {
   // public committeeList(representative: Representative): string {
   //   return this.hasCommittees(representative) ? representative.committees.join(', ') : 'Member of no committees';
   // }
+
+  public repImageStyle(rep: Legislator): any {
+    return {
+      backgroundImage: `url('${rep.imageUrl}')`
+    };
+  }
 }
