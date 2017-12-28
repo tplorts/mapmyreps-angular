@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { CoreModule } from '../core/core.module';
 import { BackendService } from './backend.service';
-import { LegislatorsService } from './legislators.service';
 import { DataStateService } from './data-state.service';
 import { StaticDataService } from './static-data.service';
+import { CongressService } from './congress.service';
 
 
 
@@ -17,9 +17,9 @@ import { StaticDataService } from './static-data.service';
   declarations: [],
   providers: [
     BackendService,
-    LegislatorsService,
     DataStateService,
-    StaticDataService
+    StaticDataService,
+    CongressService
   ]
 })
 export class DataModule { }

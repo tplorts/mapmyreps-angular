@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MaterialModule } from '../material.module';
 import { LoaderComponent } from './loader/loader.component';
+import { NumbersOnlyPipe } from './numbers-only.pipe';
 
 @NgModule({
   imports: [
@@ -12,10 +13,12 @@ import { LoaderComponent } from './loader/loader.component';
     CommonModule
   ],
   declarations: [
-    LoaderComponent
+    LoaderComponent,
+    NumbersOnlyPipe
   ],
   exports: [
-    LoaderComponent
+    LoaderComponent,
+    NumbersOnlyPipe,
   ]
 })
 export class SharedModule { }

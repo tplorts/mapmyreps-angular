@@ -29,6 +29,19 @@ $state-color: $color-black;
   pointer-events: none;
 }
 
+.state-info-content {
+  display: flex;
+  flex-direction: row;
+
+  .state-reps-section {
+    flex: 1;
+  }
+
+  .rep-info-section {
+    flex: 1;
+  }
+}
+
 .state-info-card {
   text-align: left;
 }
@@ -84,16 +97,17 @@ $party-colors: (
     }
   }
 
-  $size: 96px;
+  $size: 48px;
 
   .rep-image {
     width: $size;
     height: $size;
     border-radius: 50%;
-    border: 5px solid;
+    border: 3px solid;
     border-color: rgba(100, 100, 100, 0.8);
     background-size: cover;
     background-color: lightgrey;
+    cursor: pointer;
   }
 
   @each $party, $color in $party-colors {

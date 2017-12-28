@@ -9,8 +9,8 @@ import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
 
 import { Logger } from '../core/logger.service';
-import { LegislatorsService } from '../data/legislators.service';
-import { Legislator, Senator, Representative } from '../data/legislator';
+import { CongressService } from '../data/congress.service';
+import { Legislator, Senator, Representative } from '../data/congress';
 
 import * as UsaTopology from 'us-atlas/us/10m.json';
 import * as _UsaRegions from 'usa-regions.json';
@@ -49,20 +49,27 @@ export class MapViewComponent implements OnInit {
   public stateBordersPathData: string;
   public stateFeatures: any[];
   public selectedState: any;
+  public selectedRep: Legislator;
 
-  // private activeStateRepresentatives: Representative[];
-  // private activeStateSenators: Senator[];
   private _repSets: IRepSet[];
+
+  public socialMedia = [
+    { icon: 'twitter', urlGetter: 'twitterUrl' },
+    { icon: 'facebook', urlGetter: 'facebookUrl' },
+    { icon: 'youtube', urlGetter: 'youtubeChannelUrl' },
+    { icon: 'instagram', urlGetter: 'instagramUrl' },
+  ];
 
   private static isOfState(state: string) {
     return (x: Legislator) => state === x.state;
   }
 
   constructor(
-    private legislators: LegislatorsService,
+    private congress: CongressService,
     private http: Http,
   ) {
     this.selectedState = null;
+    this.selectedRep = null;
     this.shuffleIntervalId = null;
   }
 
@@ -194,21 +201,24 @@ export class MapViewComponent implements OnInit {
   }
 
   public selectState(state: any) {
-    this.selectedState = (state && this.selectedState === state) ? null : state;
+    this.selectedRep = null;
+    this.selectedState = (!state || this.selectedState === state) ? null : state;
     if (this.selectedState) {
       const [ x, y ] = this.selectedState.centroid;
       log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
       const reps = this.activeStateLegislators();
-      this._repSets = [
-        {
-          title: 'Senators',
-          reps: <Senator[]> reps.filter(z => z.isSenator()),
-        },
-        {
-          title: 'Representatives',
-          reps: sortBy(<Representative[]> reps.filter(z => z.isRepresentative()), ['district']),
-        }
-      ];
+      if (reps) {
+        this._repSets = [
+          {
+            title: 'Senators',
+            reps: reps.filter(z => z.isSenator()),
+          },
+          {
+            title: 'Representatives',
+            reps: sortBy(reps.filter(z => z.isRepresentative()), ['district']),
+          }
+        ];
+      }
     }
   }
 
@@ -230,7 +240,7 @@ export class MapViewComponent implements OnInit {
   }
 
   public get allReps(): Legislator[] {
-    return this.legislators.reps;
+    return this.congress.reps;
   }
 
   private activeStateLegislators(): Legislator[] {
@@ -255,5 +265,11 @@ export class MapViewComponent implements OnInit {
     return {
       backgroundImage: `url('${rep.imageUrl}')`
     };
+  }
+
+  public selectRep(rep: Legislator): void {
+    this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
+    // log.debug(rep.committees);
+    // this.selectedRep = rep;
   }
 }

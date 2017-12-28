@@ -15,34 +15,80 @@
 </svg>
 
 <mat-card class="state-info-card">
-  <mat-card-content>
-    <h3>{{ selectedStateName || 'No State Selected' }}</h3>
-    <div *ngIf="selectedState">
-      <div *ngIf="!allReps; else repList" class="inline-waiting-message">
-        <mat-spinner [diameter]="20"></mat-spinner>
-        <p>still downloading your reps</p>
-      </div>
-      <ng-template #repList>
-        <div *ngFor="let repSet of repSets">
-          <h4>{{ repSet.title }}</h4>
-          <mat-grid-list cols="8" class="rep-grid-list">
-            <mat-grid-tile 
-              *ngFor="let rep of repSet.reps"
-              class="rep-grid-tile"
-              [ngClass]="rep.partyStyleClass"
-            >
-              <div class="rep-image"
-                [ngStyle]="repImageStyle(rep)"
-              ></div>
-              <mat-grid-tile-footer class="rep-grid-tile-footer">
-                <a href="{{ rep.mainUrl }}"
-                   target="_blank"
-                >{{ rep.fullName }}</a>
-              </mat-grid-tile-footer>
-            </mat-grid-tile>
-          </mat-grid-list>
+  <mat-card-content class="state-info-content">
+    <div class="state-reps-section">
+      <h2>{{ selectedStateName || 'No State Selected' }}</h2>
+      <div *ngIf="selectedState">
+        <div *ngIf="!allReps; else repList" class="inline-waiting-message">
+          <mat-spinner [diameter]="20"></mat-spinner>
+          <p>still downloading your reps</p>
         </div>
-      </ng-template>
+        <ng-template #repList>
+          <div *ngFor="let repSet of repSets">
+            <h4>{{ repSet.title }}</h4>
+            <mat-grid-list cols="8" class="rep-grid-list">
+              <mat-grid-tile 
+                *ngFor="let rep of repSet.reps"
+                class="rep-grid-tile"
+                [ngClass]="rep.partyStyleClass"
+              >
+                <div class="rep-image"
+                  [ngStyle]="repImageStyle(rep)"
+                  (click)="selectRep(rep)"
+                  [matTooltip]="rep.fullName"
+                ></div>
+  <!-- 
+                <mat-grid-tile-footer class="rep-grid-tile-footer">
+                  <a href="{{ rep.mainUrl }}"
+                     target="_blank"
+                  >{{ rep.fullName }}</a>
+                </mat-grid-tile-footer>
+   -->
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="rep-info-section">
+      <div *ngIf="selectedRep">
+        <h3>{{ selectedRep.party }}</h3>
+        <h3>{{ selectedRep.titleName }}</h3>
+        <div>
+          <img src="{{ selectedRep.imageUrl }}" />
+        </div>
+        <div>
+          <h4>Committee Assignments</h4>
+          <ul class="rep-committee-list">
+            <li *ngFor="let committee of selectedRep.committees">
+              <span *ngIf="committee.url; else nameNoLink">
+                <a href="{{ committee.url }}">{{ committee.name }}</a>
+              </span>
+              <ng-template #nameNoLink>{{ committee.name }}</ng-template>
+              <ul class="rep-subcommittee-list">
+                <li *ngFor="let subcommittee of selectedRep.subcommittees[committee.thomasId]">
+                  {{ subcommittee.displayName }}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="selectedRep.phone as phone">
+          <div>{{ phone }}</div>
+          <div>
+            <a mat-button href="tel:{{ phone | numbersOnly }}">
+              Call {{ selectedRep.titleName }}
+            </a>
+          </div>
+        </div>
+        <div class="rep-social-media">
+          <span *ngFor="let medium of socialMedia">
+            <a *ngIf="selectedRep[medium.urlGetter] as url" href="{{ url }}">
+              {{ medium.icon }}
+            </a>
+          </span>
+        </div>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>
