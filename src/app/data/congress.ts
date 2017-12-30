@@ -243,6 +243,10 @@ export class Legislator {
     return this.presentTerm.phone;
   }
 
+  public get office(): string {
+    return this.presentTerm.office;
+  }
+
   public get chamber(): LegislativeChamber {
     return ChamberForType[ this.presentTerm.type ];
   }

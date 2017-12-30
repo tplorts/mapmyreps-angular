@@ -14,7 +14,6 @@ $state-color: $color-black;
     }
 
     &:hover {
-      // fill: hsl(hue($state-color), saturation($state-color), lightness($state-color) * 1.25);
       fill: lighten($state-color, 20%);
     }
   }
@@ -66,45 +65,31 @@ $state-color: $color-black;
   }
 }
 
-.senator-leadership-position {
-  font-style: italic;
-}
-
-.rep-list-item {
-  &.vacant {
-    font-style: italic;
-    opacity: 0.7;
-  }
-}
-
-
 $party-colors: (
   republican: red,
   democrat: blue,
   independent: green,
 );
 
+$size: 48px;
+$ring-thickness: 2px;
+$tile-size: $size + 2 * $ring-thickness;
+
+.rep-grid {
+  display: grid;
+  grid-gap: 6px;
+  grid-template-columns: repeat(auto-fit, $tile-size);
+}
+
 .rep-grid-tile {
-  .rep-grid-tile-footer {
-    background-color: white;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  &:hover {
-    .rep-grid-tile-footer {
-      opacity: 1;
-    }
-  }
-
-  $size: 48px;
+  margin: $ring-thickness;
 
   .rep-image {
     width: $size;
     height: $size;
     border-radius: 50%;
-    border: 3px solid;
-    border-color: rgba(100, 100, 100, 0.8);
+    border: 3px solid white;
+    box-shadow: 0 0 0 $ring-thickness grey;
     background-size: cover;
     background-color: lightgrey;
     cursor: pointer;
@@ -113,7 +98,7 @@ $party-colors: (
   @each $party, $color in $party-colors {
     &.rep-party-#{$party} {
       .rep-image {
-        border-color: transparentize($color, 0.1);
+        box-shadow: 0 0 0 $ring-thickness $color;
       }
     }
   }

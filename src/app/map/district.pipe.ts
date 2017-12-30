@@ -6,13 +6,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DistrictPipe implements PipeTransform {
 
   transform(value: number, args?: any): string {
-    if (value < 0) {
-      return 'Unknown';
-    }
     if (value === 0) {
       return 'At Large';
     }
-    return this.ordinal(value);
+    if (!value || value < 0) {
+      return 'Unknown';
+    }
+    return `${this.ordinal(value)} District`;
   }
 
   ordinal(n: number) {

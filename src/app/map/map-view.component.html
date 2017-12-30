@@ -26,8 +26,8 @@
         <ng-template #repList>
           <div *ngFor="let repSet of repSets">
             <h4>{{ repSet.title }}</h4>
-            <mat-grid-list cols="8" class="rep-grid-list">
-              <mat-grid-tile 
+            <div class="rep-grid">
+              <div
                 *ngFor="let rep of repSet.reps"
                 class="rep-grid-tile"
                 [ngClass]="rep.partyStyleClass"
@@ -37,15 +37,8 @@
                   (click)="selectRep(rep)"
                   [matTooltip]="rep.fullName"
                 ></div>
-  <!-- 
-                <mat-grid-tile-footer class="rep-grid-tile-footer">
-                  <a href="{{ rep.mainUrl }}"
-                     target="_blank"
-                  >{{ rep.fullName }}</a>
-                </mat-grid-tile-footer>
-   -->
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </div>
         </ng-template>
       </div>
@@ -54,8 +47,15 @@
       <div *ngIf="selectedRep">
         <h3>{{ selectedRep.party }}</h3>
         <h3>{{ selectedRep.titleName }}</h3>
+        <h4 *ngIf="selectedRep.district !== null">{{ selectedRep.district | district }}</h4>
         <div>
           <img src="{{ selectedRep.imageUrl }}" />
+        </div>
+        <div>
+          <h4>Office</h4>
+          <div>
+            {{ selectedRep.office }}
+          </div>
         </div>
         <div>
           <h4>Committee Assignments</h4>
@@ -81,7 +81,7 @@
             </a>
           </div>
         </div>
-        <div class="rep-social-media">
+        <div class="rep-social-media" *ngIf="selectedRep.socialMedia">
           <span *ngFor="let medium of socialMedia">
             <a *ngIf="selectedRep[medium.urlGetter] as url" href="{{ url }}">
               {{ medium.icon }}
