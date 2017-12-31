@@ -2,20 +2,18 @@
 
 $state-color: $color-black;
 
-.states {
-  .state-path {
-    fill: $state-color;
-    opacity: 0.5;
-    cursor: pointer;
-    outline: none;
+.state-path {
+  fill: $state-color;
+  opacity: 0.5;
+  cursor: pointer;
+  outline: none;
 
-    &.selected {
-      opacity: 1;
-    }
+  &.selected {
+    opacity: 1;
+  }
 
-    &:hover {
-      fill: lighten($state-color, 20%);
-    }
+  &:hover {
+    fill: lighten($state-color, 20%);
   }
 }
 
@@ -26,6 +24,16 @@ $state-color: $color-black;
   stroke-linejoin: round;
   stroke-linecap: round;
   pointer-events: none;
+}
+
+.state-map svg {
+  background: lighten($color-black, 25%);
+
+  .state-path {
+    fill: white;
+    opacity: 1;
+    cursor: default;
+  }
 }
 
 .state-info-content {

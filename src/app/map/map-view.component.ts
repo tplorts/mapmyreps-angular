@@ -60,6 +60,12 @@ export class MapViewComponent implements OnInit {
     { icon: 'instagram', urlGetter: 'instagramUrl' },
   ];
 
+  public mapOptions = {
+    width: 256,
+    height: 256,
+    padding: 32,
+  };
+
   private static isOfState(state: string) {
     return (x: Legislator) => state === x.state;
   }
@@ -99,6 +105,7 @@ export class MapViewComponent implements OnInit {
       f.regionType = Region.type;
       f.pathData = path(f);
       f.centroid = path.centroid(f);
+      f.bounds = path.bounds(f);
     }
 
     // log.debug('keys of a feature', Object.keys(features[0]));
@@ -206,6 +213,8 @@ export class MapViewComponent implements OnInit {
     if (this.selectedState) {
       const [ x, y ] = this.selectedState.centroid;
       log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
+      const [[x0, y0], [x1, y1]] = this.selectedState.bounds;
+      log.debug(`$(${x0}, ${y0}) - (${x1}, ${y1})`);
       const reps = this.activeStateLegislators();
       if (reps) {
         this._repSets = [
@@ -229,6 +238,23 @@ export class MapViewComponent implements OnInit {
   public get selectedStateName(): string {
     const state = this.selectedState;
     return state && `${state.name} (${state.abbreviation})`;
+  }
+
+  public stateTransform(state: any): string {
+    const [[x0, y0], [x1, y1]] = this.selectedState.bounds;
+    const [ x, y ] = [ (x0 + x1) / 2, (y0 + y1) / 2 ];
+    const stateWidth = x1 - x0;
+    const stateHeight = y1 - y0;
+    const { width, height, padding } = this.mapOptions;
+    const mapCenterX = width / 2;
+    const mapCenterY = height / 2;
+    const mapWidth = width - 2 * padding;
+    const mapHeight = height - 2 * padding;
+    const xScale = mapWidth / stateWidth;
+    const yScale = mapHeight / stateHeight;
+    const choose = (xScale > 1 || yScale > 1) ? Math.min : Math.max;
+    const scale = choose(xScale, yScale);
+    return `translate(${mapCenterX}, ${mapCenterY}) scale(${scale}) translate(${-x}, ${-y})`;
   }
 
   public get width(): number {

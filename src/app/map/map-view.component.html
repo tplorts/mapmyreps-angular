@@ -19,6 +19,31 @@
     <div class="state-reps-section">
       <h2>{{ selectedStateName || 'No State Selected' }}</h2>
       <div *ngIf="selectedState">
+        <div class="state-map">
+          <svg
+            [attr.width]="mapOptions.width"
+            [attr.height]="mapOptions.height">
+            <defs>
+              <filter xmlns="http://www.w3.org/2000/svg" id="dropshadow" height="200%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="5"/> 
+                <feOffset dx="0" dy="0" result="offsetblur"/>
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.5"/>
+                </feComponentTransfer>
+                <feMerge> 
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/> 
+                </feMerge>
+              </filter>
+            </defs>
+            <svg:path
+              class="state-path"
+              filter="url(#dropshadow)"
+              [attr.d]="selectedState.pathData"
+              [attr.transform]="stateTransform(selectedState)"
+            ></svg:path>
+          </svg>
+        </div>
         <div *ngIf="!allReps; else repList" class="inline-waiting-message">
           <mat-spinner [diameter]="20"></mat-spinner>
           <p>still downloading your reps</p>
