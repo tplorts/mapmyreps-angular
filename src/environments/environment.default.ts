@@ -7,6 +7,8 @@ export const environment: any = {
   production: false,
   version: '(dev)',
   serverUrl: 'https://usa-government-info-backend.herokuapp.com/api',
+  staticDataUrl: 'http://usa-government-data.theodoria.net',
+  congressDataDirectory: 'congress',
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

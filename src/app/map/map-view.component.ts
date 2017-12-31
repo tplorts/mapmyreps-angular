@@ -211,10 +211,6 @@ export class MapViewComponent implements OnInit {
     this.selectedRep = null;
     this.selectedState = (!state || this.selectedState === state) ? null : state;
     if (this.selectedState) {
-      const [ x, y ] = this.selectedState.centroid;
-      log.debug(`selected: ${this.selectedStateName} (${x}, ${y})`);
-      const [[x0, y0], [x1, y1]] = this.selectedState.bounds;
-      log.debug(`$(${x0}, ${y0}) - (${x1}, ${y1})`);
       const reps = this.activeStateLegislators();
       if (reps) {
         this._repSets = [

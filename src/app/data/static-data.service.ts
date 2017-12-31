@@ -4,12 +4,14 @@ import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
 import { Logger } from '../core/logger.service';
+import { environment } from '../../environments/environment';
+
 
 const log = new Logger('Backend');
 
 @Injectable()
 export class StaticDataService {
-  private baseUrl = 'http://usa-government-info.theodoria.net/data';
+  private baseUrl = environment.staticDataUrl;
 
   constructor(private http: Http) { }
 

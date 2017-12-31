@@ -3,9 +3,8 @@ import { Subscriber } from 'rxjs/Subscriber';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
-// import 'rxjs/add/operators/combineLatest';
-// import { NextObserver } from 'rxjs/Observer';
 
+import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { StaticDataService } from './static-data.service';
 import {
@@ -39,16 +38,10 @@ export class CongressService {
   private _committees: Committee[];
 
   constructor(private dataService: StaticDataService) {
-    // const repsSubscriber = new Subscriber((reps: ILegislator[]) => this.setReps(reps));
-    // const committeesSubscriber = new Subscriber((coms: ICommittee[]) => this.setCommittees(coms));
-    // const membershipSubscriber = new Subscriber((mems: ICommitteeMember[]) => this.setMembers(mems));
-    // this.dataService.fetch('legislators-current.json').subscribe(repsSubscriber);
-    // this.dataService.fetch('committees-current.json').subscribe(committeesSubscriber);
-    // this.dataService.fetch('committee-membership-current.json').subscribe(committeesSubscriber);
-    const fetches = CongressService.DataFiles.map(f => this.dataService.fetch(`${f}.json`));
+    const dir = environment.congressDataDirectory;
+    const fetches = CongressService.DataFiles.map(f => this.dataService.fetch(`${dir}/${f}.json`));
     Observable.forkJoin(...fetches).subscribe(
       results => this.setData(results),
-      // ([ legislators, committees, memberships ]) => log.debug('L', legislators, 'C', committees, 'M', memberships),
       e => log.error(e),
       () => log.info('complete'),
     );
