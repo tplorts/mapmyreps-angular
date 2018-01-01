@@ -12,7 +12,8 @@ interface NodeModule {
 }
 
 interface UsaRegion {
-  abbreviation: string;
   name: string;
-  type: string;
+  status: string;
+  fipsCode: number;
+  abbreviation?: string;
 }

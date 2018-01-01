@@ -21,8 +21,8 @@
       <div *ngIf="selectedState">
         <div class="state-map">
           <svg
-            [attr.width]="mapOptions.width"
-            [attr.height]="mapOptions.height">
+            [attr.width]="stateMapOptions.width"
+            [attr.height]="stateMapOptions.height">
             <defs>
               <filter xmlns="http://www.w3.org/2000/svg" id="dropshadow" height="200%">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="5"/> 
@@ -44,7 +44,7 @@
             ></svg:path>
           </svg>
         </div>
-        <div *ngIf="!allReps; else repList" class="inline-waiting-message">
+        <div *ngIf="isCongressLoading; else repList" class="inline-waiting-message">
           <mat-spinner [diameter]="20"></mat-spinner>
           <p>still downloading your reps</p>
         </div>

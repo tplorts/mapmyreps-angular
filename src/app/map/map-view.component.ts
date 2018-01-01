@@ -1,30 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
 import { toNumber, isEqual, sortBy } from 'lodash';
 
-import { GeoPath, geoPath } from 'd3-geo';
-import { feature, mesh } from 'topojson';
-
 import { Logger } from '../core/logger.service';
 import { CongressService } from '../data/congress.service';
+import { UsaGeographyService } from '../data/usa-geography.service';
 import { Legislator, Senator, Representative } from '../data/congress';
-
-import * as UsaTopology from 'us-atlas/us/10m.json';
-import * as _UsaRegions from 'usa-regions.json';
-
-
-const UsaRegions = <UsaRegion[]> _UsaRegions;
-// The USA Regions imported from json are already sorted by name.
-// The map here does not include territories, so filter those out.
-const typeExp = /^(state|district)$/;
-const StatesAndDistricts = UsaRegions.filter(r => typeExp.test(r.type));
 
 
 
 const log = new Logger('MapViewComponent');
+
+
 
 interface IGeoCodeResults {
   status: string;
@@ -41,13 +31,10 @@ interface IRepSet {
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.scss']
 })
-export class MapViewComponent implements OnInit {
+export class MapViewComponent {
 
   private _options: { width: number, height: number } = { width: 960, height: 600 };
-  private shuffleIntervalId: number;
 
-  public stateBordersPathData: string;
-  public stateFeatures: any[];
   public selectedState: any;
   public selectedRep: Legislator;
 
@@ -60,7 +47,7 @@ export class MapViewComponent implements OnInit {
     { icon: 'instagram', urlGetter: 'instagramUrl' },
   ];
 
-  public mapOptions = {
+  public stateMapOptions = {
     width: 256,
     height: 256,
     padding: 32,
@@ -72,46 +59,19 @@ export class MapViewComponent implements OnInit {
 
   constructor(
     private congress: CongressService,
+    private geography: UsaGeographyService,
     private http: Http,
   ) {
     this.selectedState = null;
     this.selectedRep = null;
-    this.shuffleIntervalId = null;
   }
 
-  async ngOnInit() {
-    const unequal = (a: any, b: any) => a !== b;
-    const path: GeoPath<any, any> = geoPath();
-    const StateGeometries = UsaTopology.objects.states;
-    const borders = path(mesh(UsaTopology, StateGeometries, unequal));
-    const features = feature(UsaTopology, StateGeometries).features;
+  public get stateFeatures(): any[] {
+    return this.geography.stateFeatures;
+  }
 
-    // The features come with a numeric id, in string form
-    for (const f of features) {
-      f.identifier = toNumber(f.id);
-    }
-    // Once sorted by this numeric id, the state features are ordered by
-    // the name of the state/distric.
-    const byIdentifier = (a: any, b: any) => a.identifier - b.identifier;
-    features.sort(byIdentifier);
-
-    // Now, each element of features and StatesAndDistricts arrays should
-    // line up according to index.
-    let index = 0;
-    for (const f of features) {
-      const Region = StatesAndDistricts[index++];
-      f.name = Region.name;
-      f.abbreviation = Region.abbreviation;
-      f.regionType = Region.type;
-      f.pathData = path(f);
-      f.centroid = path.centroid(f);
-      f.bounds = path.bounds(f);
-    }
-
-    // log.debug('keys of a feature', Object.keys(features[0]));
-
-    this.stateFeatures = features;
-    this.stateBordersPathData = borders;
+  public get stateBordersPathData(): string {
+    return this.geography.stateBordersPathData;
   }
 
   public selectForLocation(): void {
@@ -174,35 +134,6 @@ export class MapViewComponent implements OnInit {
     this.selectState(this.stateFeatureForAbbreviation(abbr));
   }
 
-  public shuffle(): void {
-    if (this.isShuffling()) {
-      return;
-    }
-    this.shuffleIntervalId = window.setInterval(() => this.selectRandomState(), 150);
-    const time = Math.round(Math.random() * 5e3);
-    const stop = () => {
-      window.clearInterval(this.shuffleIntervalId);
-      this.shuffleIntervalId = null;
-    };
-    window.setTimeout(stop, time);
-  }
-
-  public isShuffling(): boolean {
-    return !!this.shuffleIntervalId;
-  }
-
-  public selectRandomState(): void {
-    this.selectState(this.randomStateFeature());
-  }
-
-  public randomStateFeature(): any {
-    return this.stateFeatureForAbbreviation(this.randomAbbrevation());
-  }
-
-  public randomAbbrevation(): string {
-    return StatesAndDistricts[Math.floor(Math.random() * StatesAndDistricts.length)].abbreviation;
-  }
-
   public stateFeatureForAbbreviation(abbreviation: string) {
     return this.stateFeatures.find(sf => sf.abbreviation === abbreviation);
   }
@@ -241,7 +172,7 @@ export class MapViewComponent implements OnInit {
     const [ x, y ] = [ (x0 + x1) / 2, (y0 + y1) / 2 ];
     const stateWidth = x1 - x0;
     const stateHeight = y1 - y0;
-    const { width, height, padding } = this.mapOptions;
+    const { width, height, padding } = this.stateMapOptions;
     const mapCenterX = width / 2;
     const mapCenterY = height / 2;
     const mapWidth = width - 2 * padding;
@@ -261,27 +192,18 @@ export class MapViewComponent implements OnInit {
     return this._options.height;
   }
 
-  public get allReps(): Legislator[] {
-    return this.congress.reps;
+  public get isCongressLoading(): boolean {
+    return this.congress.isLoading;
   }
 
   private activeStateLegislators(): Legislator[] {
-    return this.allReps && this.allReps.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
+    const { reps } = this.congress;
+    return reps && reps.filter(MapViewComponent.isOfState(this.selectedState.abbreviation));
   }
 
   public get repSets(): IRepSet[] {
     return this._repSets;
   }
-
-  public hasCommittees(representative: Legislator): boolean {
-    // const {committees} = representative;
-    // return committees && committees.length > 0;
-    return false;
-  }
-
-  // public committeeList(representative: Representative): string {
-  //   return this.hasCommittees(representative) ? representative.committees.join(', ') : 'Member of no committees';
-  // }
 
   public repImageStyle(rep: Legislator): any {
     return {
@@ -291,7 +213,5 @@ export class MapViewComponent implements OnInit {
 
   public selectRep(rep: Legislator): void {
     this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
-    // log.debug(rep.committees);
-    // this.selectedRep = rep;
   }
 }

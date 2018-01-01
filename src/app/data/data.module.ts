@@ -6,6 +6,7 @@ import { BackendService } from './backend.service';
 import { DataStateService } from './data-state.service';
 import { StaticDataService } from './static-data.service';
 import { CongressService } from './congress.service';
+import { UsaGeographyService } from './usa-geography.service';
 
 
 
@@ -19,7 +20,8 @@ import { CongressService } from './congress.service';
     BackendService,
     DataStateService,
     StaticDataService,
-    CongressService
+    CongressService,
+    UsaGeographyService
   ]
 })
 export class DataModule { }

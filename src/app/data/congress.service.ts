@@ -34,17 +34,22 @@ export class CongressService {
     'legislators-social-media',
   ];
 
+  private _isLoading: boolean;
   private _legislators: Legislator[];
   private _committees: Committee[];
 
   constructor(private dataService: StaticDataService) {
+    this._isLoading = true;
     const dir = environment.congressDataDirectory;
     const fetches = CongressService.DataFiles.map(f => this.dataService.fetch(`${dir}/${f}.json`));
     Observable.forkJoin(...fetches).subscribe(
       results => this.setData(results),
       e => log.error(e),
-      () => log.info('complete'),
     );
+  }
+
+  public get isLoading(): boolean {
+    return this._isLoading;
   }
 
   setData(data: any[]) {
@@ -73,6 +78,8 @@ export class CongressService {
       return Legislator.create(z, committeesForBioguide[bioguide], socialMediaMap[bioguide]);
     };
     this._legislators = legislators.map(createLegislator);
+
+    this._isLoading = false;
   }
 
   public get reps(): Legislator[] {
