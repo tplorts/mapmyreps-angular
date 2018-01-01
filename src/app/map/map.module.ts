@@ -9,6 +9,7 @@ import { MapViewComponent } from './map-view.component';
 import { DataModule } from '../data/data.module';
 import { SharedModule } from '../shared/shared.module';
 import { DistrictPipe } from './district.pipe';
+import { GeolocateService } from './geolocate.service';
 
 @NgModule({
   imports: [
@@ -25,6 +26,9 @@ import { DistrictPipe } from './district.pipe';
   ],
   exports: [
     MapViewComponent,
+  ],
+  providers: [
+    GeolocateService,
   ]
 })
 export class MapModule { }
