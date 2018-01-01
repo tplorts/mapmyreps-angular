@@ -19,7 +19,8 @@ const log = new Logger('MapViewComponent');
 })
 export class MapViewComponent {
 
-  private _options: { width: number, height: number } = { width: 960, height: 600 };
+  private readonly WidthLimits = { min: 768, max: 1200 };
+  private readonly MapSize = { width: 960, height: 600 };
 
   public selectedState: any;
 
@@ -47,11 +48,19 @@ export class MapViewComponent {
   }
 
   public get width(): number {
-    return this._options.width;
+    return this.viewWidth;
   }
 
   public get height(): number {
-    return this._options.height;
+    return this.viewWidth * this.MapSize.height / this.MapSize.width;
   }
 
+  public get nationTransform(): string {
+    const scale = 0.98 * this.viewWidth / this.MapSize.width;
+    return `scale(${scale})`;
+  }
+
+  public get viewWidth(): number {
+    return Math.min(this.WidthLimits.max, Math.max(this.WidthLimits.min, window.innerWidth));
+  }
 }

@@ -1,17 +1,21 @@
 <!-- <button (click)="selectForLocation()">Use my location</button> -->
 
 <svg [attr.width]="width" [attr.height]="height">
-  <g class="states">
-    <svg:path
-      *ngFor="let state of stateFeatures"
-      class="state-path"
-      [ngClass]="{ 'selected': isSelected(state) }"
-      [attr.d]="state.pathData"
-      [matTooltip]="state.name"
-      (click)="selectState(state)"
-    ></svg:path>
+  <g class="nation"
+    [attr.transform]="nationTransform"
+  >
+    <g class="states">
+      <svg:path
+        *ngFor="let state of stateFeatures"
+        class="state-path"
+        [ngClass]="{ 'selected': isSelected(state) }"
+        [attr.d]="state.pathData"
+        [matTooltip]="state.name"
+        (click)="selectState(state)"
+      ></svg:path>
+    </g>
+    <svg:path class="state-borders" [attr.d]="stateBordersPathData"></svg:path>
   </g>
-  <svg:path class="state-borders" [attr.d]="stateBordersPathData"></svg:path>
 </svg>
 
 <div>
