@@ -1,0 +1,57 @@
+<div class="state-info-content">
+  <div class="state-reps-section">
+    <h2>{{ stateTitle || 'No State Selected' }}</h2>
+    <div *ngIf="state">
+      <div class="state-map">
+        <svg
+          [attr.width]="stateMapOptions.width"
+          [attr.height]="stateMapOptions.height">
+          <defs>
+            <filter xmlns="http://www.w3.org/2000/svg" id="dropshadow" height="200%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> 
+              <feOffset dx="0" dy="0" result="offsetblur"/>
+              <feComponentTransfer>
+                <feFuncA type="linear" slope="0.5"/>
+              </feComponentTransfer>
+              <feMerge> 
+                <feMergeNode/>
+                <feMergeNode in="SourceGraphic"/> 
+              </feMerge>
+            </filter>
+          </defs>
+          <svg:path
+            class="state-path"
+            filter="url(#dropshadow)"
+            [attr.d]="state.pathData"
+            [attr.transform]="stateTransform(state)"
+          ></svg:path>
+        </svg>
+      </div>
+      <div *ngIf="isCongressLoading; else repList" class="inline-waiting-message">
+        <mat-spinner [diameter]="20"></mat-spinner>
+        <p>still downloading your reps</p>
+      </div>
+      <ng-template #repList>
+        <div *ngFor="let repSet of repSets">
+          <h4>{{ repSet.title }}</h4>
+          <div class="rep-grid">
+            <div
+              *ngFor="let rep of repSet.reps"
+              class="rep-grid-tile"
+              [ngClass]="rep.partyStyleClass"
+            >
+              <div class="rep-image"
+                [ngStyle]="repImageStyle(rep)"
+                (click)="selectRep(rep)"
+                [matTooltip]="rep.fullName"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="rep-info-section">
+    <app-rep-detail [rep]="selectedRep"></app-rep-detail>
+  </div>
+</div>

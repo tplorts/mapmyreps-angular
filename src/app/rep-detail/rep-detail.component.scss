@@ -1,0 +1,7 @@
+@import "src/theme/theme-variables";
+
+@each $party, $color in $political-party-colors {
+  .rep-party-#{$party} {
+    color: $color;
+  }
+}

@@ -10,6 +10,8 @@ import { DataModule } from '../data/data.module';
 import { SharedModule } from '../shared/shared.module';
 import { DistrictPipe } from './district.pipe';
 import { GeolocateService } from './geolocate.service';
+import { StateDetailComponent } from '../state-detail/state-detail.component';
+import { RepDetailComponent } from '../rep-detail/rep-detail.component';
 
 @NgModule({
   imports: [
@@ -23,6 +25,8 @@ import { GeolocateService } from './geolocate.service';
   declarations: [
     MapViewComponent,
     DistrictPipe,
+    StateDetailComponent,
+    RepDetailComponent,
   ],
   exports: [
     MapViewComponent,

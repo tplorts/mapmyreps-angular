@@ -29,6 +29,12 @@ $color-border: #9FA2A7;
 $color-rep: #BC2929;
 $color-dem: #5586EF;
 
+$political-party-colors: (
+  republican: red,
+  democrat: blue,
+  independent: green,
+);
+
 // Fonts
 @font-face {
   font-family: National;

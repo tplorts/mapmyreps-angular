@@ -1,0 +1,59 @@
+@import "src/theme/theme-variables";
+
+$state-color: $color-black;
+
+.state-map svg {
+  background: lighten($state-color, 25%);
+
+  .state-path {
+    fill: white;
+    opacity: 1;
+    cursor: default;
+  }
+}
+
+.state-info-content {
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+
+  .state-reps-section {
+    flex: 1;
+  }
+
+  .rep-info-section {
+    flex: 1;
+  }
+}
+
+
+$size: 48px;
+$ring-thickness: 2px;
+$tile-size: $size + 2 * $ring-thickness;
+
+.rep-grid {
+  display: grid;
+  grid-gap: 6px;
+  grid-template-columns: repeat(auto-fit, $tile-size);
+}
+
+.rep-grid-tile {
+  margin: $ring-thickness;
+
+  .rep-image {
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 $ring-thickness grey;
+    background-size: cover;
+    background-color: lightgrey;
+    cursor: pointer;
+  }
+
+  @each $party, $color in $political-party-colors {
+    &.rep-party-#{$party} .rep-image {
+      box-shadow: 0 0 0 $ring-thickness $color;
+    }
+  }
+}
