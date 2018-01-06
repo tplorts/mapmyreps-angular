@@ -1,15 +1,23 @@
 <div *ngIf="rep">
-  <h3 [ngClass]="rep.partyStyleClass">{{ rep.party }}</h3>
-  <h3>{{ rep.titleName }}</h3>
-  <h4 *ngIf="rep.district !== null">{{ rep.district | district }}</h4>
+  <h2 [ngClass]="rep.partyStyleClass">{{ rep.party }}</h2>
+  <h2>{{ rep.titleName }}</h2>
+  
+  <div class="rep-meta-details">
+    <div *ngIf="rep.district !== null" class="district">
+      <h4>District</h4>
+      <div>{{ rep.district | district }}</div>
+    </div>
+    
+    <div class="office">
+      <h4>Office</h4>
+      <div>
+        {{ rep.office }}
+      </div>
+    </div>
+  </div>
+  
   <div>
     <img src="{{ rep.imageUrl }}" />
-  </div>
-  <div>
-    <h4>Office</h4>
-    <div>
-      {{ rep.office }}
-    </div>
   </div>
   <div>
     <h4>Committee Assignments</h4>
@@ -27,14 +35,17 @@
       </li>
     </ul>
   </div>
-  <h4>Contact Info</h4>
-  <div *ngIf="rep.phone as phone">
-    <div>{{ phone }}</div>
-    <div>
-      <a mat-button href="tel:{{ phone | numbersOnly }}">
-        Call {{ rep.titleName }}
-      </a>
-    </div>
+  <div *ngIf="rep.phone as phone"> 
+    <span>
+      <div>
+        <a mat-button class="button" href="tel:{{ phone | numbersOnly }}">
+          Call {{ rep.titleName }}
+        </a>
+      </div>
+    </span>
+    <span>
+      <h2>{{ phone }}</h2>
+    </span>
   </div>
   <div class="rep-social-media" *ngIf="rep.socialMedia">
     <span *ngFor="let medium of socialMedia">
