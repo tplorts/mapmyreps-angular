@@ -40,10 +40,6 @@ $political-party-colors: (
   independent: $color-ind,
 );
 
-.button {
-  background-color: $color-grey-dark;
-  color: white;
-}
 
 // Fonts
 @font-face {
@@ -74,12 +70,12 @@ $political-party-colors: (
 }
 
 
-
 // Typography
 body, html {
   font-family: National;
   font-weight: normal;
   color: $color-black;
+  font-smooth: Antialiased;
 }
 h1 {
   font-family: Frederick;
@@ -97,11 +93,12 @@ h4 {
   margin: 0 0 1rem 0;
 }
 
+
+// Globals
 hr {
   border: none;
   border-bottom: 1px solid $color-borders;
 }
-
 a {
   color: black;
   text-decoration: none;
@@ -109,9 +106,19 @@ a {
     text-decoration: underline;
   }
 }
-
 .spacer-bottom {
   margin-bottom: 2rem;
+}
+.button {
+  background-color: $color-grey-dark;
+  color: white;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  font-size: 1rem;
+  font-weight: 100;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 

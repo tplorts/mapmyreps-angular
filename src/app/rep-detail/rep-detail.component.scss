@@ -13,14 +13,15 @@
   display: flex;
   border-top: 1px solid $color-borders;
   margin: 1rem 0;
-  .district,
-  .office {
-    padding: 1rem 0;
-  }
-  .district {
+  div {
+    padding: 1rem 0 0 0;
     border-right: 1px solid $color-borders;
     margin-right: 2rem;
     padding-right: 2rem;
+    &:last-child {
+      margin: 0;
+      border: none;
+    }
   }
 }
 

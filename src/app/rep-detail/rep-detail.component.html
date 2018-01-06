@@ -3,17 +3,25 @@
   <h2>{{ rep.titleName }}</h2>
   
   <div class="rep-meta-details">
+    
     <div *ngIf="rep.district !== null" class="district">
       <h4>District</h4>
-      <div>{{ rep.district | district }}</div>
+      <h3>{{ rep.district | district }}</h3>
     </div>
     
     <div class="office">
       <h4>Office</h4>
-      <div>
+      <h3>
         {{ rep.office }}
-      </div>
+      </h3>
     </div>
+    
+    <div *ngIf="rep.phone as phone" class="phone">
+      <h4>Phone</h4>
+      <h3>{{ phone }}</h3>
+    </div>
+    
+
   </div>
   
   <div>
@@ -24,7 +32,7 @@
     <ul class="rep-committee-list">
       <li *ngFor="let committee of rep.committees">
         <span *ngIf="committee.url; else nameNoLink">
-          <a href="{{ committee.url }}">{{ committee.name }}</a>
+          <a target="_blank" href="{{ committee.url }}">{{ committee.name }}</a>
         </span>
         <ng-template #nameNoLink>{{ committee.name }}</ng-template>
         <ul class="rep-subcommittee-list">
@@ -36,16 +44,11 @@
     </ul>
   </div>
   <div *ngIf="rep.phone as phone"> 
-    <span>
-      <div>
-        <a mat-button class="button" href="tel:{{ phone | numbersOnly }}">
-          Call {{ rep.titleName }}
-        </a>
-      </div>
-    </span>
-    <span>
-      <h2>{{ phone }}</h2>
-    </span>
+    <div>
+      <a mat-button class="button" href="tel:{{ phone | numbersOnly }}">
+        Call {{ rep.titleName }}
+      </a>
+    </div>
   </div>
   <div class="rep-social-media" *ngIf="rep.socialMedia">
     <h4>On Social Media</h4>
