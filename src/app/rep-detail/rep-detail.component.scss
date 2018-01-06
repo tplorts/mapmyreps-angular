@@ -24,3 +24,19 @@
   }
 }
 
+.rep-social-media {
+  margin-top: 2rem;
+  span {
+    a {
+      margin-right: 2rem;
+      font-size: 1.25rem;
+      &:hover {
+        text-decoration: none;
+        color: black;
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
