@@ -37,15 +37,19 @@ export class CongressService {
   private _isLoading: boolean;
   private _legislators: Legislator[];
   private _committees: Committee[];
+  public readonly dataObservable: Observable<any>;
 
   constructor(private dataService: StaticDataService) {
     this._isLoading = true;
     const dir = environment.congressDataDirectory;
     const fetches = CongressService.DataFiles.map(f => this.dataService.fetch(`${dir}/${f}.json`));
-    Observable.forkJoin(...fetches).subscribe(
-      results => this.setData(results),
-      e => log.error(e),
-    );
+    this.dataObservable = new Observable<any>(observer => {
+      Observable.forkJoin(...fetches).subscribe(
+        results => this.setData(results),
+        e => log.error(e),
+        () => observer.complete(),
+      );
+    });
   }
 
   public get isLoading(): boolean {

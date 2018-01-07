@@ -18,6 +18,9 @@
   </g>
 </svg>
 
-<div>
-  <app-state-detail [state]="selectedState"></app-state-detail>
+<div *ngIf="selectedState">
+  <app-state-detail
+    [state]="selectedState"
+    (close)="closeState()"
+  ></app-state-detail>
 </div>

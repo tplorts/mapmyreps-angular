@@ -10,8 +10,6 @@ const log = new Logger('MapViewComponent');
 
 
 
-
-
 @Component({
   selector: 'app-map-view',
   templateUrl: './map-view.component.html',
@@ -41,6 +39,10 @@ export class MapViewComponent {
 
   public selectState(state: any) {
     this.selectedState = (!state || this.selectedState === state) ? null : state;
+  }
+
+  public closeState(): void {
+    this.selectedState = null;
   }
 
   public isSelected(state: any): boolean {

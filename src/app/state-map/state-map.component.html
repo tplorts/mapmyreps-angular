@@ -1,0 +1,23 @@
+<svg
+  [attr.width]="stateMapOptions.width"
+  [attr.height]="stateMapOptions.height">
+  <defs>
+    <filter xmlns="http://www.w3.org/2000/svg" id="dropshadow" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> 
+      <feOffset dx="0" dy="0" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  <svg:path
+    class="state-path"
+    filter="url(#dropshadow)"
+    [attr.d]="state.pathData"
+    [attr.transform]="stateTransform(state)"
+  ></svg:path>
+</svg>

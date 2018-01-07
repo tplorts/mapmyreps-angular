@@ -1,30 +1,20 @@
 @import "src/theme/theme-variables";
 
-$state-color: $color-black;
-
-.state-map svg {
-  background: rgba($state-color, 0.3);
-
-  .state-path {
-    fill: white;
-    opacity: 1;
-    cursor: default;
-  }
-}
-
 .state-info-content {
   display: flex;
   flex-direction: row;
   text-align: left;
 
   // Bad hack for now. Need to clean this up.
-  width: 100%;
-  max-width: 1200px;
+  // width: 100%;
+  // max-width: 1200px;
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding: 2rem;
-  margin-left: -600px;
+  // margin-left: -600px;
   background: rgba($color-background, 0.9);
   justify-content: space-around;
 

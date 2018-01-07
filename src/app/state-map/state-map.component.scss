@@ -1,0 +1,13 @@
+@import "src/theme/theme-variables";
+
+$state-color: $color-black;
+
+svg {
+  background: rgba($state-color, 0.3);
+
+  .state-path {
+    fill: white;
+    opacity: 1;
+    cursor: default;
+  }
+}

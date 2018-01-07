@@ -12,6 +12,7 @@ import { DistrictPipe } from './district.pipe';
 import { GeolocateService } from './geolocate.service';
 import { StateDetailComponent } from '../state-detail/state-detail.component';
 import { RepDetailComponent } from '../rep-detail/rep-detail.component';
+import { StateMapComponent } from '../state-map/state-map.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { RepDetailComponent } from '../rep-detail/rep-detail.component';
     DistrictPipe,
     StateDetailComponent,
     RepDetailComponent,
+    StateMapComponent,
   ],
   exports: [
     MapViewComponent,
