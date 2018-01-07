@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Legislator } from '../data/congress';
+import { Legislator, Committee } from '../data/congress';
 
 
 
@@ -18,12 +18,34 @@ export class RepDetailComponent implements OnInit {
     { icon: 'instagram', urlGetter: 'instagramUrl' },
   ];
 
+  public committeesExpanded: { [thomasId: string]: boolean };
+
   @Input()
   rep: Legislator;
 
   constructor() { }
 
   ngOnInit() {
+    this.committeesExpanded = {};
   }
 
+  public hasSubs(committee: Committee): boolean {
+    const subs = this.rep.subcommittees[committee.thomasId];
+    return subs && subs.length > 0;
+  }
+
+  public committeeItemClasses(committee: Committee): object {
+    return {
+      // empty: !this.hasSubs(committee),
+      expanded: this.isExpanded(committee),
+    };
+  }
+
+  public expand(committee: Committee): void {
+    this.committeesExpanded[committee.thomasId] = !this.committeesExpanded[committee.thomasId];
+  }
+
+  public isExpanded(committee: Committee): boolean {
+    return this.committeesExpanded[committee.thomasId];
+  }
 }

@@ -4,7 +4,8 @@
   .rep-party-#{$party} {
     color: $color;
   }
-  .button {
+
+  .button-party-#{$party} {
     background: $color;
   }
 }
@@ -13,11 +14,13 @@
   display: flex;
   border-top: 1px solid $color-borders;
   margin: 1rem 0;
+
   div {
-    padding: 1rem 0 0 0;
+    padding: 1rem 0 0;
     border-right: 1px solid $color-borders;
     margin-right: 2rem;
     padding-right: 2rem;
+
     &:last-child {
       margin: 0;
       border: none;
@@ -25,17 +28,48 @@
   }
 }
 
+.rep-committee-list {
+  list-style: none;
+  padding-left: 1.5em;
+
+  .committee-expander {
+    position: absolute;
+    margin-left: -1em;
+    margin-top: -0.1em;
+    vertical-align: bottom;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .rep-subcommittee-list {
+    display: none;
+  }
+
+  .expanded {
+    .committee-expander {
+      transform: rotate(180deg);
+    }
+
+    .rep-subcommittee-list {
+      display: block;
+    }
+  }
+}
+
 .rep-social-media {
   margin-top: 2rem;
+
   span {
     a {
       margin-right: 2rem;
       font-size: 1.25rem;
+
       &:hover {
         text-decoration: none;
         color: black;
       }
     }
+
     &:last-child {
       margin-right: 0;
     }

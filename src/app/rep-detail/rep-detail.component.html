@@ -30,7 +30,17 @@
   <div>
     <h4>Committee Assignments</h4>
     <ul class="rep-committee-list">
-      <li *ngFor="let committee of rep.committees">
+      <li
+        *ngFor="let committee of rep.committees"
+        [ngClass]="{ expanded: isExpanded(committee) }"
+      >
+        <span *ngIf="hasSubs(committee)">
+          <mat-icon
+            class="committee-expander"
+            (click)="expand(committee)"
+            [matTooltip]="isExpanded(committee) ? 'Hide Subcommittees' : 'Show Subcommittees'"
+          >expand_more</mat-icon>
+        </span>
         <span *ngIf="committee.url; else nameNoLink">
           <a target="_blank" href="{{ committee.url }}">{{ committee.name }}</a>
         </span>
@@ -45,7 +55,11 @@
   </div>
   <div *ngIf="rep.phone as phone"> 
     <div>
-      <a mat-button class="button" href="tel:{{ phone | numbersOnly }}">
+      <a mat-button 
+        class="button"
+        [ngClass]="'button-party-' + rep.party.toLowerCase()"
+        href="tel:{{ phone | numbersOnly }}"
+      >
         Call {{ rep.titleName }}
       </a>
     </div>
