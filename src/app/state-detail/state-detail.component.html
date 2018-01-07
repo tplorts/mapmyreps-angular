@@ -1,8 +1,8 @@
 <div class="state-info-content">
   <div class="state-reps-section">
-    <h2>{{ stateTitle || 'No State Selected' }}</h2>
+    <h4>{{ stateTitle || 'No State Selected' }}</h4>
     <div *ngIf="state">
-      <div class="state-map">
+      <div class="state-map spacer-bottom">
         <svg
           [attr.width]="stateMapOptions.width"
           [attr.height]="stateMapOptions.height">
@@ -32,7 +32,7 @@
         <p>still downloading your reps</p>
       </div>
       <ng-template #repList>
-        <div *ngFor="let repSet of repSets">
+        <div class="spacer-bottom" *ngFor="let repSet of repSets">
           <h4>{{ repSet.title }}</h4>
           <div class="rep-grid">
             <div

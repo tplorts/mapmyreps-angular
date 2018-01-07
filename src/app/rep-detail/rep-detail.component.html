@@ -1,22 +1,38 @@
 <div *ngIf="rep">
-  <h3 [ngClass]="rep.partyStyleClass">{{ rep.party }}</h3>
-  <h3>{{ rep.titleName }}</h3>
-  <h4 *ngIf="rep.district !== null">{{ rep.district | district }}</h4>
+  <h2 [ngClass]="rep.partyStyleClass">{{ rep.party }}</h2>
+  <h2>{{ rep.titleName }}</h2>
+  
+  <div class="rep-meta-details">
+    
+    <div *ngIf="rep.district !== null" class="district">
+      <h4>District</h4>
+      <h3>{{ rep.district | district }}</h3>
+    </div>
+    
+    <div class="office">
+      <h4>Office</h4>
+      <h3>
+        {{ rep.office }}
+      </h3>
+    </div>
+    
+    <div *ngIf="rep.phone as phone" class="phone">
+      <h4>Phone</h4>
+      <h3>{{ phone }}</h3>
+    </div>
+    
+
+  </div>
+  
   <div>
     <img src="{{ rep.imageUrl }}" />
-  </div>
-  <div>
-    <h4>Office</h4>
-    <div>
-      {{ rep.office }}
-    </div>
   </div>
   <div>
     <h4>Committee Assignments</h4>
     <ul class="rep-committee-list">
       <li *ngFor="let committee of rep.committees">
         <span *ngIf="committee.url; else nameNoLink">
-          <a href="{{ committee.url }}">{{ committee.name }}</a>
+          <a target="_blank" href="{{ committee.url }}">{{ committee.name }}</a>
         </span>
         <ng-template #nameNoLink>{{ committee.name }}</ng-template>
         <ul class="rep-subcommittee-list">
@@ -27,19 +43,17 @@
       </li>
     </ul>
   </div>
-  <h4>Contact Info</h4>
-  <div *ngIf="rep.phone as phone">
-    <div>{{ phone }}</div>
+  <div *ngIf="rep.phone as phone"> 
     <div>
-      <a mat-button href="tel:{{ phone | numbersOnly }}">
+      <a mat-button class="button" href="tel:{{ phone | numbersOnly }}">
         Call {{ rep.titleName }}
       </a>
     </div>
   </div>
   <div class="rep-social-media" *ngIf="rep.socialMedia">
+    <h4>On Social Media</h4>
     <span *ngFor="let medium of socialMedia">
-      <a *ngIf="rep[medium.urlGetter] as url" href="{{ url }}">
-        {{ medium.icon }}
+      <a *ngIf="rep[medium.urlGetter] as url" target="_blank" href="{{ url }}" class="socicon-{{ medium.icon }}">
       </a>
     </span>
   </div>

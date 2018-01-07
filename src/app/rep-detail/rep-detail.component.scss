@@ -4,4 +4,40 @@
   .rep-party-#{$party} {
     color: $color;
   }
+  .button {
+    background: $color;
+  }
+}
+
+.rep-meta-details {
+  display: flex;
+  border-top: 1px solid $color-borders;
+  margin: 1rem 0;
+  div {
+    padding: 1rem 0 0 0;
+    border-right: 1px solid $color-borders;
+    margin-right: 2rem;
+    padding-right: 2rem;
+    &:last-child {
+      margin: 0;
+      border: none;
+    }
+  }
+}
+
+.rep-social-media {
+  margin-top: 2rem;
+  span {
+    a {
+      margin-right: 2rem;
+      font-size: 1.25rem;
+      &:hover {
+        text-decoration: none;
+        color: black;
+      }
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }

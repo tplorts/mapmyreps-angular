@@ -3,7 +3,7 @@
 $state-color: $color-black;
 
 .state-map svg {
-  background: lighten($state-color, 25%);
+  background: rgba($state-color, 0.3);
 
   .state-path {
     fill: white;
@@ -17,12 +17,24 @@ $state-color: $color-black;
   flex-direction: row;
   text-align: left;
 
+  // Bad hack for now. Need to clean this up.
+  width: 100%;
+  max-width: 1200px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 2rem;
+  margin-left: -600px;
+  background: rgba($color-background, 0.9);
+  justify-content: space-around;
+
   .state-reps-section {
     flex: 1;
+    padding-right: 4rem;
   }
 
   .rep-info-section {
-    flex: 1;
+    flex: 1.5;
   }
 }
 

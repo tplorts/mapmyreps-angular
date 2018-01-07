@@ -33,12 +33,13 @@
 // Navbar
 .navbar {
   height: 96px;
-  background: white;
-  border-bottom: 1px solid $color-border;
+  background: $color-background;
+  border-bottom: 1px solid $color-borders;
   box-shadow: none;
   display: flex;
   justify-content: space-around;
   .navbar-link {
-    font-weight: 100;
+    font-family: National;
+    font-weight: normal;
   }
 }
