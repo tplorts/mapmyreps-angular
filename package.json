@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "build": "yarn run env && ng build --prod",
-    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region 'us-east-1' --bucket 'mapmyreps.theodoria.net' --deleteRemoved",
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region 'us-east-1' --bucket 'mapmyreps.us' --deleteRemoved",
     "start": "ng serve --aot --environment=hybrid",
     "start-dev": "ng serve --aot",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
