@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { CongressionalDistrictsService } from '../data/congressional-districts.service';
+// import { CongressionalDistrictsService } from '../data/congressional-districts.service';
 
 
 
@@ -20,7 +20,7 @@ export class StateMapComponent implements OnInit {
   };
 
   constructor(
-    private districts: CongressionalDistrictsService,
+    // private districts: CongressionalDistrictsService,
   ) {}
 
   ngOnInit() {
@@ -44,7 +44,8 @@ export class StateMapComponent implements OnInit {
   }
 
   public get districtFeatures(): any[] {
-    return this.districts.districtsFor(this.state.abbreviation);
+    // return this.districts.districtsFor(this.state.abbreviation);
+    return [];
   }
 
   public get districtsTransform(): string {

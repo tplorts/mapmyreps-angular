@@ -10,6 +10,26 @@
   }
 }
 
+.rep-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  > *:not(:last-child) {
+    margin-right: 1em;
+  }
+
+  .rep-image {
+    height: 144px;
+  }
+
+  .rep-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+
 .rep-meta-details {
   display: flex;
   border-top: 1px solid $color-borders;
@@ -24,8 +44,25 @@
     &:last-child {
       margin: 0;
       border: none;
+      padding-right: 0;
     }
   }
+
+  .district {
+    flex: 1;
+  }
+
+  .office {
+    flex: 2;
+  }
+
+  .phone {
+    flex: 1;
+  }
+}
+
+.phone-number {
+  min-width: 6em;
 }
 
 .rep-committee-list {

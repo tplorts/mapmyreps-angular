@@ -7,7 +7,7 @@ import { DataStateService } from './data-state.service';
 import { StaticDataService } from './static-data.service';
 import { CongressService } from './congress.service';
 import { UsaGeographyService } from './usa-geography.service';
-import { CongressionalDistrictsService } from './congressional-districts.service';
+// import { CongressionalDistrictsService } from './congressional-districts.service';
 
 
 
@@ -23,7 +23,7 @@ import { CongressionalDistrictsService } from './congressional-districts.service
     StaticDataService,
     CongressService,
     UsaGeographyService,
-    CongressionalDistrictsService
+    // CongressionalDistrictsService,
   ]
 })
 export class DataModule { }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { Logger } from '../core/logger.service';
 import { UsaGeographyService } from '../data/usa-geography.service';
+// import { CongressService } from '../data/congress.service';
 import { Legislator, Senator, Representative } from '../data/congress';
 
 
@@ -25,7 +26,10 @@ export class MapViewComponent {
 
   constructor(
     private geography: UsaGeographyService,
+    // private _congress: CongressService, // Just to force it to load asap
   ) {
+    // this._congress.load();
+    // this._congress.dataObservable.subscribe(null, null, () => log.info('loaded congress'));
     this.selectedState = null;
   }
 
@@ -58,7 +62,7 @@ export class MapViewComponent {
   }
 
   public get nationTransform(): string {
-    const scale = 0.98 * this.viewWidth / this.MapSize.width;
+    const scale = this.viewWidth / this.MapSize.width;
     return `scale(${scale})`;
   }
 

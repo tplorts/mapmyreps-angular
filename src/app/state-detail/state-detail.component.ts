@@ -44,8 +44,12 @@ export class StateDetailComponent implements OnInit {
   @Input()
   public set state(s: any) {
     this._state = s;
-    const onceDone = new Subscriber(null, null, () => this.makeRepSets());
-    this.congress.dataObservable.subscribe(onceDone);
+    if (this.isCongressLoading) {
+      const onceDone = new Subscriber(null, null, () => this.makeRepSets());
+      this.congress.dataObservable.subscribe(onceDone);
+    } else {
+      this.makeRepSets();
+    }
   }
 
   ngOnInit() {
