@@ -23,6 +23,10 @@ $app-warn:    mat-palette($mat-red);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 
+// Measurements
+$navbar-height: 96px;
+
+
 // Colors
 $color-black: #323943;
 $color-grey-dark: #545A62;

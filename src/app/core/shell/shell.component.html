@@ -1,5 +1,5 @@
 <div fxFlex>
-  <mat-toolbar class="navbar mat-elevation-z6">
+  <header class="navbar">
     <span class="navbar-link about">More</span>
     <h1>Map My Reps</h1>
     <div class="share-thing" [ngClass]="{ open: isShareMenuOpen }">
@@ -15,6 +15,7 @@
         </a>
       </div>
     </div>
-  </mat-toolbar>
+  </header>
+  <div class="navbar-offset"></div>
   <router-outlet></router-outlet>
 </div>

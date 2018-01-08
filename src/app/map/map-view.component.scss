@@ -2,6 +2,12 @@
 
 $state-color: $color-black;
 
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+
 .state-path {
   fill: $state-color;
   opacity: 0.5;

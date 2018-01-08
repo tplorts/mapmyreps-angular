@@ -10,17 +10,33 @@
 }
 
 .navbar {
-  height: 96px;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $navbar-height;
   background: $color-background;
   border-bottom: 1px solid $color-borders;
-  box-shadow: none;
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+  white-space: nowrap;
+
+  h1 {
+    font-weight: normal;
+  }
 
   .navbar-link {
     font-family: National, sans-serif;
     font-weight: normal;
+    font-size: 20px;
   }
+}
+
+.navbar-offset {
+  height: $navbar-height;
 }
 
 .share-thing {

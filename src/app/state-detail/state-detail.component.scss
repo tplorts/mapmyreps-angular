@@ -1,9 +1,16 @@
 @import "src/theme/theme-variables";
 
 :host {
-  display: block;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  z-index: 1;
+  overflow-y: scroll;
+  top: $navbar-height;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  background: rgba($color-background, 0.9);
+  justify-content: space-around;
 }
 
 .state-info-content {
@@ -12,13 +19,6 @@
   text-align: left;
 
   // Bad hack for now. Need to clean this up.
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 2rem;
-  background: rgba($color-background, 0.9);
-  justify-content: space-around;
 
   .state-reps-section {
     flex: 1;
