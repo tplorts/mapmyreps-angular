@@ -43,6 +43,7 @@
             class="committee-expander"
             (click)="expand(committee)"
             [matTooltip]="isExpanded(committee) ? 'Hide Subcommittees' : 'Show Subcommittees'"
+            matTooltipPosition="left"
           >expand_more</mat-icon>
         </span>
         <span *ngIf="committee.url; else nameNoLink">
