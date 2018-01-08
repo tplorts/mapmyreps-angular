@@ -1,10 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { Subscriber } from 'rxjs/Subscriber';
 
 import { sortBy } from 'lodash';
 
+import { Logger } from '../core/logger.service';
 import { Legislator } from '../data/congress';
 import { CongressService } from '../data/congress.service';
+
+
+const log = new Logger('State Detail');
 
 
 
@@ -59,6 +63,13 @@ export class StateDetailComponent implements OnInit {
   public get stateTitle(): string {
     const {state} = this;
     return state && `${state.name} (${state.abbreviation})`;
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.goBack();
+    }
   }
 
   public goBack(): void {
