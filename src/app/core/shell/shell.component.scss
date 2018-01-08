@@ -69,5 +69,10 @@
 
   .share-close {
     opacity: 0.5;
+
+    .mat-icon {
+      position: relative;
+      bottom: -5px;
+    }
   }
 }
