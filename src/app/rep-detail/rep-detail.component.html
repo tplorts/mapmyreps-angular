@@ -71,8 +71,11 @@
   <div class="rep-social-media" *ngIf="rep.socialMedia">
     <h4>On Social Media</h4>
     <span *ngFor="let medium of socialMedia">
-      <a *ngIf="rep[medium.urlGetter] as url" target="_blank" href="{{ url }}" class="socicon-{{ medium.icon }}">
-      </a>
+      <a *ngIf="rep[medium.urlGetter] as url"
+        target="_blank"
+        href="{{ url }}"
+        class="socicon-{{ medium.icon }}"
+      ></a>
     </span>
   </div>
 </div>
