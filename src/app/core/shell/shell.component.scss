@@ -22,3 +22,36 @@
     font-weight: normal;
   }
 }
+
+.share-thing {
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+  perspective: 800px;
+
+  > div {
+    background: $color-background;
+    backface-visibility: hidden;
+  }
+
+  a {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .share-options {
+    position: absolute;
+    top: 0;
+    transform: rotate3d(1, 0, 0, 180deg);
+  }
+
+  &.open {
+    transform: rotate3d(1, 0, 0, 180deg);
+  }
+
+  .share-close {
+    opacity: 0.5;
+  }
+}

@@ -2,7 +2,19 @@
   <mat-toolbar class="navbar mat-elevation-z6">
     <span class="navbar-link about">More</span>
     <h1>Map My Reps</h1>
-    <span class="navbar-link share">Share</span>
+    <div class="share-thing" [ngClass]="{ open: isShareMenuOpen }">
+      <div class="navbar-link share">
+        <a (click)="openShareMenu()">Share</a>
+      </div>
+      <div class="share-options">
+        <span *ngFor="let medium of ['facebook', 'twitter']">
+          <a class="socicon-{{ medium }}"></a>
+        </span>
+        <a (click)="closeShareMenu()" class="share-close">
+          <mat-icon>close</mat-icon>
+        </a>
+      </div>
+    </div>
   </mat-toolbar>
   <router-outlet></router-outlet>
 </div>

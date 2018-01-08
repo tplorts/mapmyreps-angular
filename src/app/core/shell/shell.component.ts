@@ -12,6 +12,7 @@ import { I18nService } from '../i18n.service';
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {
+  private isShareOpen: boolean;
 
   constructor(private router: Router,
               private titleService: Title,
@@ -19,7 +20,9 @@ export class ShellComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private i18nService: I18nService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.isShareOpen = false;
+  }
 
   setLanguage(language: string) {
     this.i18nService.language = language;
@@ -49,5 +52,17 @@ export class ShellComponent implements OnInit {
 
   get title(): string {
     return this.titleService.getTitle();
+  }
+
+  public openShareMenu() {
+    this.isShareOpen = true;
+  }
+
+  public closeShareMenu() {
+    this.isShareOpen = false;
+  }
+
+  public get isShareMenuOpen(): boolean {
+    return this.isShareOpen;
   }
 }
