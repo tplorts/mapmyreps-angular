@@ -13,6 +13,6 @@ export const environment: any = {
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',
-    'es',
+    // 'es',
   ]
 };
