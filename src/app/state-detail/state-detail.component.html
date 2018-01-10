@@ -10,19 +10,24 @@
       <p>still downloading your reps</p>
     </div>
     <ng-template #repList>
-      <div class="spacer-bottom" *ngFor="let repSet of repSets">
-        <h4>{{ repSet.title }}</h4>
-        <div class="rep-grid">
-          <div
-            *ngFor="let rep of repSet.reps"
-            class="rep-grid-tile"
-            [ngClass]="rep.partyStyleClass"
-          >
-            <div class="rep-image"
-              [ngStyle]="repImageStyle(rep)"
-              (click)="selectRep(rep)"
-              [matTooltip]="rep.fullName"
-            ></div>
+      <div
+        class="rep-list"
+        [ngClass]="{ 'rep-selected': selectedRep !== null }"
+      >
+        <div class="spacer-bottom" *ngFor="let repSet of repSets">
+          <h4>{{ repSet.title }}</h4>
+          <div class="rep-grid">
+            <div
+              *ngFor="let rep of repSet.reps"
+              class="rep-grid-tile"
+              [ngClass]="repTileClass(rep)"
+            >
+              <div class="rep-image"
+                [ngStyle]="repImageStyle(rep)"
+                (click)="selectRep(rep)"
+                [matTooltip]="rep.fullName"
+              ></div>
+            </div>
           </div>
         </div>
       </div>

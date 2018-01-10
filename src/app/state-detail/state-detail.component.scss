@@ -30,6 +30,22 @@
   }
 }
 
+.rep-list {
+  .rep-grid-tile {
+    transition: opacity 0.5s;
+    opacity: 1;
+  }
+
+  &.rep-selected {
+    .rep-grid-tile {
+      opacity: 0.5;
+
+      &.selected-rep {
+        opacity: 1;
+      }
+    }
+  }
+}
 
 $size: 48px;
 $ring-thickness: 2px;

@@ -114,4 +114,9 @@ export class StateDetailComponent implements OnInit {
   public selectRep(rep: Legislator): void {
     this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
   }
+
+  public repTileClass(rep: Legislator): string {
+    const selected = rep === this.selectedRep ? 'selected-rep' : '';
+    return rep.partyStyleClass + ' ' + selected;
+  }
 }
