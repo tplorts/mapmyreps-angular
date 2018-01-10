@@ -1,11 +1,11 @@
 {
-  "name": "USA Government Info",
-  "short_name": "USA Government Info",
+  "name": "Map My Reps",
+  "short_name": "Map My Reps",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
-    "src": "assets/ngx-rocket-logo.png",
-    "sizes": "512x512",
+    "src": "assets/usa-icon/256x256.png",
+    "sizes": "256x256",
     "type": "image/png"
   }],
   "background_color": "#488aff",

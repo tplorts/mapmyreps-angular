@@ -2,7 +2,7 @@
   "generator-ngx-rocket": {
     "version": "3.1.1",
     "props": {
-      "appName": "USA Government Info",
+      "appName": "Map My Reps",
       "target": [
         "web"
       ],
@@ -10,7 +10,7 @@
       "ui": "material",
       "layout": "side-menu",
       "auth": true,
-      "projectName": "usa-government-info",
+      "projectName": "mapmyreps",
       "packageManager": "yarn",
       "mobile": []
     }

@@ -1,4 +1,4 @@
-# USA Government Info
+# Map My Reps
 
 This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
 version 3.1.1

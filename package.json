@@ -1,11 +1,13 @@
 {
-  "name": "usa-government-info",
+  "name": "mapmyreps",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "ng": "ng",
     "build": "yarn run env && ng build --prod",
-    "deploy": "s3-deploy './dist/**' --cwd './dist/' --region 'us-east-1' --bucket 'mapmyreps.us' --deleteRemoved",
+    "deploy": "s3-deploy './dist/**' --cwd './dist/' --deleteRemoved",
+    "deploy:prod": "yarn run deploy --region 'us-east-1' --bucket 'mapmyreps.us'",
+    "deploy:staging": "yarn run deploy --region 'us-east-1' --bucket 'staging.mapmyreps.us'",
     "start": "ng serve --aot --environment=hybrid",
     "start-dev": "ng serve --aot",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
