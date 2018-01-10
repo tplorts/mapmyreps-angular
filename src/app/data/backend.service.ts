@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import {
-  map,
-  // delay
-} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 // import * as moment from 'moment-timezone';
 
 import { Logger } from '../core/logger.service';

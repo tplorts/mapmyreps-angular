@@ -3,7 +3,11 @@
     <button (click)="goBack()">back</button>
     <h4>{{ stateTitle }}</h4>
     <div class="state-map spacer-bottom">
-      <app-state-map [state]="state"></app-state-map>
+      <app-state-map
+        [state]="state"
+        [selectedDistrict]="selectedRep && selectedRep.district"
+        (onSelectDistrict)="selectRepForDistrict($event)"
+      ></app-state-map>
     </div>
     <div *ngIf="isCongressLoading; else repList" class="inline-waiting-message">
       <mat-spinner [diameter]="20"></mat-spinner>

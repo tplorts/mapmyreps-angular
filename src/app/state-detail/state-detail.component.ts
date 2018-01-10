@@ -115,6 +115,14 @@ export class StateDetailComponent implements OnInit {
     this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
   }
 
+  public selectRepForDistrict(district: number) {
+    const { reps } = this.repSets.find(s => s.title === 'Representatives');
+    const rep = reps.find(r => r.district === district);
+    if (rep) {
+      this.selectRep(rep);
+    }
+  }
+
   public repTileClass(rep: Legislator): string {
     const selected = rep === this.selectedRep ? 'selected-rep' : '';
     return rep.partyStyleClass + ' ' + selected;
