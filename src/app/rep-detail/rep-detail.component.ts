@@ -6,7 +6,7 @@ import { Legislator, Committee } from '../data/congress';
 
 @Component({
   selector: 'app-rep-detail',
-  templateUrl: './rep-detail.component.html',
+  templateUrl: './rep-detail.component.pug',
   styleUrls: ['./rep-detail.component.scss']
 })
 export class RepDetailComponent implements OnInit {

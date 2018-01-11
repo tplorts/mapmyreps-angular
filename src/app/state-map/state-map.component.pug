@@ -1,0 +1,29 @@
+svg(
+  [attr.width]='stateMapOptions.width',
+  [attr.height]='stateMapOptions.height',
+)
+  defs
+    filter#dropshadow(xmlns='http://www.w3.org/2000/svg' height='200%')
+      feGaussianBlur(in='SourceAlpha' stdDeviation='3')
+      feOffset(dx='0' dy='0' result='offsetblur')
+      feComponentTransfer
+        feFuncA(type='linear' slope='0.5')
+      feMerge
+        feMergeNode
+        feMergeNode(in='SourceGraphic')
+  g.state(*ngIf='hasDistrictData; else stateOnly' filter='url(#dropshadow)')
+    g.districts
+      path.district-path(
+        *ngFor='let district of districtFeatures',
+        [ngClass]="{ 'selected': isSelected(district) }",
+        [attr.d]='district.pathData',
+        [matTooltip]='district.districtId | district',
+        (click)='selectDistrict(district)',
+      )
+    path.district-borders([attr.d]='districtBorders')
+  ng-template(#stateOnly)
+    path.state-path(
+      filter='url(#dropshadow)',
+      [attr.d]='state.pathData',
+      [attr.transform]='stateTransform',
+    )

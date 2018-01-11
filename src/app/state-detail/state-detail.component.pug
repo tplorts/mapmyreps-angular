@@ -1,0 +1,29 @@
+.state-info-content
+  .state-reps-section
+    button((click)='goBack()') back
+    h4 {{ stateTitle }}
+    .state-map.spacer-bottom
+      app-state-map(
+        [state]='state',
+        [selectedDistrict]='selectedRep && selectedRep.district',
+        (onSelectDistrict)='selectRepForDistrict($event)',
+      )
+    .inline-waiting-message(*ngIf='isCongressLoading; else repList')
+      mat-spinner([diameter]='20')
+      p still downloading your reps
+    ng-template(#repList)
+      .rep-list([ngClass]="{ 'rep-selected': selectedRep !== null }")
+        .spacer-bottom(*ngFor='let repSet of repSets')
+          h4 {{ repSet.title }}
+          .rep-grid
+            .rep-grid-tile(
+              *ngFor='let rep of repSet.reps',
+              [ngClass]='repTileClass(rep)'
+            )
+              .rep-image(
+                [ngStyle]='repImageStyle(rep)',
+                (click)='selectRep(rep)',
+                [matTooltip]='rep.fullName',
+              )
+  .rep-info-section
+    app-rep-detail([rep]='selectedRep')

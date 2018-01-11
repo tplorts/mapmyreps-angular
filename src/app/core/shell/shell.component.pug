@@ -1,0 +1,14 @@
+div(fxFlex)
+  header.navbar
+    span.navbar-link.about More
+    h1 Map My Reps
+    .share-thing([ngClass]='{ open: isShareMenuOpen }')
+      .navbar-link.share
+        a((click)='openShareMenu()') Share
+      .share-options
+        span(*ngFor="let medium of ['facebook', 'twitter']")
+          a.medium(class='socicon-{{ medium }}')
+        a.share-close((click)='closeShareMenu()')
+          mat-icon close
+  .navbar-offset
+  router-outlet

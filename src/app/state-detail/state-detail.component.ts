@@ -21,7 +21,7 @@ interface IRepSet {
 
 @Component({
   selector: 'app-state-detail',
-  templateUrl: './state-detail.component.html',
+  templateUrl: './state-detail.component.pug',
   styleUrls: ['./state-detail.component.scss']
 })
 export class StateDetailComponent implements OnInit {

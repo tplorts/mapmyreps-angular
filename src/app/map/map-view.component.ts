@@ -13,7 +13,7 @@ const log = new Logger('MapViewComponent');
 
 @Component({
   selector: 'app-map-view',
-  templateUrl: './map-view.component.html',
+  templateUrl: './map-view.component.pug',
   styleUrls: ['./map-view.component.scss']
 })
 export class MapViewComponent {

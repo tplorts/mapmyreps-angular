@@ -8,7 +8,7 @@ import { I18nService } from '../i18n.service';
 
 @Component({
   selector: 'app-shell',
-  templateUrl: './shell.component.html',
+  templateUrl: './shell.component.pug',
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {

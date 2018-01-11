@@ -5,7 +5,7 @@ import { CongressionalDistrictsService } from '../data/congressional-districts.s
 
 @Component({
   selector: 'app-state-map',
-  templateUrl: './state-map.component.html',
+  templateUrl: './state-map.component.pug',
   styleUrls: ['./state-map.component.scss']
 })
 export class StateMapComponent implements OnInit {

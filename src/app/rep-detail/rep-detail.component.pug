@@ -1,0 +1,54 @@
+div(*ngIf='rep')
+  section.rep-head
+    div
+      img.rep-image(src='{{ rep.imageUrl }}')
+    .rep-title
+      h2([ngClass]='rep.partyStyleClass') {{ rep.party }}
+      h2 {{ rep.titleName }}
+  .rep-meta-details
+    .district(*ngIf='rep.district !== null')
+      h4 District
+      h3 {{ rep.district | district }}
+    .office
+      h4 Office
+      h3
+        | {{ rep.office }}
+    .phone(*ngIf='rep.phone as phone')
+      h4 Phone
+      h3.phone-number {{ phone }}
+  div
+    h4 Committee Assignments
+    ul.rep-committee-list
+      li(
+        *ngFor='let committee of rep.committees',
+        [ngClass]='{ expanded: isExpanded(committee) }',
+      )
+        span(*ngIf='hasSubs(committee)')
+          mat-icon.committee-expander(
+            (click)='expand(committee)',
+            [matTooltip]="isExpanded(committee) ? 'Hide Subcommittees' : 'Show Subcommittees'",
+            matTooltipPosition='left',
+          ) expand_more
+        span(*ngIf='committee.url; else nameNoLink')
+          a(target='_blank' href='{{ committee.url }}') {{ committee.name }}
+        ng-template(#nameNoLink) {{ committee.name }}
+        ul.rep-subcommittee-list
+          li(*ngFor='let subcommittee of rep.subcommittees[committee.thomasId]')
+            | {{ subcommittee.displayName }}
+  div(*ngIf='rep.phone as phone')
+    div
+      a.button(
+        mat-button,
+        [ngClass]='"button-party-" + rep.party.toLowerCase()',
+        href='tel:{{ phone | numbersOnly }}',
+      )
+        | Call {{ rep.titleName }}
+  .rep-social-media(*ngIf='rep.socialMedia')
+    h4 On Social Media
+    span(*ngFor='let medium of socialMedia')
+      a(
+        *ngIf='rep[medium.urlGetter] as url',
+        target='_blank',
+        href='{{ url }}',
+        class='socicon-{{ medium.icon }}',
+      )
