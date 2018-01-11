@@ -16,17 +16,19 @@
   justify-content: flex-start;
 
   > *:not(:last-child) {
-    margin-right: 1em;
+    margin-right: 1.25em;
+    width: 7rem;
   }
 
   .rep-image {
-    height: 144px;
+    // height: 144px;
+    width: 100%;
   }
 
   .rep-title {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    // justify-content: space-around;
   }
 }
 
