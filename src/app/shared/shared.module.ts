@@ -7,6 +7,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { NumbersOnlyPipe } from './numbers-only.pipe';
 import { DistrictOrdinalPipe } from './district-ordinal.pipe';
 import { GeolocateService } from './geolocate.service';
+import { IconBackToMapComponent } from './icons/icon-back-to-map/icon-back-to-map.component';
 
 @NgModule({
   imports: [
@@ -18,11 +19,13 @@ import { GeolocateService } from './geolocate.service';
     LoaderComponent,
     NumbersOnlyPipe,
     DistrictOrdinalPipe,
+    IconBackToMapComponent,
   ],
   exports: [
     LoaderComponent,
     NumbersOnlyPipe,
     DistrictOrdinalPipe,
+    IconBackToMapComponent,
   ],
   providers: [
     GeolocateService,

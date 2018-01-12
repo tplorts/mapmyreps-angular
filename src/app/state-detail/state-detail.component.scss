@@ -16,24 +16,16 @@
 .state-title {
   display: flex;
   align-items: flex-start;
+
   .back-button {
     cursor: pointer;
     background-color: transparent;
     outline: none;
     border: none;
     padding: 0;
-    margin-right: .5rem;
-    svg {
-      fill: $color-grey-light;
-      margin-right: .5rem;
-      transition: all .15s ease;
-    }
-    &:hover {
-      svg {
-        fill: $color-black;
-      }
-    }
+    margin-right: 1rem;
   }
+
   h4 {
     position: relative;
     top: -3px;
