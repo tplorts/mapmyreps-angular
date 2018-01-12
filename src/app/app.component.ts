@@ -61,6 +61,8 @@ export class AppComponent implements OnInit {
   }
 
   removePreAppLoader() {
-    document.querySelector('#pre-app-loader').remove();
+    const loader = document.querySelector('#pre-app-loader');
+    loader.classList.add('removing');
+    window.setTimeout(() => loader.remove(), 1500);
   }
 }
