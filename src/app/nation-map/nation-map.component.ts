@@ -11,11 +11,11 @@ const log = new Logger('MapViewComponent');
 
 
 @Component({
-  selector: 'app-map-view',
-  templateUrl: './map-view.component.pug',
-  styleUrls: ['./map-view.component.scss']
+  selector: 'app-nation-map',
+  templateUrl: './nation-map.component.pug',
+  styleUrls: ['./nation-map.component.scss']
 })
-export class MapViewComponent {
+export class NationMapComponent {
 
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };

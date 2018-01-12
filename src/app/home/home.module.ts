@@ -10,7 +10,7 @@ import { DataModule } from '../data/data.module';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-import { MapViewComponent } from '../map/map-view.component';
+import { NationMapComponent } from '../nation-map/nation-map.component';
 import { StateDetailComponent } from '../state-detail/state-detail.component';
 import { StateMapComponent } from '../state-map/state-map.component';
 import { RepDetailComponent } from '../rep-detail/rep-detail.component';
@@ -29,7 +29,7 @@ import { RepDetailComponent } from '../rep-detail/rep-detail.component';
   ],
   declarations: [
     HomeComponent,
-    MapViewComponent,
+    NationMapComponent,
     StateDetailComponent,
     StateMapComponent,
     RepDetailComponent,
