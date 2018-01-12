@@ -1,8 +1,14 @@
 @import "src/theme/theme-variables";
 
 :host {
-  display: flex;
   flex: 1;
+
+  // flex-start (top) becuase the home container should be pushed to the
+  // top, which allows it to take care of vertically centering the map
+  // within the space which remains after the navbar.
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .menu-button {

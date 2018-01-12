@@ -1,10 +1,17 @@
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -375px;
-  margin-left: -600px;
+@import "src/theme/theme-variables";
+
+:host {
+  flex: 1;
+
+  // Vertically centers the national map
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  // Allows scrolling if the map goes under the navbar
+  padding-top: $navbar-height;
 }
+
 .blur {
   filter: blur(3px);
 }
