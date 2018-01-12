@@ -34,6 +34,10 @@
       }
     }
   }
+  h4 {
+    position: relative;
+    top: -3px;
+  }
 }
 
 .state-info-content {
@@ -50,6 +54,7 @@
 
   .rep-info-section {
     flex: 1.5;
+    margin-top: 2.5rem;
   }
 }
 
