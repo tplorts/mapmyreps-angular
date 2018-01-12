@@ -12,8 +12,4 @@ svg(
         (click)='selectState(state)',
       )
     svg:path.state-borders([attr.d]='stateBordersPathData')
-div(*ngIf='selectedState')
-  app-state-detail(
-    [state]='selectedState',
-    (close)='closeState()',
-  )
+

@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'district'
+  name: 'districtOrdinal'
 })
-export class DistrictPipe implements PipeTransform {
+export class DistrictOrdinalPipe implements PipeTransform {
 
   transform(value: number, args?: any): string {
     if (value === 0) {

@@ -6,11 +6,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
-import { MapModule } from '../map/map.module';
 import { DataModule } from '../data/data.module';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
+import { MapViewComponent } from '../map/map-view.component';
+import { StateDetailComponent } from '../state-detail/state-detail.component';
+import { StateMapComponent } from '../state-map/state-map.component';
+import { RepDetailComponent } from '../rep-detail/rep-detail.component';
+
 
 @NgModule({
   imports: [
@@ -18,14 +22,17 @@ import { HomeComponent } from './home.component';
     TranslateModule,
     CoreModule,
     SharedModule,
-    MapModule,
     FlexLayoutModule,
     MaterialModule,
     DataModule,
     HomeRoutingModule
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    MapViewComponent,
+    StateDetailComponent,
+    StateMapComponent,
+    RepDetailComponent,
   ],
   providers: [
   ]

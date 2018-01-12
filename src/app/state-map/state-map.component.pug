@@ -17,7 +17,7 @@ svg(
         *ngFor='let district of districtFeatures',
         [ngClass]="{ 'selected': isSelected(district) }",
         [attr.d]='district.pathData',
-        [matTooltip]='district.districtId | district',
+        [matTooltip]='district.districtId | districtOrdinal',
         (click)='selectDistrict(district)',
       )
     path.district-borders([attr.d]='districtBorders')

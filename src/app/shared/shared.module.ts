@@ -5,6 +5,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../material.module';
 import { LoaderComponent } from './loader/loader.component';
 import { NumbersOnlyPipe } from './numbers-only.pipe';
+import { DistrictOrdinalPipe } from './district-ordinal.pipe';
+import { GeolocateService } from './geolocate.service';
 
 @NgModule({
   imports: [
@@ -14,11 +16,16 @@ import { NumbersOnlyPipe } from './numbers-only.pipe';
   ],
   declarations: [
     LoaderComponent,
-    NumbersOnlyPipe
+    NumbersOnlyPipe,
+    DistrictOrdinalPipe,
   ],
   exports: [
     LoaderComponent,
     NumbersOnlyPipe,
-  ]
+    DistrictOrdinalPipe,
+  ],
+  providers: [
+    GeolocateService,
+  ],
 })
 export class SharedModule { }

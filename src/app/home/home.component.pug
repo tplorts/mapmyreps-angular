@@ -1,2 +1,9 @@
 .container
-  app-map-view
+  app-map-view(
+    [(selectedState)]="selectedState"
+  )
+  div(*ngIf='selectedState')
+    app-state-detail(
+      [state]='selectedState',
+      (close)='closeState()',
+    )

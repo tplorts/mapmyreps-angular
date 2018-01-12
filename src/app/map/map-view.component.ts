@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Logger } from '../core/logger.service';
 import { UsaGeographyService } from '../data/usa-geography.service';
-// import { CongressService } from '../data/congress.service';
 import { Legislator, Senator, Representative } from '../data/congress';
 
 
@@ -21,15 +20,13 @@ export class MapViewComponent {
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
 
-  public selectedState: any;
+  @Input()  selectedState: any;
+  @Output() selectedStateChange = new EventEmitter<any>();
 
 
   constructor(
     private geography: UsaGeographyService,
-    // private _congress: CongressService, // Just to force it to load asap
   ) {
-    // this._congress.load();
-    // this._congress.dataObservable.subscribe(null, null, () => log.info('loaded congress'));
     this.selectedState = null;
   }
 
@@ -43,10 +40,7 @@ export class MapViewComponent {
 
   public selectState(state: any) {
     this.selectedState = (!state || this.selectedState === state) ? null : state;
-  }
-
-  public closeState(): void {
-    this.selectedState = null;
+    this.selectedStateChange.emit(this.selectedState);
   }
 
   public isSelected(state: any): boolean {

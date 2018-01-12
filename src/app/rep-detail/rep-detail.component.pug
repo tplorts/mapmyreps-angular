@@ -8,7 +8,7 @@ div(*ngIf='rep')
   .rep-meta-details
     .district(*ngIf='rep.district !== null')
       h4 District
-      h3 {{ rep.district | district }}
+      h3 {{ rep.district | districtOrdinal }}
     .office
       h4 Office
       h3
