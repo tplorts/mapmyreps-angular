@@ -58,7 +58,6 @@ export class CongressionalDistrictsService {
     )
     .subscribe(
       x => {
-        log.debug(x);
         this._bordersPath = x.borders;
         this._features = x.features;
         this._isLoading = false;
@@ -73,8 +72,6 @@ export class CongressionalDistrictsService {
     displayHeight: number,
   ): IMappableTopology {
     const projection = this.statePlane.projection(postalCode, displayWidth, displayHeight);
-    log.debug(projection);
-
     const path: GeoPath<any, any> = geoPath(projection);
     const { districts } = topology.objects;
 
@@ -101,44 +98,4 @@ export class CongressionalDistrictsService {
   public get features(): any[] {
     return this._features;
   }
-
-  // setDistricts(cd: any) {
-  //   const path: GeoPath<any, any> = geoPath();
-  //   const { cd114: districts } = cd.objects;
-
-  //   this._bordersPath = path(mesh(cd, districts, (a: any, b: any) => a !== b));
-
-  //   const features = sortBy(feature(cd, districts).features.filter(f => /^\d{4}$/.test(f.id)), ['id']);
-  //   const byState = {};
-
-  //   for (const f of features) {
-  //     // log.debug(f.id);
-  //     f.regionId = toNumber(f.id.substring(0, 2));
-  //     f.districtId = toNumber(f.id.substring(2));
-  //     // const stateFipsCode = toNumber(f.regionId);
-  //     const region = UsaRegions.find(r => r.fipsCode === f.regionId);
-  //     // log.debug(region.name, f.districtId);
-  //     // f.name = region.name;
-  //     // f.regionAbbreviation = region.abbreviation;
-  //     // f.regionType = region.status;
-  //     f.pathData = path(f);
-  //     f.centroid = path.centroid(f);
-  //     f.bounds = path.bounds(f);
-
-  //     const abbr = region.abbreviation;
-  //     let stateDistricts = byState[abbr];
-  //     if (!stateDistricts) {
-  //       stateDistricts = byState[abbr] = [];
-  //     }
-  //     stateDistricts.push(f);
-  //   }
-
-  //   this._features = features;
-  //   this._featuresByState = byState;
-  //   // log.debug(this._featuresByState);
-  // }
-
-  // public districtsFor(abbreviation: string): any[] {
-  //   return this._featuresByState[abbreviation];
-  // }
 }
