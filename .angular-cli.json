@@ -28,6 +28,7 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.dev.ts",
+        "local-data": "environments/environment.local-data.ts",
         "hybrid": "environments/environment.hybrid.ts",
         "prod": "environments/environment.prod.ts"
       }

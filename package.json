@@ -10,7 +10,7 @@
     "deploy:staging": "yarn run deploy --region 'us-east-1' --bucket 'staging.mapmyreps.us'",
     "deploy:alt": "yarn run deploy --region 'us-east-1' --bucket 'mapmyreps'",
     "start": "ng serve --no-aot --environment=hybrid",
-    "start-dev": "ng serve --aot",
+    "start:local-data": "ng serve --no-aot --environment=local-data",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
     "test": "ng test",
     "test:ci": "yarn run lint && ng test --single-run --code-coverage",
