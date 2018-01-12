@@ -56,6 +56,11 @@ export class AppComponent implements OnInit {
           this.titleService.setTitle(this.translateService.instant(title));
         }
       });
+
+     this.removePreAppLoader();
   }
 
+  removePreAppLoader() {
+    document.querySelector('#pre-app-loader').remove();
+  }
 }
