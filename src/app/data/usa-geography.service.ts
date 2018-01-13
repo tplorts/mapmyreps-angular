@@ -24,13 +24,16 @@ export class UsaGeographyService {
   private _stateBordersPathData: string;
   private _stateFeatures: any[];
 
-
   constructor(private dataService: StaticDataService) {
     this._isLoading = false;
     const dir = environment.geographyDataDirectory;
     this.dataService.fetch(`${dir}/us-atlas-10m.json`).subscribe(
       atlasResult => this.setNationalAtlas(atlasResult),
     );
+  }
+
+  public get regions(): UsaRegion[] {
+    return UsaRegions;
   }
 
   public get isLoading(): boolean {

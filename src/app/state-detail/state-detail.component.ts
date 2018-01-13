@@ -32,10 +32,6 @@ export class StateDetailComponent implements OnInit {
 
   @Output() close: EventEmitter<any> = new EventEmitter();
 
-  private static isOfState(state: string) {
-    return (x: Legislator) => state === x.state;
-  }
-
   constructor(
     private congress: CongressService,
   ) {
@@ -81,8 +77,9 @@ export class StateDetailComponent implements OnInit {
   }
 
   private stateLegislators(): Legislator[] {
-    const { reps } = this.congress;
-    return reps && reps.filter(StateDetailComponent.isOfState(this.state.abbreviation));
+    return this.congress.repsForState(this.state.abbreviation);
+    // const { reps } = this.congress;
+    // return reps && reps.filter(StateDetailComponent.isOfState(this.state.abbreviation));
   }
 
   private makeRepSets() {

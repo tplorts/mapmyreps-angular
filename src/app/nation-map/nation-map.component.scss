@@ -1,7 +1,5 @@
 @import "src/theme/theme-variables";
 
-$state-color: $color-black;
-
 // Horizontally centers the map
 :host {
   display: flex;
@@ -10,17 +8,23 @@ $state-color: $color-black;
 
 
 .state-path {
-  fill: $state-color;
   opacity: 0.5;
   cursor: pointer;
   outline: none;
+  transition: fill 0.2s;
 
   &.selected {
     opacity: 1;
   }
 
   &:hover {
-    fill: lighten($state-color, 20%);
+    opacity: 0.75;
+  }
+}
+
+.uniform-color {
+  .state-path {
+    fill: $color-black;
   }
 }
 

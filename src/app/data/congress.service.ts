@@ -7,6 +7,7 @@ import 'rxjs/add/observable/forkJoin';
 import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { StaticDataService } from './static-data.service';
+import { UsaGeographyService } from './usa-geography.service';
 import {
   Legislator,
   ILegislator,
@@ -38,9 +39,18 @@ export class CongressService {
   private _legislators: Legislator[];
   private _committees: Committee[];
   private _dataObservable: Observable<any>;
+  private _legislatorsByState: { [stateAbbreviation: string]: Legislator[] };
 
-  constructor(private dataService: StaticDataService) {
+  private static isOfState(state: string) {
+    return (x: Legislator) => state === x.state;
+  }
+
+  constructor(
+    private dataService: StaticDataService,
+    private geography: UsaGeographyService,
+  ) {
     this.load();
+    this._legislatorsByState = {};
   }
 
   public load(): void {
@@ -91,10 +101,21 @@ export class CongressService {
     };
     this._legislators = legislators.map(createLegislator);
 
+    for (const region of this.geography.regions) {
+      const abbr = region.abbreviation;
+      if (abbr) {
+        this._legislatorsByState[abbr] = this.reps.filter(CongressService.isOfState(abbr));
+      }
+    }
+
     this._isLoading = false;
   }
 
   public get reps(): Legislator[] {
     return this._legislators;
+  }
+
+  public repsForState(stateAbbreviation: string): Legislator[] {
+    return this._legislatorsByState[stateAbbreviation];
   }
 }

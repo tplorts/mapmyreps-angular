@@ -1,15 +1,21 @@
-svg(
-  [attr.width]='width',
-  [attr.height]='height',
-)
-  g.nation([attr.transform]='nationTransform')
-    g.states
-      svg:path.state-path(
-        *ngFor='let state of stateFeatures',
-        [ngClass]="{ 'selected': isSelected(state) }",
-        [attr.d]='state.pathData',
-        [matTooltip]='state.name',
-        (click)='selectState(state)',
-      )
-    svg:path.state-borders([attr.d]='stateBordersPathData')
+div
+  svg(
+    [attr.width]='width',
+    [attr.height]='height',
+  )
+    g.nation([attr.transform]='nationTransform')
+      g.states([ngClass]="{ 'uniform-color': !isPartyColoringOn }")
+        svg:path.state-path(
+          *ngFor='let state of stateFeatures',
+          [ngClass]="{ 'selected': isSelected(state) }",
+          [attr.d]='state.pathData',
+          [matTooltip]='state.name',
+          (click)='selectState(state)',
+          [attr.fill]='state.fillColor',
+        )
+      svg:path.state-borders([attr.d]='stateBordersPathData')
 
+  mat-slide-toggle(
+    [checked]="isPartyColoringOn",
+    (change)="isPartyColoringOn = !isPartyColoringOn"
+  ) Color states by majority party
