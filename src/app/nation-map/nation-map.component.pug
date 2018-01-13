@@ -18,4 +18,18 @@ div
   mat-slide-toggle(
     [checked]="isPartyColoringOn",
     (change)="isPartyColoringOn = !isPartyColoringOn"
-  ) Color states by majority party
+  ) Color states by party
+
+  mat-button-toggle-group((change)="coloringMode = $event.value")
+    mat-button-toggle(
+      *ngFor="let mode of AllColoringModes",
+      value="{{ mode }}",
+      [checked]="mode == coloringMode"
+    ) {{ mode }}
+
+  //- mat-button-toggle-group((change)="chromaMixMode = $event.value")
+    mat-button-toggle(
+      *ngFor="let mode of allChromaMixModes",
+      value="{{ mode }}",
+      [checked]="mode == chromaMixMode"
+    ) {{ mode }}
