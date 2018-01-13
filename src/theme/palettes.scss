@@ -1,0 +1,91 @@
+@import "~@angular/material/theming";
+@import "colors";
+
+$reference-contrast-palette: (
+  50: $black-87-opacity,
+  100: $black-87-opacity,
+  200: $black-87-opacity,
+  300: $black-87-opacity,
+  400: $black-87-opacity,
+  500: $black-87-opacity,
+  600: $white-87-opacity,
+  700: $white-87-opacity,
+  800: $white-87-opacity,
+  900: $white-87-opacity,
+  A100: $black-87-opacity,
+  A200: $black-87-opacity,
+  A400: $black-87-opacity,
+  A700: $white-87-opacity,
+);
+
+
+@function create-mat-palette($base-color) {
+  $mat-reference-palette: $mat-blue;
+  $reference-color-default: map-get($mat-reference-palette, 500);
+  $default-saturation: saturation($reference-color-default);
+  $default-lightness: lightness($reference-color-default);
+  $hue-base: hue($base-color);
+  $saturation-base: saturation($base-color);
+  $lightness-base: lightness($base-color);
+
+  $contrast-palette: ();
+
+  @each $hue, $color in $reference-contrast-palette {
+    $contrast-palette: map-merge($contrast-palette, ( #{$hue}: $color ));
+  }
+
+  $palette: (contrast: $contrast-palette);
+
+  @each $hue, $color in $mat-reference-palette {
+    @if $hue != contrast {
+      $s: $saturation-base * saturation($color) / $default-saturation;
+      $l: $lightness-base * lightness($color) / $default-lightness;
+
+      @if $s < 0% or $s > 100% {
+        @error "#{$s} is out of saturation bounds";
+      }
+
+      @if $l < 0% or $l > 100% {
+        @error "#{$l} is out of lightness bounds";
+      }
+
+      $next-color: hsl($hue-base, $s, $l);
+      $palette: map-merge($palette, ( #{$hue}: $next-color ));
+    }
+  }
+
+
+  // $palette: map-merge($palette, ( contrast: $contrast-palette ));
+
+  @return $palette;
+}
+
+
+// @debug $mat-blue;
+
+// @each $key, $value in $palette-black-d {
+//   @debug inspect($key);
+// }
+
+
+// $palette-black: create-mat-palette($color-black);
+
+// @debug $palette-black;
+
+$palette-black: (
+  50: #576374,
+  100: #4f5a6a,
+  200: #47515f,
+  300: #3f4754,
+  400: #38404c,
+  500: #323943,
+  600: #30363e,
+  700: #2b3138,
+  800: #272c33,
+  900: #20242a,
+  A100: #444f5f,
+  A200: #394350,
+  A400: #353d49,
+  A700: #353d49,
+  contrast: $reference-contrast-palette,
+);
