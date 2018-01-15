@@ -30,6 +30,9 @@ const log = new Logger('MapViewComponent');
   styleUrls: ['./nation-map.component.scss']
 })
 export class NationMapComponent {
+
+  // TODO: find a way to grab these color definitions from the
+  // scss theme files
   private static readonly PartyColors = {
     Republican: '#BC2929',
     Democrat: '#5586EF',

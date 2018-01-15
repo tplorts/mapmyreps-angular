@@ -15,10 +15,11 @@ div
         )
       svg:path.state-borders([attr.d]='stateBordersPathData')
 
-  mat-slide-toggle(
-    [checked]="isPartyColoringOn",
-    (change)="isPartyColoringOn = !isPartyColoringOn"
-  ) Color states by party
+  div
+    mat-slide-toggle(
+      [checked]="isPartyColoringOn",
+      (change)="isPartyColoringOn = !isPartyColoringOn"
+    ) Color states by party
 
   div(*ngIf="isPartyColoringOn")
     mat-button-toggle-group((change)="coloringMode = $event.value")
