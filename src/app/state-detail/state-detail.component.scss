@@ -64,22 +64,6 @@
   }
 }
 
-.rep-list {
-  .rep-grid-tile {
-    transition: opacity 0.5s;
-    opacity: 1;
-  }
-
-  &.rep-selected {
-    .rep-grid-tile {
-      opacity: 0.5;
-
-      &.selected-rep {
-        opacity: 1;
-      }
-    }
-  }
-}
 
 $size: 48px;
 $ring-thickness: 2px;
@@ -109,5 +93,12 @@ $tile-size: $size + 2 * $ring-thickness;
     &.rep-party-#{$party} .rep-image {
       box-shadow: 0 0 0 $ring-thickness $color;
     }
+  }
+
+  transition: opacity 0.2s;
+  opacity: 1;
+
+  .rep-selected &:not(.selected-rep) {
+    opacity: 0.5;
   }
 }
