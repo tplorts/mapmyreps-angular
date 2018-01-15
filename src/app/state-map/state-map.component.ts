@@ -84,8 +84,9 @@ export class StateMapComponent implements OnInit {
 
   private districtParty(district: any): string {
     const { districtId } = district;
-    const districtIndex = districtId && districtId - 1;
-    const rep = this.houseReps[districtIndex];
+    // const districtIndex = districtId && districtId - 1;
+    // const rep = this.houseReps[districtIndex];
+    const rep = this.houseReps.find(r => r.district === districtId);
     return rep && rep.party;
   }
 
