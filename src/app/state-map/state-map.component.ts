@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { CongressionalDistrictsService } from '../data/congressional-districts.service';
+import { Representative } from '../data/congress';
+
 
 
 @Component({
@@ -10,7 +12,14 @@ import { CongressionalDistrictsService } from '../data/congressional-districts.s
 })
 export class StateMapComponent implements OnInit {
 
+  private static readonly PartyColors = {
+    Republican: '#BC2929',
+    Democrat: '#5586EF',
+    Independent: '#3BAC69',
+  };
+
   @Input() state: any;
+  @Input() houseReps: Representative[];
   @Input() selectedDistrict: number | null;
 
   @Output() onSelectDistrict: EventEmitter<number> = new EventEmitter();
@@ -71,5 +80,16 @@ export class StateMapComponent implements OnInit {
 
   public selectDistrict(district: any): void {
     this.onSelectDistrict.emit(district.districtId);
+  }
+
+  private districtParty(district: any): string {
+    const { districtId } = district;
+    const districtIndex = districtId && districtId - 1;
+    const rep = this.houseReps[districtIndex];
+    return rep && rep.party;
+  }
+
+  public partyColor(district: any): string {
+    return StateMapComponent.PartyColors[this.districtParty(district)];
   }
 }

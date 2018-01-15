@@ -4,7 +4,7 @@ import { Subscriber } from 'rxjs/Subscriber';
 import { sortBy } from 'lodash';
 
 import { Logger } from '../core/logger.service';
-import { Legislator } from '../data/congress';
+import { Legislator, Representative } from '../data/congress';
 import { CongressService } from '../data/congress.service';
 
 
@@ -27,6 +27,7 @@ interface IRepSet {
 export class StateDetailComponent implements OnInit {
   private _state: any;
   private _repSets: IRepSet[];
+  private _houseReps: Representative[];
 
   public selectedRep: Legislator;
 
@@ -82,6 +83,7 @@ export class StateDetailComponent implements OnInit {
 
   private makeRepSets() {
     const reps = this.stateLegislators();
+    this._houseReps = <Representative[]> sortBy(reps.filter(z => z.isRepresentative()), ['district']);
     if (reps) {
       this._repSets = [
         {
@@ -90,7 +92,7 @@ export class StateDetailComponent implements OnInit {
         },
         {
           title: 'Representatives',
-          reps: sortBy(reps.filter(z => z.isRepresentative()), ['district']),
+          reps: this._houseReps,
         }
       ];
     }
@@ -98,6 +100,10 @@ export class StateDetailComponent implements OnInit {
 
   public get repSets(): IRepSet[] {
     return this._repSets;
+  }
+
+  public get houseReps(): Representative[] {
+    return this._houseReps;
   }
 
   public repImageStyle(rep: Legislator): any {

@@ -13,9 +13,17 @@
   justify-content: space-around;
 }
 
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .state-title {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
 
   .back-button {
     cursor: pointer;
