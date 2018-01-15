@@ -20,16 +20,17 @@ div
     (change)="isPartyColoringOn = !isPartyColoringOn"
   ) Color states by party
 
-  mat-button-toggle-group((change)="coloringMode = $event.value")
-    mat-button-toggle(
-      *ngFor="let mode of AllColoringModes",
-      value="{{ mode }}",
-      [checked]="mode == coloringMode"
-    ) {{ mode }}
-
-  //- mat-button-toggle-group((change)="chromaMixMode = $event.value")
-    mat-button-toggle(
-      *ngFor="let mode of allChromaMixModes",
-      value="{{ mode }}",
-      [checked]="mode == chromaMixMode"
-    ) {{ mode }}
+  div(*ngIf="isPartyColoringOn")
+    mat-button-toggle-group((change)="coloringMode = $event.value")
+      mat-button-toggle(
+        *ngFor="let mode of AllColoringModes",
+        value="{{ mode }}",
+        [checked]="mode === coloringMode"
+      ) {{ mode }}
+    div(*ngIf="coloringMode === 'Proportional'")
+      mat-button-toggle-group((change)="chromaMixMode = $event.value")
+        mat-button-toggle(
+          *ngFor="let mode of allChromaMixModes",
+          value="{{ mode }}",
+          [checked]="mode == chromaMixMode"
+        ) {{ mode }}

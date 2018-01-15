@@ -12,7 +12,8 @@ import {
   PoliticalParty,
 } from '../data/congress';
 
-type ChromaMixMode = keyof ColorSpaces;
+// type ChromaMixMode = keyof ColorSpaces;
+type ChromaMixMode = string;
 enum ColoringMode {
   Majority = 'Majority',
   Proportional = 'Proportional',
@@ -36,7 +37,7 @@ export class NationMapComponent {
   };
 
   private static readonly AllChromaMixModes: ChromaMixMode[] = [
-    'rgb', 'hsl', 'lab', 'lch', // 'lrgb',
+    'rgb', 'hsl', 'lab', 'lch', 'lrgb',
   ];
 
   private static readonly _AllColoringModes: string[] = Object.values(ColoringMode);
@@ -58,7 +59,8 @@ export class NationMapComponent {
   ) {
     this.selectedState = null;
     this.isPartyColoringOn = true;
-    this._chromaMixMode = 'rgb';
+    this._chromaMixMode = 'lab';
+    this._coloringMode = ColoringMode.Proportional;
     this.congress.dataObservable.subscribe(null, null, () => {
       this.computeStateProportions();
     });
@@ -154,7 +156,7 @@ export class NationMapComponent {
   private proportionalColor(state: any): Color {
     const p = state.seatProportionsByParty[PoliticalParty.Republican];
     const { Democrat, Republican } = NationMapComponent.PartyColors;
-    return chromaMix(Democrat, Republican, p, this.chromaMixMode);
+    return chromaMix(Democrat, Republican, p, <keyof ColorSpaces> this.chromaMixMode);
   }
 
   private majorityColor(state: any): Color {
