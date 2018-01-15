@@ -6,6 +6,5 @@ export const environment: any = {
   ...defaultEnvironment,
   production: true,
   version: env.npm_package_version,
-  // serverUrl: 'https://usa-government-info-backend.herokuapp.com/api',
-  staticDataUrl: 'http://data.mapmyreps.us',
+  staticDataUrl: 'http://staging-data.mapmyreps.us',
 };

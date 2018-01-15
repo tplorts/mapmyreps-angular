@@ -6,9 +6,9 @@
 export const environment: any = {
   production: false,
   version: '(dev)',
-  serverUrl: 'https://usa-government-info-backend.herokuapp.com/api',
-  // staticDataUrl: 'http://data.mapmyreps.us',
-  staticDataUrl: 'http://mapmyreps-data.s3-website-us-east-1.amazonaws.com',
+  // serverUrl: 'https://usa-government-info-backend.herokuapp.com/api',
+  serveUrl: null,
+  staticDataUrl: 'http://data.mapmyreps.us',
   congressDataDirectory: 'congress',
   geographyDataDirectory: 'geography',
   defaultLanguage: 'en-US',
