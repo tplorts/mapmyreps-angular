@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { toNumber } from 'lodash';
+import { toNumber, sortBy } from 'lodash';
 
 import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
@@ -57,14 +57,13 @@ export class UsaGeographyService {
     const features = feature(atlas, states).features;
     for (const f of features) {
       const region = UsaRegions.find(r => r.fipsCode === toNumber(f.id));
-      f.name = region.name;
-      f.abbreviation = region.abbreviation;
-      f.regionType = region.status;
+      Object.assign(f, region);
       f.pathData = path(f);
       f.centroid = path.centroid(f);
       f.bounds = path.bounds(f);
     }
-    this._stateFeatures = features;
+
+    this._stateFeatures = sortBy(features, ['name']);
   }
 
 }

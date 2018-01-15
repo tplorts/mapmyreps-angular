@@ -50,6 +50,12 @@
   }
 }
 
+@media (max-width: 767px) {
+  .state-info-content {
+    display: block;
+  }
+}
+
 .rep-list {
   .rep-grid-tile {
     transition: opacity 0.5s;

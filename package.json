@@ -8,6 +8,7 @@
     "deploy": "s3-deploy './dist/**' --cwd './dist/' --deleteRemoved",
     "deploy:prod": "yarn run deploy --region 'us-east-1' --bucket 'mapmyreps.us'",
     "deploy:staging": "yarn run deploy --region 'us-east-1' --bucket 'staging.mapmyreps.us'",
+    "deploy:all": "yarn run deploy:staging && yarn run deploy:prod",
     "deploy:alt": "yarn run deploy --region 'us-east-1' --bucket 'mapmyreps'",
     "start": "ng serve --no-aot --environment=hybrid",
     "start:local-data": "ng serve --no-aot --environment=local-data",

@@ -12,6 +12,18 @@
   padding-top: $navbar-height;
 }
 
+@media (max-width: 767px) {
+  app-nation-map {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .mini-state-selector {
+    display: none;
+  }
+}
+
 .blur {
   filter: blur(3px);
 }

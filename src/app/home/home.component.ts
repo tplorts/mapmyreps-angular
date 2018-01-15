@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UsaGeographyService } from '../data/usa-geography.service';
+
 
 
 @Component({
@@ -10,7 +12,10 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   public selectedState: any;
 
-  constructor() { }
+  constructor(
+    private geography: UsaGeographyService,
+  ) {
+  }
 
   ngOnInit() {
     this.selectedState = null;
@@ -18,5 +23,9 @@ export class HomeComponent implements OnInit {
 
   public closeState(): void {
     this.selectedState = null;
+  }
+
+  public get states(): any[] {
+    return this.geography.stateFeatures;
   }
 }

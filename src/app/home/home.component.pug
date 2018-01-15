@@ -1,6 +1,19 @@
+.mini-state-selector
+  mat-select(
+    placeholder='State',
+    [(value)]='selectedState',
+  )
+    mat-option None
+    mat-option(
+      *ngFor='let state of states',
+      [value]='state',
+    ) {{ state.name }}
+
+
 app-nation-map(
   [(selectedState)]="selectedState"
 )
+
 div(*ngIf='selectedState')
   app-state-detail(
     [state]='selectedState',

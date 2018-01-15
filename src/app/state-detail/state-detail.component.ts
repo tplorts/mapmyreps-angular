@@ -78,8 +78,6 @@ export class StateDetailComponent implements OnInit {
 
   private stateLegislators(): Legislator[] {
     return this.congress.repsForState(this.state.abbreviation);
-    // const { reps } = this.congress;
-    // return reps && reps.filter(StateDetailComponent.isOfState(this.state.abbreviation));
   }
 
   private makeRepSets() {
