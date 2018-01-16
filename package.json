@@ -9,6 +9,8 @@
     "deploy": "s3-deploy './dist/**' --cwd './dist/' --deleteRemoved",
     "deploy:prod": "yarn run deploy --region 'us-east-1' --bucket 'mapmyreps.us'",
     "deploy:staging": "yarn run deploy --region 'us-east-1' --bucket 'staging.mapmyreps.us'",
+    "bd:staging": "yarn run build:staging && yarn run deploy:staging",
+    "bd:prod": "yarn run build && yarn run deploy:prod",
     "start": "ng serve --no-aot",
     "start:local-data": "ng serve --no-aot --environment=local-data",
     "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
