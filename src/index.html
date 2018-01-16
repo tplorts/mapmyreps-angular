@@ -25,7 +25,7 @@
   </noscript>
   <app-root></app-root>
   <div id="pre-app-loader">
-    <span>App Loading</span>
+    <span>Loading</span>
     <style type="text/css">
       #pre-app-loader {
         position: fixed;
@@ -43,7 +43,7 @@
       #pre-app-loader > span {
         font-family: sans-serif;
         text-transform: uppercase;
-        font-size: 64px;
+        font-size: 24px;
         color: #323943; /* $color-black from theme-variables.scss */
         animation: loading 1s infinite;
       }
@@ -60,7 +60,6 @@
       }
       #pre-app-loader.removing {
         opacity: 0;
-        filter: blur(5px);
       }
       #pre-app-loader.removing > span {
         animation: none;
