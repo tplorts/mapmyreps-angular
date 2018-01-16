@@ -85,7 +85,7 @@ $tile-size: $size + 2 * $ring-thickness;
   }
 
   @each $party, $color in $political-party-colors {
-    &.rep-party-#{$party} .rep-image {
+    &.party-#{$party} .rep-image {
       box-shadow: 0 0 0 $ring-thickness $color;
     }
   }

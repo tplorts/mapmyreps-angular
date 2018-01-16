@@ -19,6 +19,12 @@ export class RepDetailComponent implements OnInit {
     { icon: 'instagram', urlGetter: 'instagramUrl' },
   ];
 
+  public externalLinks = [
+    { label: 'Congress Bioguide', urlGetter: 'bioguideUrl' },
+    { label: 'GovTrack', urlGetter: 'govtrackUrl' },
+    { label: 'OpenSecrets', urlGetter: 'opensecretsUrl' },
+  ];
+
   public committeesExpanded: { [thomasId: string]: boolean };
 
   constructor() { }

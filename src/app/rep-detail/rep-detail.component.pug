@@ -1,11 +1,11 @@
 div(*ngIf='rep')
-  section.rep-head
+  section.head
     div
-      img.rep-image(src='{{ rep.imageUrl }}')
-    .rep-title
+      img.image(src='{{ rep.imageUrl }}')
+    .title
       h2([ngClass]='rep.partyStyleClass') {{ rep.party }}
       h2 {{ rep.titleName }}
-  .rep-meta-details
+  section.meta-details
     .district(*ngIf='rep.district !== null')
       h4 District
       h3 {{ rep.district | districtOrdinal }}
@@ -16,9 +16,9 @@ div(*ngIf='rep')
     .phone(*ngIf='rep.phone as phone')
       h4 Phone
       h3.phone-number {{ phone }}
-  div.rep-committees
+  section.committees
     h4 Committee Assignments
-    ul.rep-committee-list
+    ul.committee-list
       li(
         *ngFor='let committee of rep.committees',
         [ngClass]='{ expanded: isExpanded(committee) }',
@@ -32,10 +32,10 @@ div(*ngIf='rep')
         span(*ngIf='committee.url; else nameNoLink')
           a(target='_blank' href='{{ committee.url }}') {{ committee.name }}
         ng-template(#nameNoLink) {{ committee.name }}
-        ul.rep-subcommittee-list
+        ul.subcommittee-list
           li(*ngFor='let subcommittee of rep.subcommittees[committee.thomasId]')
             | {{ subcommittee.displayName }}
-  div(*ngIf='rep.phone as phone')
+  section(*ngIf='rep.phone as phone')
     div
       a.button(
         mat-button,
@@ -43,12 +43,21 @@ div(*ngIf='rep')
         href='tel:{{ phone | numbersOnly }}',
       )
         | Call {{ rep.titleName }}
-  .rep-social-media(*ngIf='rep.socialMedia')
-    h4 On Social Media
-    span(*ngFor='let medium of socialMedia')
-      a(
-        *ngIf='rep[medium.urlGetter] as url',
-        target='_blank',
-        href='{{ url }}',
-        class='socicon-{{ medium.icon }}',
-      )
+  section.external-links
+    .social-media(*ngIf='rep.socialMedia')
+      h4 On Social Media
+      span(*ngFor='let medium of socialMedia')
+        a(
+          *ngIf='rep[medium.urlGetter] as url',
+          target='_blank',
+          href='{{ url }}',
+          class='socicon-{{ medium.icon }}',
+        )
+    .other-websites
+      h4 On Other Websites
+      div(*ngFor="let link of externalLinks")
+        a(
+          *ngIf='rep[link.urlGetter] as url',
+          target='_blank',
+          href='{{ url }}',
+        ) {{ link.label }}

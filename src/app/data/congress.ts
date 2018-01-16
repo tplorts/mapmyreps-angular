@@ -270,7 +270,7 @@ export class Legislator {
   }
 
   public get partyStyleClass(): string {
-    return `rep-party-${this.party.toLowerCase()}`;
+    return `party-${this.party.toLowerCase()}`;
   }
 
   public get twitterUrl(): string {
@@ -296,6 +296,21 @@ export class Legislator {
   public get facebookUrl(): string {
     const fb = this.socialMedia.facebook;
     return fb ? `https://facebook.com/${fb}` : null;
+  }
+
+  public get bioguideUrl(): string {
+    const { bioguide } = this.identifiers;
+    return bioguide && `http://bioguide.congress.gov/scripts/biodisplay.pl?index=${bioguide}`;
+  }
+
+  public get govtrackUrl(): string {
+    const { govtrack } = this.identifiers;
+    return `https://www.govtrack.us/congress/members/${govtrack}`;
+  }
+
+  public get opensecretsUrl(): string {
+    const { opensecrets } = this.identifiers;
+    return `https://www.opensecrets.org/members-of-congress/summary/?cid=${opensecrets}`;
   }
 }
 

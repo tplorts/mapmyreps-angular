@@ -1,7 +1,7 @@
 @import "src/theme/theme-variables";
 
 @each $party, $color in $political-party-colors {
-  .rep-party-#{$party} {
+  .party-#{$party} {
     color: $color;
   }
   .button-party-#{$party} {
@@ -9,7 +9,7 @@
   }
 }
 
-.rep-head {
+.head {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -20,19 +20,19 @@
     width: 7rem;
   }
 
-  .rep-image {
+  .image {
     // height: 144px;
     width: 100%;
   }
 
-  .rep-title {
+  .title {
     display: flex;
     flex-direction: column;
     // justify-content: space-around;
   }
 }
 
-.rep-meta-details {
+.meta-details {
   display: flex;
   border-top: 1px solid $color-borders;
   margin: 1rem 0;
@@ -62,9 +62,9 @@
   min-width: 6em;
 }
 
-.rep-committees {
+.committees {
   margin-top: 2rem;
-  .rep-committee-list {
+  .committee-list {
     list-style: none;
     padding-left: 1.5em;
     .committee-expander {
@@ -75,22 +75,30 @@
       cursor: pointer;
       transition: transform 0.2s;
     }
-    .rep-subcommittee-list {
+    .subcommittee-list {
       display: none;
     }
     .expanded {
       .committee-expander {
         transform: rotate(180deg);
       }
-      .rep-subcommittee-list {
+      .subcommittee-list {
         display: block;
       }
     }
   }
 }
 
-.rep-social-media {
+.external-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-top: 2rem;
+}
+
+.social-media {
+  flex: 1;
   span {
     a {
       margin-right: 2rem;
@@ -104,4 +112,8 @@
       margin-right: 0;
     }
   }
+}
+
+.other-websites {
+  flex: 1;
 }
