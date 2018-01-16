@@ -1,8 +1,6 @@
 @import "src/theme/theme-variables";
 
 
-$district-color: white;
-
 svg {
   background: rgba($color-black, 0.9);
 }
@@ -11,6 +9,8 @@ svg {
   opacity: 1;
   cursor: pointer;
   outline: none;
+  transition: fill 0.15s;
+  fill: $color-black;
 
   &:hover {
     opacity: 0.75;
@@ -22,11 +22,14 @@ svg {
 }
 
 @each $party, $party-color in $political-party-colors {
+  $selected-color: lighten($party-color, 25%);
+
   .district-path[party="#{$party}"] {
     fill: $party-color;
 
     &.selected {
       animation-name: flash-#{$party};
+      fill: $selected-color;
     }
   }
 
@@ -41,14 +44,14 @@ svg {
     }
 
     to {
-      fill: $party-color;
+      fill: $selected-color;
     }
   }
 }
 
 .district-borders {
   fill: none;
-  stroke: darken($district-color, 25%);
+  stroke: $color-borders;
   stroke-width: 0.5px;
   stroke-linejoin: round;
   stroke-linecap: round;
