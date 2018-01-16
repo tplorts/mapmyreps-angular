@@ -23,15 +23,21 @@
 .state-title {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   .back-button {
     margin-right: 1rem;
+    position: absolute;
+    z-index: 1;
   }
 
-  h4 {
+  h3 {
     position: relative;
     top: -3px;
+    flex: 1;
+    text-align: center;
+    margin-left: 52px;
+    margin-right: 52px;
   }
 }
 
