@@ -26,11 +26,6 @@
   justify-content: space-between;
 
   .back-button {
-    cursor: pointer;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    padding: 0;
     margin-right: 1rem;
   }
 
@@ -71,7 +66,7 @@ $tile-size: $size + 2 * $ring-thickness;
 
 .rep-grid {
   display: grid;
-  grid-gap: 6px;
+  grid-gap: 12px;
   grid-template-columns: repeat(auto-fit, $tile-size);
 }
 
@@ -100,5 +95,23 @@ $tile-size: $size + 2 * $ring-thickness;
 
   .rep-selected &:not(.selected-rep) {
     opacity: 0.5;
+  }
+}
+
+.rep-nav {
+  margin-top: 1rem;
+
+  button {
+    padding: 0.4rem 3rem;
+    border: 1px solid $color-grey-light;
+    transition: border-color 0.15s;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &:hover:not([disabled]) {
+      border-color: $color-black;
+    }
   }
 }

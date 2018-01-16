@@ -26,6 +26,8 @@ interface IRepSet {
 })
 export class StateDetailComponent implements OnInit {
   private _state: any;
+  private _allLegislators: Legislator[];
+  private _iSelectedLegislator: number;
   private _repSets: IRepSet[];
   private _houseReps: Representative[];
 
@@ -55,6 +57,7 @@ export class StateDetailComponent implements OnInit {
 
   ngOnInit() {
     this.selectedRep = null;
+    this._iSelectedLegislator = null;
   }
 
   public get stateTitle(): string {
@@ -82,9 +85,9 @@ export class StateDetailComponent implements OnInit {
   }
 
   private makeRepSets() {
-    const reps = this.stateLegislators();
-    this._houseReps = <Representative[]> sortBy(reps.filter(z => z.isRepresentative()), ['district']);
+    const reps = this._allLegislators = sortBy(this.stateLegislators(), ['sortingDistrict']);
     if (reps) {
+      this._houseReps = <Representative[]> reps.filter(z => z.isRepresentative());
       this._repSets = [
         {
           title: 'Senators',
@@ -114,6 +117,21 @@ export class StateDetailComponent implements OnInit {
 
   public selectRep(rep: Legislator): void {
     this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
+    if (this.selectedRep) {
+      const byBioguideId = (r: Legislator) => r.identifiers.bioguide === this.selectedRep.identifiers.bioguide;
+      this._iSelectedLegislator = this._allLegislators.findIndex(byBioguideId);
+    } else {
+      this._iSelectedLegislator = null;
+    }
+  }
+
+  public selectRepByIndex(index: number) {
+    this._iSelectedLegislator = index;
+    this.selectedRep = this._allLegislators[index];
+  }
+
+  public get isRepSelected(): boolean {
+    return !!this.selectedRep;
   }
 
   public selectRepForDistrict(district: number) {
@@ -127,5 +145,25 @@ export class StateDetailComponent implements OnInit {
   public repTileClass(rep: Legislator): string {
     const selected = rep === this.selectedRep ? 'selected-rep' : '';
     return rep.partyStyleClass + ' ' + selected;
+  }
+
+  public get isOnFirstRep(): boolean {
+    return this._iSelectedLegislator === 0;
+  }
+
+  public get isOnLastRep(): boolean {
+    return this._iSelectedLegislator === this._allLegislators.length - 1;
+  }
+
+  public nextRep(): void {
+    if (this.isRepSelected && !this.isOnLastRep) {
+      this.selectRepByIndex(this._iSelectedLegislator + 1);
+    }
+  }
+
+  public priorRep(): void {
+    if (this.isRepSelected && !this.isOnFirstRep) {
+      this.selectRepByIndex(this._iSelectedLegislator - 1);
+    }
   }
 }

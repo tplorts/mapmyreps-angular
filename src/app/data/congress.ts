@@ -255,6 +255,12 @@ export class Legislator {
     return null;
   }
 
+  // used when sorting all legislators on the state detail view
+  // so that senators will be placed at the beginning of the list
+  public get sortingDistrict(): number {
+    return this.isSenator() ? -1 : this.district;
+  }
+
   public isSenator(): boolean {
     return false;
   }
