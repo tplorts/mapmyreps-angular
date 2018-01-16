@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 import { toNumber, sortBy } from 'lodash';
 
@@ -21,15 +23,22 @@ const log = new Logger('USA Geography');
 @Injectable()
 export class UsaGeographyService {
   private _isLoading: boolean;
+  private _dataObservable: Observable<any>;
   private _stateBordersPathData: string;
   private _stateFeatures: any[];
 
   constructor(private dataService: StaticDataService) {
-    this._isLoading = false;
+    this._isLoading = true;
     const dir = environment.geographyDataDirectory;
-    this.dataService.fetch(`${dir}/us-atlas-10m.json`).subscribe(
-      atlasResult => this.setNationalAtlas(atlasResult),
-    );
+    this._dataObservable = new Observable<any>(observer => {
+      this.dataService.fetch(`${dir}/us-atlas-10m.json`)
+      .pipe(map((atlasJson: any) => this.setNationalAtlas(atlasJson)))
+      .subscribe(
+        (value: any) => observer.next(value),
+        e => log.error(e),
+        () => observer.complete(),
+      );
+    });
   }
 
   public get regions(): UsaRegion[] {
@@ -40,6 +49,10 @@ export class UsaGeographyService {
     return this._isLoading;
   }
 
+  public get dataObservable(): Observable<any> {
+    return this._dataObservable;
+  }
+
   public get stateBordersPathData(): string {
     return this._stateBordersPathData;
   }
@@ -48,7 +61,7 @@ export class UsaGeographyService {
     return this._stateFeatures;
   }
 
-  setNationalAtlas(atlas: any) {
+  setNationalAtlas(atlas: any): any[] {
     const path: GeoPath<any, any> = geoPath();
     const { states } = atlas.objects;
 
@@ -64,6 +77,10 @@ export class UsaGeographyService {
     }
 
     this._stateFeatures = sortBy(features, ['name']);
+
+    this._isLoading = false;
+
+    return this.stateFeatures;
   }
 
 }

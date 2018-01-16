@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subscriber } from 'rxjs/Subscriber';
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
 
@@ -58,8 +59,10 @@ export class CongressService {
     const dir = environment.congressDataDirectory;
     const fetches = CongressService.DataFiles.map(f => this.dataService.fetch(`${dir}/${f}.json`));
     this._dataObservable = new Observable<any>(observer => {
-      Observable.forkJoin(...fetches).subscribe(
-        results => this.setData(results),
+      Observable.forkJoin(...fetches)
+      .pipe(map((results: any[]) => this.setData(results)))
+      .subscribe(
+        (value: any) => observer.next(value),
         e => log.error(e),
         () => observer.complete(),
       );
@@ -74,7 +77,7 @@ export class CongressService {
     return this._dataObservable;
   }
 
-  setData(data: any[]) {
+  setData(data: any[]): Legislator[] {
     const [ legislators, committees, memberships, socialMedia ] = data;
     this._committees = committees.map((z: ICommittee) => Committee.create(z));
     const membershipMap = <CommitteeMembershipMap> memberships;
@@ -105,10 +108,13 @@ export class CongressService {
       const abbr = region.abbreviation;
       if (abbr) {
         this._legislatorsByState[abbr] = this.reps.filter(CongressService.isOfState(abbr));
+        // log.debug(abbr, this._legislatorsByState[abbr]);
       }
     }
 
     this._isLoading = false;
+
+    return this.reps;
   }
 
   public get reps(): Legislator[] {

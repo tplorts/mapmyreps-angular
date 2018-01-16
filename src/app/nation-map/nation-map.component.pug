@@ -1,4 +1,8 @@
-div
+.loading(*ngIf="isLoading; else content")
+  mat-spinner([diameter]='48')
+  p Loading Atlas &amp; Congressional Info
+
+ng-template(#content): div
   svg(
     [attr.width]='width',
     [attr.height]='height',

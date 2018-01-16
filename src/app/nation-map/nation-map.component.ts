@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/forkJoin';
 
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
@@ -52,6 +54,8 @@ export class NationMapComponent {
   private _chromaMixMode: ChromaMixMode;
   private _coloringMode: ColoringMode;
 
+  private _isLoading: boolean;
+
   @Input()  selectedState: any;
   @Output() selectedStateChange = new EventEmitter<any>();
 
@@ -60,13 +64,22 @@ export class NationMapComponent {
     private geography: UsaGeographyService,
     private congress: CongressService,
   ) {
+    this._isLoading = true;
     this.selectedState = null;
     this.isPartyColoringOn = true;
     this._chromaMixMode = 'lab';
     this._coloringMode = ColoringMode.Proportional;
-    this.congress.dataObservable.subscribe(null, null, () => {
+    Observable.forkJoin(
+      this.congress.dataObservable,
+      this.geography.dataObservable,
+    ).subscribe(() => {
       this.computeStateProportions();
+      this._isLoading = false;
     });
+  }
+
+  public get isLoading(): boolean {
+    return this._isLoading;
   }
 
   public get stateFeatures(): any[] {
@@ -134,6 +147,9 @@ export class NationMapComponent {
     const parties = Object.values(PoliticalParty);
     for (const state of this.stateFeatures) {
       const reps = this.congress.repsForState(state.abbreviation);
+      if (!reps) {
+        log.warn('got no reps for state', state);
+      }
       state.repCount = reps.length;
       const seatProportionsByParty = {};
       for (const party of parties) {

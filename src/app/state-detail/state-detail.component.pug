@@ -1,6 +1,7 @@
 .loading(*ngIf="isCongressLoading; else content")
   mat-spinner([diameter]='48')
   p Getting info for {{ state.name }}
+
 ng-template(#content)
   .state-info-content
     .state-reps-section
