@@ -19,7 +19,7 @@ svg(
         [attr.d]='district.pathData',
         [matTooltip]='district.districtId | districtOrdinal',
         (click)='selectDistrict(district)',
-        [attr.fill]='partyColor(district)',
+        [attr.party]='party(district)',
       )
     path.district-borders([attr.d]='districtBorders')
   ng-template(#stateOnly)

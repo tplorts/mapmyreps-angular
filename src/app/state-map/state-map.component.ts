@@ -12,12 +12,6 @@ import { Representative } from '../data/congress';
 })
 export class StateMapComponent implements OnInit {
 
-  private static readonly PartyColors = {
-    Republican: '#BC2929',
-    Democrat: '#5586EF',
-    Independent: '#3BAC69',
-  };
-
   @Input() state: any;
   @Input() houseReps: Representative[];
   @Input() selectedDistrict: number | null;
@@ -84,13 +78,11 @@ export class StateMapComponent implements OnInit {
 
   private districtParty(district: any): string {
     const { districtId } = district;
-    // const districtIndex = districtId && districtId - 1;
-    // const rep = this.houseReps[districtIndex];
     const rep = this.houseReps.find(r => r.district === districtId);
     return rep && rep.party;
   }
 
-  public partyColor(district: any): string {
-    return StateMapComponent.PartyColors[this.districtParty(district)];
+  public party(district: any): string {
+    return (this.districtParty(district) || '').toLowerCase();
   }
 }

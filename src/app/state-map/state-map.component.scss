@@ -17,7 +17,32 @@ svg {
   }
 
   &.selected {
-    opacity: 0.5;
+    animation-duration: 1s;
+  }
+}
+
+@each $party, $party-color in $political-party-colors {
+  .district-path[party="#{$party}"] {
+    fill: $party-color;
+
+    &.selected {
+      animation-name: flash-#{$party};
+    }
+  }
+
+
+  @keyframes flash-#{$party} {
+    from {
+      fill: $party-color;
+    }
+
+    20% {
+      fill: white;
+    }
+
+    to {
+      fill: $party-color;
+    }
   }
 }
 
