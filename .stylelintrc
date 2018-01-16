@@ -11,7 +11,7 @@
     "selector-attribute-quotes": "always",
     "string-quotes": "double",
     "max-nesting-depth": 5,
-    "selector-max-compound-selectors": 3,
+    "selector-max-compound-selectors": 5,
     "selector-max-specificity": "0,5,2",
     "declaration-no-important": true,
     "at-rule-no-vendor-prefix": true,
@@ -29,7 +29,7 @@
         "ignore": ["attribute"]
       }
     ],
-    "selector-max-universal": 0,
+    "selector-max-universal": 1,
     "selector-pseudo-element-no-unknown": [
       true,
       {
@@ -44,6 +44,10 @@
       {
         "ignoreTypes": ["/^app-/", "/^mat-/"]
       }
+    ],
+    "rule-empty-line-before": [
+      "always",
+      { "ignore": ["after-comment", "inside-block"] }
     ]
   }
 }
