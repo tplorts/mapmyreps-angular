@@ -67,8 +67,18 @@ export class StateDetailComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      this.goBack();
+    switch (event.key) {
+      case 'Escape':
+        this.goBack();
+        break;
+      case 'ArrowLeft':
+        this.priorRep();
+        break;
+      case 'ArrowRight':
+        this.nextRep();
+        break;
+      default:
+        break;
     }
   }
 
