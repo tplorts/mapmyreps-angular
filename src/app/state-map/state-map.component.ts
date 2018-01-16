@@ -21,7 +21,7 @@ export class StateMapComponent implements OnInit {
   public stateMapOptions = {
     width: 320,
     height: 320,
-    padding: 32,
+    padding: 16,
   };
 
   constructor(
@@ -31,8 +31,9 @@ export class StateMapComponent implements OnInit {
   ngOnInit() {
     this.selectedDistrict = null;
     const { id, abbreviation } = this.state;
-    const { width, height } = this.stateMapOptions;
-    this.districts.fetchState(id, abbreviation, width, height);
+    const { width, height, padding } = this.stateMapOptions;
+    const p = 2 * padding;
+    this.districts.fetchState(id, abbreviation, width - p, height - p);
   }
 
   public get stateTransform(): string {
@@ -64,8 +65,9 @@ export class StateMapComponent implements OnInit {
     return this.districts.features;
   }
 
-  public get districtsTransform(): string {
-    return `translate(200, 100)`;
+  public get stateWithDistrictsTransform(): string {
+    const { padding } = this.stateMapOptions;
+    return `translate(${padding}, ${padding})`;
   }
 
   public isSelected(district: any): boolean {

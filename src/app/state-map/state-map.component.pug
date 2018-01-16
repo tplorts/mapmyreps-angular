@@ -3,15 +3,19 @@ svg(
   [attr.height]='stateMapOptions.height',
 )
   defs
-    filter#dropshadow(xmlns='http://www.w3.org/2000/svg' height='200%')
-      feGaussianBlur(in='SourceAlpha' stdDeviation='3')
+    filter#dropshadow(xmlns='http://www.w3.org/2000/svg' height='150%')
+      feGaussianBlur(in='SourceAlpha' stdDeviation='10')
       feOffset(dx='0' dy='0' result='offsetblur')
       feComponentTransfer
         feFuncA(type='linear' slope='0.5')
       feMerge
         feMergeNode
         feMergeNode(in='SourceGraphic')
-  g.state(*ngIf='hasDistrictData; else stateOnly' filter='url(#dropshadow)')
+  g.state(
+    *ngIf='hasDistrictData; else stateOnly',
+    filter='url(#dropshadow)',
+    [attr.transform]='stateWithDistrictsTransform',
+  )
     g.districts
       path.district-path(
         *ngFor='let district of districtFeatures',

@@ -1,8 +1,13 @@
 @import "src/theme/theme-variables";
 
+:host {
+  display: flex;
+  justify-content: center;
+  // background: rgba($color-black, 0.9);
+}
 
 svg {
-  background: rgba($color-black, 0.9);
+  background: transparent;
 }
 
 .district-path {
