@@ -305,14 +305,57 @@ export class Legislator {
 
   public get govtrackUrl(): string {
     const { govtrack } = this.identifiers;
-    return `https://www.govtrack.us/congress/members/${govtrack}`;
+    return govtrack && `https://www.govtrack.us/congress/members/${govtrack}`;
   }
 
   public get opensecretsUrl(): string {
     const { opensecrets } = this.identifiers;
-    return `https://www.opensecrets.org/members-of-congress/summary/?cid=${opensecrets}`;
+    return opensecrets && `https://www.opensecrets.org/members-of-congress/summary/?cid=${opensecrets}`;
+  }
+
+  public get votesmartUrl(): string {
+    const { votesmart } = this.identifiers;
+    return votesmart && `https://votesmart.org/candidate/${votesmart}`;
+  }
+
+  public get fecUrl(): string {
+    const { fec: fecIds } = this.identifiers;
+    const fec = fecIds.find(fecId => fecId.startsWith(this.fecIdPrefix));
+    return fec && `https://www.fec.gov/data/candidate/${fec}/`;
+  }
+
+  protected get fecIdPrefix(): string {
+    return '';
+  }
+
+  public get cspanUrl(): string {
+    const { cspan } = this.identifiers;
+    return cspan && `https://www.c-span.org/person/?${cspan}`;
+  }
+
+  public get wikipediaUrl(): string {
+    const { wikipedia } = this.identifiers;
+    return wikipedia && `https://wikipedia.org/wiki/${wikipedia}`;
+  }
+
+  public get ballotpediaUrl(): string {
+    const { ballotpedia } = this.identifiers;
+    return ballotpedia && `https://ballotpedia.org/${ballotpedia}`;
+  }
+
+  public get maplightUrl(): string {
+    const { maplight } = this.identifiers;
+    const newPrefix = 'http://maplight.org/data/passthrough/#legacyurl=';
+    return maplight && `${newPrefix}http://classic.maplight.org/us-congress/legislator/${maplight}`;
+  }
+
+  public get wikidataUrl(): string {
+    const { wikidata } = this.identifiers;
+    return wikidata && `https://www.wikidata.org/wiki/${wikidata}`;
   }
 }
+
+
 
 export class Senator extends Legislator {
   public get presentTerm(): ISenatorTerm {
@@ -334,6 +377,10 @@ export class Senator extends Legislator {
   public isSenator(): boolean {
     return true;
   }
+
+  protected get fecIdPrefix(): string {
+    return 'S';
+  }
 }
 
 export class Representative extends Legislator {
@@ -351,6 +398,10 @@ export class Representative extends Legislator {
 
   public isRepresentative(): boolean {
     return true;
+  }
+
+  protected get fecIdPrefix(): string {
+    return 'H';
   }
 }
 
