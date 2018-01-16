@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { Title, DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs/observable/merge';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -18,11 +19,15 @@ const log = new Logger('App');
 })
 export class AppComponent implements OnInit {
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private i18nService: I18nService) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private i18nService: I18nService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+  ) {
     log.info(`API URL: ${environment.serverUrl}`);
   }
 
@@ -57,12 +62,22 @@ export class AppComponent implements OnInit {
         }
       });
 
-     this.removePreAppLoader();
+      this.setupIcons();
+
+      this.removePreAppLoader();
   }
 
   removePreAppLoader() {
     const loader = document.querySelector('#pre-app-loader');
     loader.classList.add('removing');
     window.setTimeout(() => loader.remove(), 1500);
+  }
+
+  setupIcons() {
+    const SvgIconNames = ['back-to-map', 'arrow-left', 'arrow-right'];
+    for (const name of SvgIconNames) {
+      const url = this.sanitizer.bypassSecurityTrustResourceUrl(`assets/svg-icons/${name}.svg`);
+      this.iconRegistry.addSvgIcon(name, url);
+    }
   }
 }

@@ -6,8 +6,8 @@ ng-template(#content)
   .state-info-content
     .state-reps-section
       .state-title
-        button.back-button((click)='goBack()') 
-          app-icon-back-to-map
+        button.back-button((click)='goBack()')
+          mat-icon(svgIcon='back-to-map')
         h4 {{ stateTitle }}
       .state-map.spacer-bottom
         app-state-map(

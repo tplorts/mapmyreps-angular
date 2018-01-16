@@ -46,3 +46,20 @@
     }
   }
 }
+
+.mat-icon {
+  svg {
+    fill: $color-grey-light;
+    transition: all 0.15s ease;
+  }
+
+  &:hover {
+    svg {
+      fill: $color-black;
+    }
+  }
+
+  &[svgIcon="back-to-map"] {
+    width: 52px;
+  }
+}
