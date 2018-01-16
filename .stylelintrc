@@ -23,7 +23,12 @@
     "selector-class-pattern": "[a-z-]+",
     "selector-id-pattern": "[a-z-]+",
     "selector-max-id": 0,
-    "selector-no-qualifying-type": true,
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignoreTypes": ["/^app-/", "/^mat-/"]
+      }
+    ],
     "selector-max-universal": 0,
     "selector-pseudo-element-no-unknown": [
       true,
@@ -37,7 +42,7 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignoreTypes": ["/^app-/"]
+        "ignore": ["attribute"]
       }
     ]
   }

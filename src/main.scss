@@ -47,19 +47,37 @@
   }
 }
 
-.mat-icon {
+
+.svg-icon-button {
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 0;
+
   svg {
     fill: $color-grey-light;
     transition: all 0.15s ease;
   }
 
-  &:hover {
+  &:hover:not([disabled]) {
     svg {
       fill: $color-black;
     }
   }
 
-  &[svgIcon="back-to-map"] {
-    width: 52px;
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  mat-icon {
+    &[svgIcon="back-to-map"] {
+      width: 52px;
+    }
+
+    &[svgIcon*="arrow-"] {
+      height: 16px;
+    }
   }
 }
