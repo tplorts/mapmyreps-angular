@@ -9,6 +9,9 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
+  // Compensate for the fixed position navbar
+  padding-top: $navbar-height;
 }
 
 .menu-button {
@@ -37,10 +40,6 @@
     font-weight: normal;
     font-size: 20px;
   }
-}
-
-.navbar-offset {
-  height: $navbar-height;
 }
 
 .share-thing {
