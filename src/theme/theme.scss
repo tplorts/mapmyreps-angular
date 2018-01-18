@@ -75,6 +75,11 @@ a {
   }
 }
 
+.mat-tooltip {
+  background: $color-black;
+  font-size: 1rem;
+}
+
 .inline-waiting-message {
   display: flex;
   flex-direction: row;
