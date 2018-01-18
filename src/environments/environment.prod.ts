@@ -8,4 +8,5 @@ export const environment: any = {
   version: env.npm_package_version,
   // serverUrl: 'https://usa-government-info-backend.herokuapp.com/api',
   staticDataUrl: 'http://data.mapmyreps.us',
+  showColorMixingOptions: false,
 };

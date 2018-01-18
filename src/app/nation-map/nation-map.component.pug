@@ -7,9 +7,9 @@ ng-template(#content): div
     [attr.width]='width',
     [attr.height]='height',
   )
-    g.nation([attr.transform]='nationTransform')
-      g.states([ngClass]="{ 'uniform-color': !isPartyColoringOn }")
-        g.state-group(
+    svg:g.nation([attr.transform]='nationTransform')
+      svg:g.states([ngClass]="{ 'uniform-color': !options.isPartyColoringOn }")
+        svg:g.state-group(
           *ngFor='let state of stateFeatures',
         )
           svg:path.state-path(
@@ -27,24 +27,3 @@ ng-template(#content): div
             | /
             | {{ state.seatProportionsByParty.Republican | percent }}
       svg:path.state-borders([attr.d]='stateBordersPathData')
-
-  div
-    mat-slide-toggle(
-      [checked]="isPartyColoringOn",
-      (change)="isPartyColoringOn = !isPartyColoringOn"
-    ) Color states by party
-
-  div(*ngIf="isPartyColoringOn")
-    mat-button-toggle-group((change)="coloringMode = $event.value")
-      mat-button-toggle(
-        *ngFor="let mode of AllColoringModes",
-        value="{{ mode }}",
-        [checked]="mode === coloringMode"
-      ) {{ mode }}
-    div(*ngIf="coloringMode === 'Proportional'")
-      mat-button-toggle-group((change)="chromaMixMode = $event.value")
-        mat-button-toggle(
-          *ngFor="let mode of allChromaMixModes",
-          value="{{ mode }}",
-          [checked]="mode == chromaMixMode"
-        ) {{ mode }}

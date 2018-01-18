@@ -2,9 +2,14 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObservableMedia } from '@angular/flex-layout';
+import { MatDialog } from '@angular/material';
 
 import { AuthenticationService } from '../authentication/authentication.service';
 import { I18nService } from '../i18n.service';
+import { UserOptionsService } from '../user-options.service';
+import { OptionsDialogComponent } from '../options-dialog/options-dialog.component';
+
+
 
 @Component({
   selector: 'app-shell',
@@ -13,12 +18,20 @@ import { I18nService } from '../i18n.service';
 })
 export class ShellComponent implements OnInit {
   private isShareOpen: boolean;
+  public readonly isOpen = {
+    more: false,
+    share: false,
+  };
 
-  constructor(private router: Router,
-              private titleService: Title,
-              private media: ObservableMedia,
-              private authenticationService: AuthenticationService,
-              private i18nService: I18nService) { }
+  constructor(
+    private router: Router,
+    private titleService: Title,
+    private media: ObservableMedia,
+    private authenticationService: AuthenticationService,
+    private i18nService: I18nService,
+    private options: UserOptionsService,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     this.isShareOpen = false;
@@ -52,6 +65,10 @@ export class ShellComponent implements OnInit {
 
   get title(): string {
     return this.titleService.getTitle();
+  }
+
+  public openOptionsDialog(): void {
+    this.dialog.open(OptionsDialogComponent);
   }
 
   public openShareMenu() {

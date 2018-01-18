@@ -32,13 +32,41 @@
   justify-content: space-around;
   align-items: center;
   white-space: nowrap;
+  overflow: hidden;
+
   h1 {
     font-weight: normal;
   }
+
   .navbar-link {
     font-family: National, sans-serif;
     font-weight: normal;
     font-size: 20px;
+  }
+
+  button {
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+}
+
+.more {
+  transition: transform 0.3s;
+
+  .more-items {
+    position: absolute;
+    bottom: -$navbar-height;
+    left: -50%;
+
+    > *:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  &.open {
+    transform: translate(0, -$navbar-height);
   }
 }
 
@@ -69,13 +97,13 @@
   &.open {
     transform: rotate3d(1, 0, 0, 180deg);
   }
+}
 
-  .share-close {
-    opacity: 0.5;
+.close {
+  opacity: 0.3;
 
-    .mat-icon {
-      position: relative;
-      bottom: -5px;
-    }
+  .mat-icon {
+    position: relative;
+    bottom: -5px;
   }
 }

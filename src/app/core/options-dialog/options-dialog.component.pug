@@ -1,0 +1,29 @@
+h2 Options
+
+section
+  mat-slide-toggle(
+    [checked]='options.isPartyColoringOn',
+    (change)='options.isPartyColoringOn = !options.isPartyColoringOn',
+  ) Color-code states by party
+
+section
+  h3 Determine a state's party color by:
+  mat-button-toggle-group(
+    (change)='options.partyColoringMode = $event.value',
+  )
+    mat-button-toggle(
+      *ngFor='let mode of AllPartyColoringModes',
+      [value]='mode',
+      [checked]='mode === options.partyColoringMode',
+    ) {{ mode }}
+
+section(*ngIf='showColorMixMode')
+  h3 Color mixing mode for proportional color coding
+  mat-button-toggle-group(
+    (change)='options.colorMixMode = $event.value',
+  )
+    mat-button-toggle(
+      *ngFor='let mode of AllColorMixModes',
+      [value]='mode',
+      [checked]='mode == options.colorMixMode'
+    ) {{ mode }}

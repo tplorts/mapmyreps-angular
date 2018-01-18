@@ -11,6 +11,7 @@ export const environment: any = {
   staticDataUrl: 'http://data.mapmyreps.us',
   congressDataDirectory: 'congress',
   geographyDataDirectory: 'geography',
+  showColorMixingOptions: true,
   defaultLanguage: 'en-US',
   supportedLanguages: [
     'en-US',

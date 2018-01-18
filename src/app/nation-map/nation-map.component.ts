@@ -4,6 +4,7 @@ import 'rxjs/add/observable/forkJoin';
 
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
+import { UserOptionsService, PartyColoringMode } from '../core/user-options.service';
 import { Logger } from '../core/logger.service';
 import { UsaGeographyService } from '../data/usa-geography.service';
 import { CongressService } from '../data/congress.service';
@@ -14,12 +15,6 @@ import {
   PoliticalParty,
 } from '../data/congress';
 
-// type ChromaMixMode = keyof ColorSpaces;
-type ChromaMixMode = string;
-enum ColoringMode {
-  Majority = 'Majority',
-  Proportional = 'Proportional',
-}
 
 
 const log = new Logger('MapViewComponent');
@@ -41,18 +36,8 @@ export class NationMapComponent {
     Independent: '#3BAC69',
   };
 
-  private static readonly AllChromaMixModes: ChromaMixMode[] = [
-    'rgb', 'hsl', 'lab', 'lch', 'lrgb',
-  ];
-
-  private static readonly _AllColoringModes: string[] = Object.values(ColoringMode);
-
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
-
-  public isPartyColoringOn: boolean;
-  private _chromaMixMode: ChromaMixMode;
-  private _coloringMode: ColoringMode;
 
   private _isLoading: boolean;
 
@@ -63,12 +48,13 @@ export class NationMapComponent {
   constructor(
     private geography: UsaGeographyService,
     private congress: CongressService,
+    public options: UserOptionsService,
   ) {
     this._isLoading = true;
     this.selectedState = null;
-    this.isPartyColoringOn = true;
-    this._chromaMixMode = 'lab';
-    this._coloringMode = ColoringMode.Proportional;
+    this.options.partyColoringModeChange.subscribe(() => this.updateStateColors());
+    this.options.colorMixModeChange.subscribe(() => this.updateStateColors());
+
     Observable.forkJoin(
       this.congress.dataObservable,
       this.geography.dataObservable,
@@ -117,33 +103,6 @@ export class NationMapComponent {
     return Math.min(this.WidthLimits.max, Math.max(this.WidthLimits.min, window.innerWidth));
   }
 
-  public get allChromaMixModes(): string[] {
-    return NationMapComponent.AllChromaMixModes;
-  }
-
-  public get chromaMixMode(): ChromaMixMode {
-    return this._chromaMixMode;
-  }
-
-  public set chromaMixMode(m: ChromaMixMode) {
-    log.debug(m);
-    this._chromaMixMode = m;
-    this.updateStateColors();
-  }
-
-  public get AllColoringModes(): string[] {
-    return NationMapComponent._AllColoringModes;
-  }
-
-  public get coloringMode(): ColoringMode {
-    return this._coloringMode;
-  }
-
-  public set coloringMode(v: ColoringMode) {
-    this._coloringMode = v;
-    this.updateStateColors();
-  }
-
   private computeStateProportions() {
     const parties = Object.values(PoliticalParty);
     for (const state of this.stateFeatures) {
@@ -167,9 +126,9 @@ export class NationMapComponent {
   }
 
   private computeStateColor(state: any): Color {
-    if (this.coloringMode === ColoringMode.Majority) {
+    if (this.options.partyColoringMode === PartyColoringMode.Majority) {
       return this.majorityColor(state);
-    } else if (this.coloringMode === ColoringMode.Proportional) {
+    } else if (this.options.partyColoringMode === PartyColoringMode.Proportion) {
       return this.proportionalColor(state);
     } else {
       return null;
@@ -179,7 +138,7 @@ export class NationMapComponent {
   private proportionalColor(state: any): Color {
     const p = state.seatProportionsByParty[PoliticalParty.Republican];
     const { Democrat, Republican } = NationMapComponent.PartyColors;
-    return chromaMix(Democrat, Republican, p, <keyof ColorSpaces> this.chromaMixMode);
+    return chromaMix(Democrat, Republican, p, <keyof ColorSpaces> this.options.colorMixMode);
   }
 
   private majorityColor(state: any): Color {
