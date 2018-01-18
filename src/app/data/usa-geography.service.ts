@@ -72,7 +72,8 @@ export class UsaGeographyService {
       const region = UsaRegions.find(r => r.fipsCode === toNumber(f.id));
       Object.assign(f, region);
       f.pathData = path(f);
-      f.centroid = path.centroid(f);
+      const [ cx, cy ] = path.centroid(f);
+      f.centroid = { x: cx, y: cy };
       f.bounds = path.bounds(f);
     }
 

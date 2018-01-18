@@ -72,7 +72,8 @@ export class NationMapComponent {
     Observable.forkJoin(
       this.congress.dataObservable,
       this.geography.dataObservable,
-    ).subscribe(() => {
+    )
+    .subscribe(() => {
       this.computeStateProportions();
       this._isLoading = false;
     });
@@ -157,6 +158,9 @@ export class NationMapComponent {
         seatProportionsByParty[party] = seats.length / state.repCount;
       }
       state.seatProportionsByParty = seatProportionsByParty;
+      const dem = state.seatProportionsByParty.Democrat;
+      const rep = state.seatProportionsByParty.Republican;
+      state.tooltipText = `${state.abbreviation} ${Math.round(100 * dem)}-${Math.round(100 * rep)}`;
     }
 
     this.updateStateColors();
