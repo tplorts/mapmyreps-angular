@@ -6,6 +6,11 @@
   justify-content: center;
 }
 
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .state-path {
   opacity: 1;
@@ -36,4 +41,3 @@
   stroke-linecap: round;
   pointer-events: none;
 }
-
