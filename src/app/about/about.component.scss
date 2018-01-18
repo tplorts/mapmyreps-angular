@@ -1,8 +1,29 @@
-.container {
-  text-align: center;
-  padding: 1rem;
+
+:host {
+  padding: 2rem;
 }
 
-.mat-icon {
-  vertical-align: middle;
+section {
+  margin-bottom: 4rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+li {
+  margin-top: 0.5rem;
+}
+
+.authors {
+  .role {
+    display: inline-block;
+    width: 10em;
+  }
+
+  .author {
+    display: inline-block;
+    font-weight: bold;
+  }
 }

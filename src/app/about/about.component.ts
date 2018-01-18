@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-about',
-  templateUrl: './about.component.html',
+  templateUrl: './about.component.pug',
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
