@@ -12,10 +12,6 @@
 @import "palettes";
 
 
-// Measurements
-$navbar-height: 96px;
-
-
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
@@ -34,96 +30,3 @@ $app-warn:    mat-palette($mat-red);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 // @debug $palette-black;
-
-
-// Fonts
-@font-face {
-  font-family: National;
-  font-weight: 300;
-  src: url(/assets/fonts/National-Book.otf);
-}
-@font-face {
-  font-family: National;
-  font-weight: 300;
-  font-style: italic;
-  src: url(/assets/fonts/National-BookItalic.otf);
-}
-@font-face {
-  font-family: National;
-  font-weight: 100;
-  src: url(/assets/fonts/National-Light.otf);
-}
-@font-face {
-  font-family: National;
-  font-weight: 100;
-  font-style: italic;
-  src: url(/assets/fonts/National-LightItalic.otf);
-}
-@font-face {
-  font-family: Frederick;
-  src: url(/assets/fonts/Frederick.ttf);
-}
-
-
-// Typography
-body, html {
-  font-family: National;
-  font-weight: normal;
-  color: $color-black;
-  background: $color-background;
-  font-smooth: Antialiased;
-}
-h1 {
-  font-family: Frederick;
-  font-size: 2.4rem;
-}
-h2 {
-  font-family: National;
-  font-weight: 100;
-  font-size: 2.5rem;
-  margin: 0;
-}
-// h3 {
-//   font-family: Frederick;
-//   font-size: 1.75rem;
-//   margin: 0 0 1rem 0;
-// }
-h4 {
-  font-family: Frederick;
-  font-size: 1.25rem;
-  margin: 0 0 1rem 0;
-}
-
-
-// Globals
-hr {
-  border: none;
-  border-bottom: 1px solid $color-borders;
-}
-a {
-  color: black;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-.spacer-bottom {
-  margin-bottom: 2rem;
-}
-.button {
-  background-color: $color-grey-dark;
-  color: white;
-  height: 3.5rem;
-  line-height: 3.5rem;
-  font-size: 1rem;
-  font-weight: 100;
-  &:hover {
-    text-decoration: none;
-  }
-}
-
-
-// Hack to get the sate details overlay above the map
-.container {
-  position: relative;
-}
