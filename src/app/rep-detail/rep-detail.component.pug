@@ -13,14 +13,13 @@ div(*ngIf='rep')
             href='tel:{{ phone | numbersOnly }}',
           )
             | Call Me: {{ phone }}
-        .social-media(*ngIf='rep.socialMedia')
-          span(*ngFor='let medium of socialMedia')
+        .social-media
+          span(*ngFor='let medium of rep.availableSocialMedia')
             a.mat-button(
               mat-button,
-              *ngIf='rep[medium.urlGetter] as url',
               target='_blank',
-              href='{{ url }}',
-              class='button socicon-{{ medium.icon }}',
+              href='{{ medium.url }}',
+              class='button socicon-{{ medium.name }}',
             )
   section.meta-details
     .detail-block.district(*ngIf='rep.district !== null')
@@ -42,7 +41,7 @@ div(*ngIf='rep')
         span(*ngIf='hasSubs(committee)')
           mat-icon.committee-expander(
             (click)='expand(committee)',
-            [matTooltip]="isExpanded(committee) ? 'Hide Subcommittees' : 'Show Subcommittees'",
+            [matTooltip]="(isExpanded(committee) ? 'Hide':'Show') + ' Subcommittees'",
             matTooltipPosition='right',
           ) expand_more
         ng-template(#nameNoLink) {{ committee.name }}

@@ -26,6 +26,7 @@
   }
 
   .title {
+    flex: 1;
     display: flex;
     flex-direction: column;
     // justify-content: space-around;
@@ -36,16 +37,15 @@
   display: flex;
   margin-top: 1rem;
   .social-media {
-    span {
-      a {
-        margin-left: 1rem;
-        font-size: 1.25rem;
-        &:hover {
-          text-decoration: none;
-        }
-      }
-      &:last-child {
-        margin-right: 0;
+    flex: 1;
+    margin-left: 1rem;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, 52px);
+    a {
+      font-size: 1.25rem;
+      &:hover {
+        text-decoration: none;
       }
     }
   }

@@ -12,13 +12,6 @@ import { Legislator, Committee } from '../data/congress';
 export class RepDetailComponent implements OnInit {
   private _rep: Legislator;
 
-  public socialMedia = [
-    { icon: 'twitter', urlGetter: 'twitterUrl' },
-    { icon: 'facebook', urlGetter: 'facebookUrl' },
-    { icon: 'youtube', urlGetter: 'youtubeChannelUrl' },
-    { icon: 'instagram', urlGetter: 'instagramUrl' },
-  ];
-
   public externalLinks = [
     { label: 'Official Website', urlGetter: 'mainUrl' },
     { label: 'Congress Bioguide', urlGetter: 'bioguideUrl' },

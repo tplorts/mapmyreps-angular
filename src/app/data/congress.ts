@@ -134,13 +134,20 @@ export interface ILegislatorLeadershipRole extends DatePeriod {
 
 
 export class Legislator {
+  static SocialMedia = [
+    { name: 'twitter', urlGetter: 'twitterUrl' },
+    { name: 'facebook', urlGetter: 'facebookUrl' },
+    { name: 'youtube', urlGetter: 'youtubeChannelUrl' },
+    { name: 'instagram', urlGetter: 'instagramUrl' },
+  ];
+
   readonly identifiers: ILegislatorId;
   readonly name: ILegislatorName;
   readonly otherNames?: ILegislatorAlternativeName[];
   readonly bio: ILegislatorBio;
   readonly terms: ILegislatorTerm[];
   readonly leadershipRoles?: ILegislatorLeadershipRole[];
-  readonly socialMedia: ISocialMediaInfo;
+  private readonly _socialMedia: ISocialMediaInfo;
 
   readonly committees: Committee[];
   readonly subcommittees: ThomasSubommitteeMap;
@@ -173,7 +180,7 @@ export class Legislator {
     this.bio = source.bio;
     this.terms = source.terms;
     this.leadershipRoles = source.leadership_roles;
-    this.socialMedia = socialMedia;
+    this._socialMedia = socialMedia || {};
 
     if (committees) {
       this.committees = <Committee[]> committees.filter(c => !(c instanceof Subcommittee));
@@ -273,28 +280,38 @@ export class Legislator {
     return `party-${this.party.toLowerCase()}`;
   }
 
+
+
+  public get availableSocialMedia(): any[] {
+    const media = Legislator.SocialMedia.map(m => ({
+      name: m.name,
+      url: this[m.urlGetter],
+    }));
+    return media.filter(m => m.url);
+  }
+
   public get twitterUrl(): string {
-    const twitter = this.socialMedia.twitter;
+    const twitter = this._socialMedia.twitter;
     return twitter ? `https://twitter.com/${twitter}` : null;
   }
 
   public get youtubeUserUrl(): string {
-    const user = this.socialMedia.youtube;
+    const user = this._socialMedia.youtube;
     return user ? `https://youtube.com/user/${user}` : null;
   }
 
   public get youtubeChannelUrl(): string {
-    const channel = this.socialMedia.youtube_id;
+    const channel = this._socialMedia.youtube_id;
     return channel ? `https://youtube.com/channel/${channel}` : null;
   }
 
   public get instagramUrl(): string {
-    const insta = this.socialMedia.instagram;
+    const insta = this._socialMedia.instagram;
     return insta ? `https://instagram.com/${insta}` : null;
   }
 
   public get facebookUrl(): string {
-    const fb = this.socialMedia.facebook;
+    const fb = this._socialMedia.facebook;
     return fb ? `https://facebook.com/${fb}` : null;
   }
 
