@@ -141,6 +141,20 @@ export class Legislator {
     { name: 'instagram', urlGetter: 'instagramUrl' },
   ];
 
+  static ExternalLinks = [
+    { label: 'Official Website', urlGetter: 'mainUrl' },
+    { label: 'Congress Bioguide', urlGetter: 'bioguideUrl' },
+    { label: 'GovTrack', urlGetter: 'govtrackUrl' },
+    { label: 'OpenSecrets', urlGetter: 'opensecretsUrl' },
+    { label: 'VoteSmart', urlGetter: 'votesmartUrl' },
+    { label: 'Federal Election Commission', urlGetter: 'fecUrl' },
+    { label: 'C-SPAN', urlGetter: 'cspanUrl' },
+    { label: 'Wikipedia', urlGetter: 'wikipediaUrl' },
+    { label: 'Ballotpedia', urlGetter: 'ballotpediaUrl' },
+    { label: 'MapLight', urlGetter: 'maplightUrl' },
+    { label: 'Wikidata', urlGetter: 'wikidataUrl' },
+  ];
+
   readonly identifiers: ILegislatorId;
   readonly name: ILegislatorName;
   readonly otherNames?: ILegislatorAlternativeName[];
@@ -281,13 +295,20 @@ export class Legislator {
   }
 
 
-
   public get availableSocialMedia(): any[] {
     const media = Legislator.SocialMedia.map(m => ({
       name: m.name,
       url: this[m.urlGetter],
     }));
     return media.filter(m => m.url);
+  }
+
+  public get availableExternalLinks(): any[] {
+    const links = Legislator.ExternalLinks.map(x => ({
+      label: x.label,
+      url: this[x.urlGetter],
+    }));
+    return links.filter(m => m.url);
   }
 
   public get twitterUrl(): string {

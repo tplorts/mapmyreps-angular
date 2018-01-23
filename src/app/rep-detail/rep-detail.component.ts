@@ -12,20 +12,6 @@ import { Legislator, Committee } from '../data/congress';
 export class RepDetailComponent implements OnInit {
   private _rep: Legislator;
 
-  public externalLinks = [
-    { label: 'Official Website', urlGetter: 'mainUrl' },
-    { label: 'Congress Bioguide', urlGetter: 'bioguideUrl' },
-    { label: 'GovTrack', urlGetter: 'govtrackUrl' },
-    { label: 'OpenSecrets', urlGetter: 'opensecretsUrl' },
-    { label: 'VoteSmart', urlGetter: 'votesmartUrl' },
-    { label: 'Federal Election Commission', urlGetter: 'fecUrl' },
-    { label: 'C-SPAN', urlGetter: 'cspanUrl' },
-    { label: 'Wikipedia', urlGetter: 'wikipediaUrl' },
-    { label: 'Ballotpedia', urlGetter: 'ballotpediaUrl' },
-    { label: 'MapLight', urlGetter: 'maplightUrl' },
-    { label: 'Wikidata', urlGetter: 'wikidataUrl' },
-  ];
-
   public committeesExpanded: { [thomasId: string]: boolean };
 
   constructor() { }

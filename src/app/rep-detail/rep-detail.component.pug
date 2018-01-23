@@ -57,7 +57,7 @@ div(*ngIf='rep')
     .other-websites
       a.mat-button(
         mat-button,
-        *ngFor="let link of externalLinks",
+        *ngFor="let link of rep.availableExternalLinks",
         target='_blank',
-        href='{{ rep[link.urlGetter] }}',
+        href='{{ link.url }}',
       ) {{ link.label }}
