@@ -1,5 +1,6 @@
 header.navbar
-  .more([ngClass]='{ open: isOpen.more }')
+  a.navbar-link(routerLink='/about') More
+  //- .more([ngClass]='{ open: isOpen.more }')
     .more-label
       button.navbar-link((click)='isOpen.more = true') More
     .more-items

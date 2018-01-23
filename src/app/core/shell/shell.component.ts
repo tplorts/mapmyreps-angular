@@ -2,12 +2,10 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObservableMedia } from '@angular/flex-layout';
-import { MatDialog } from '@angular/material';
 
 import { AuthenticationService } from '../authentication/authentication.service';
 import { I18nService } from '../i18n.service';
 import { UserOptionsService } from '../user-options.service';
-import { OptionsDialogComponent } from '../options-dialog/options-dialog.component';
 
 
 
@@ -30,7 +28,6 @@ export class ShellComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private i18nService: I18nService,
     private options: UserOptionsService,
-    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -65,10 +62,6 @@ export class ShellComponent implements OnInit {
 
   get title(): string {
     return this.titleService.getTitle();
-  }
-
-  public openOptionsDialog(): void {
-    this.dialog.open(OptionsDialogComponent);
   }
 
   public openShareMenu() {
