@@ -107,13 +107,12 @@
 }
 
 .external-links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
   margin-top: 2rem;
 }
 
 .other-websites {
   flex: 1;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min-content, 10rem));
 }
