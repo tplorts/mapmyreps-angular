@@ -16,13 +16,10 @@ body {
   flex-direction: column;
   margin: 0;
   height: 100%;
-
-  // Typography
   font-family: National, sans-serif;
   font-weight: normal;
   color: $color-black;
   background: $color-background;
-  font-smooth: Antialiased;
 }
 
 h1 {
@@ -45,6 +42,7 @@ h4 {
 }
 
 
+
 // Globals
 hr {
   border: none;
@@ -61,18 +59,6 @@ a {
 
 .spacer-bottom {
   margin-bottom: 2rem;
-}
-
-.button {
-  background-color: $color-grey-dark;
-  color: white;
-  height: 3.5rem;
-  line-height: 3.5rem;
-  font-size: 1rem;
-  font-weight: 100;
-  &:hover {
-    text-decoration: none;
-  }
 }
 
 .mat-tooltip {
@@ -97,6 +83,35 @@ a {
     &:last-child {
       margin-left: $space;
     }
+  }
+}
+
+
+
+// Buttons
+$button-height: 3rem;
+
+%button-text {
+  color: white;
+  height: $button-height;
+  line-height: $button-height;
+  font-size: 1rem;
+  font-weight: 100;    
+}
+
+.mat-button,
+a.mat-button {
+  background-color: $color-grey-light;
+  padding: 0 1rem;
+  min-width: 2rem;
+  height: $button-height;
+  @extend %button-text;
+  span {
+    @extend %button-text;
+  }
+  &:hover {
+    text-decoration: none;
+    // background-color: darken($color-grey-dark, 5%);
   }
 }
 

@@ -5,17 +5,31 @@ div(*ngIf='rep')
     .title
       h2([ngClass]='rep.partyStyleClass') {{ rep.party }}
       h2 {{ rep.titleName }}
+      .contact-buttons
+        .call-button(*ngIf='rep.phone as phone')
+          a(
+            mat-button,
+            [ngClass]='"button-party-" + rep.party.toLowerCase()',
+            href='tel:{{ phone | numbersOnly }}',
+          )
+            | Call Me: {{ phone }}
+        .social-media(*ngIf='rep.socialMedia')
+          span(*ngFor='let medium of socialMedia')
+            a.mat-button(
+              mat-button,
+              *ngIf='rep[medium.urlGetter] as url',
+              target='_blank',
+              href='{{ url }}',
+              class='button socicon-{{ medium.icon }}',
+            )
   section.meta-details
-    .district(*ngIf='rep.district !== null')
+    .detail-block.district(*ngIf='rep.district !== null')
       h4 District
-      h3 {{ rep.district | districtOrdinal }}
-    .office
+      h3 {{ rep.district | districtOrdinal }}   
+    .detail-block.office
       h4 Office
       h3
         | {{ rep.office }}
-    .phone(*ngIf='rep.phone as phone')
-      h4 Phone
-      h3.phone-number {{ phone }}
   section.committees
     h4 Committee Assignments
     ul.committee-list
@@ -23,36 +37,37 @@ div(*ngIf='rep')
         *ngFor='let committee of rep.committees',
         [ngClass]='{ expanded: isExpanded(committee) }',
       )
+        span(*ngIf='committee.url; else nameNoLink')
+          a(target='_blank' href='{{ committee.url }}') {{ committee.name }}
         span(*ngIf='hasSubs(committee)')
           mat-icon.committee-expander(
             (click)='expand(committee)',
             [matTooltip]="isExpanded(committee) ? 'Hide Subcommittees' : 'Show Subcommittees'",
-            matTooltipPosition='left',
+            matTooltipPosition='right',
           ) expand_more
-        span(*ngIf='committee.url; else nameNoLink')
-          a(target='_blank' href='{{ committee.url }}') {{ committee.name }}
         ng-template(#nameNoLink) {{ committee.name }}
         ul.subcommittee-list
           li(*ngFor='let subcommittee of rep.subcommittees[committee.thomasId]')
             | {{ subcommittee.displayName }}
-  section(*ngIf='rep.phone as phone')
-    div
-      a.button(
-        mat-button,
-        [ngClass]='"button-party-" + rep.party.toLowerCase()',
-        href='tel:{{ phone | numbersOnly }}',
-      )
-        | Call {{ rep.titleName }}
+  //- section(*ngIf='rep.phone as phone')
+  //-   div
+  //-     a.button(
+  //-       mat-button,
+  //-       [ngClass]='"button-party-" + rep.party.toLowerCase()',
+  //-       href='tel:{{ phone | numbersOnly }}',
+  //-     )
+  //-       | Call {{ rep.titleName }}
+
   section.external-links
-    .social-media(*ngIf='rep.socialMedia')
-      h4 On Social Media
-      span(*ngFor='let medium of socialMedia')
-        a(
-          *ngIf='rep[medium.urlGetter] as url',
-          target='_blank',
-          href='{{ url }}',
-          class='socicon-{{ medium.icon }}',
-        )
+    //- .social-media(*ngIf='rep.socialMedia')
+    //-   h4 On Social Media
+    //-   span(*ngFor='let medium of socialMedia')
+    //-     a(
+    //-       *ngIf='rep[medium.urlGetter] as url',
+    //-       target='_blank',
+    //-       href='{{ url }}',
+    //-       class='socicon-{{ medium.icon }}',
+    //-     )
     .other-websites
       h4 On Other Websites
       div(*ngFor="let link of externalLinks")

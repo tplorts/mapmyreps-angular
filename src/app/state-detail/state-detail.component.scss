@@ -35,11 +35,36 @@
     position: relative;
     top: -3px;
     flex: 1;
-    font-size: 1.75rem;
-    text-align: center;
-    margin-left: 52px;
-    margin-right: 52px;
+    font-size: 1.5rem;
+    margin-left: 5rem;
+    margin-bottom: 1.5rem;
   }
+}
+
+.state-map {
+  position: relative;
+  &:after, 
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid $color-black;
+    z-index: -1;
+  }
+  &:after {
+    top: -5px;
+    left: -5px;
+    border: 1px solid $color-rep;
+  }
+  &:before {
+    top: 5px;
+    left: 5px;
+    border: 1px solid $color-dem;
+  }
+  // border: 1px solid $color-black;
 }
 
 .state-info-content {
@@ -56,7 +81,7 @@
 
   .rep-info-section {
     flex: 1.5;
-    margin-top: 2.5rem;
+    // margin-top: 2.5rem;
   }
 }
 

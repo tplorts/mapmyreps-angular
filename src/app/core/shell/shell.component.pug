@@ -6,9 +6,8 @@ header.navbar
       button.close((click)='isOpen.more = false')
         mat-icon close
       a.navbar-link(routerLink='/about') About
-      button.navbar-link((click)='openOptionsDialog()') Options
 
-  h1 Map My Reps
+  h1: a(routerLink='/') Map My Reps
 
   .share-thing([ngClass]='{ open: isShareMenuOpen }')
     .share
