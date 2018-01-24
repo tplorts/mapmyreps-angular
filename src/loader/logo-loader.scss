@@ -8,7 +8,7 @@ $dt: $maxDelay / ($pathCount - 1);
   height: 31px;
   position: relative;
   path {
-    fill: black;
+    fill: $color-grey-light;
     animation: load-logo $animationDuration infinite;
     opacity: 0;
 
