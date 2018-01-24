@@ -1,0 +1,49 @@
+$animationDuration: 3s;
+$pathCount: 9;
+$maxDelay: $animationDuration / 3;
+$dt: $maxDelay / ($pathCount - 1);
+
+.logo-loader {
+  width: 210px;
+  height: 31px;
+  position: relative;
+  path {
+    fill: black;
+    animation: load-logo $animationDuration infinite;
+    opacity: 0;
+
+    @for $n from 1 through $pathCount {
+      &:nth-child(#{$n}) {
+        animation-delay: 2s - ($n - 1) * $dt;
+      }
+    }
+  }
+}
+
+@keyframes load-logo {
+  from,
+  to {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+#pre-app-loader {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: all 1s;
+
+  &.removing {
+    opacity: 0;
+  }
+}
