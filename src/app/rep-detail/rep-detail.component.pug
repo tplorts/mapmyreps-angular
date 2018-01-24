@@ -8,12 +8,13 @@ div(*ngIf='rep')
       h2 {{ rep.titleName }}
       .contact-buttons
         .call-button(*ngIf='rep.phone as phone')
-          a(
+          a.button-icon(
             mat-button,
             [ngClass]='"button-party-" + rep.party.toLowerCase()',
             href='tel:{{ phone | numbersOnly }}',
           )
-            | Call Me: {{ phone }}
+            mat-icon(svgIcon='phone')
+            span {{ phone }}
         .social-media
           span(*ngFor='let medium of rep.availableSocialMedia')
             a.mat-button(
@@ -55,7 +56,7 @@ div(*ngIf='rep')
   section.external-links
     h4 On Other Websites
     .other-websites
-      a.mat-button(
+      a.mat-button.button-small(
         mat-button,
         *ngFor="let link of rep.availableExternalLinks",
         target='_blank',

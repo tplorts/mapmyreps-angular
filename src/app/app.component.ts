@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
   }
 
   setupIcons() {
-    const SvgIconNames = ['back-to-map', 'arrow-left', 'arrow-right'];
+    const SvgIconNames = ['phone', 'back-to-map', 'arrow-left', 'arrow-right'];
     for (const name of SvgIconNames) {
       const url = this.sanitizer.bypassSecurityTrustResourceUrl(`assets/svg-icons/${name}.svg`);
       this.iconRegistry.addSvgIcon(name, url);

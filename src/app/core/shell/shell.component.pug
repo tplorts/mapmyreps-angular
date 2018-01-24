@@ -1,22 +1,23 @@
-header.navbar
-  a.navbar-link(routerLink='/about') More
-  //- .more([ngClass]='{ open: isOpen.more }')
-    .more-label
-      button.navbar-link((click)='isOpen.more = true') More
-    .more-items
-      button.close((click)='isOpen.more = false')
-        mat-icon close
-      a.navbar-link(routerLink='/about') About
+header.navbar 
+  .container
+    a.navbar-link(routerLink='/about') More
+    //- .more([ngClass]='{ open: isOpen.more }')
+      .more-label
+        button.navbar-link((click)='isOpen.more = true') More
+      .more-items
+        button.close((click)='isOpen.more = false')
+          mat-icon close
+        a.navbar-link(routerLink='/about') About
 
-  h1: a(routerLink='/') Map My Reps
+    h1: a(routerLink='/') Map My Reps
 
-  .share-thing([ngClass]='{ open: isShareMenuOpen }')
-    .share
-      button.navbar-link((click)='openShareMenu()') Share
-    .share-options
-      span(*ngFor='let medium of ["facebook", "twitter"]')
-        a.medium(class='socicon-{{ medium }}')
-      button.close((click)='closeShareMenu()')
-        mat-icon close
+    .share-thing([ngClass]='{ open: isShareMenuOpen }')
+      .share
+        button.navbar-link((click)='openShareMenu()') Share
+      .share-options
+        span(*ngFor='let medium of ["facebook", "twitter"]')
+          a.medium(class='socicon-{{ medium }}')
+        button.close((click)='closeShareMenu()')
+          mat-icon close
 
 router-outlet

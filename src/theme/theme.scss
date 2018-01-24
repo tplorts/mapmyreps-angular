@@ -57,6 +57,12 @@ a {
   }
 }
 
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .spacer-bottom {
   margin-bottom: 2rem;
 }
@@ -90,30 +96,59 @@ a {
 
 // Buttons
 $button-height: 3rem;
+$button-height-small: 2rem;
 
 %button-text {
   color: white;
   height: $button-height;
   line-height: $button-height;
   font-size: 1rem;
-  font-weight: 100;    
+}
+%button-text-small {
+  color: white;
+  height: $button-height-small;
+  line-height: $button-height-small;
+  font-size: 0.75rem;
 }
 
 .mat-button,
 a.mat-button {
-  background-color: $color-grey-light;
+  background-color: $color-grey-dark;
   padding: 0 1rem;
-  min-width: 2rem;
+  min-width: 1rem;
   height: $button-height;
+  font-weight: 100;
   @extend %button-text;
   span {
     @extend %button-text;
   }
   &:hover {
     text-decoration: none;
-    // background-color: darken($color-grey-dark, 5%);
+  }
+  
+  // Button Sizes
+  &.button-small {
+    font-size: 0.75rem;
+    height: $button-height-small;
+    line-height: $button-height-small;;
+    padding: 0 1rem;
+    @extend %button-text-small;
+    span {
+      @extend %button-text-small;
+    }
   }
 }
+
+.button-icon {
+  display: flex;  
+  mat-icon {
+    margin-right: 0.75rem;
+  }
+  span {
+
+  }
+}
+
 
 .svg-icon-button {
   cursor: pointer;
@@ -138,13 +173,26 @@ a.mat-button {
     opacity: 0.5;
   }
 
-  mat-icon {
-    &[svgIcon="back-to-map"] {
-      width: 52px;
-    }
+}
 
-    &[svgIcon*="arrow-"] {
-      height: 16px;
-    }
+
+
+// Icons
+mat-icon {
+  position: relative;
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &[svgIcon="phone"] {
+    width: 20px;
+    height: 20px;
+  }    
+  &[svgIcon="back-to-map"] {
+    width: 52px;
+  }
+  &[svgIcon*="arrow-"] {
+    height: 16px;
   }
 }
