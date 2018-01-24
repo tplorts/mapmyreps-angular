@@ -63,14 +63,6 @@ export class AppComponent implements OnInit {
       });
 
       this.setupIcons();
-
-      this.removePreAppLoader();
-  }
-
-  removePreAppLoader() {
-    const loader = document.querySelector('#pre-app-loader');
-    loader.classList.add('removing');
-    window.setTimeout(() => loader.remove(), 1500);
   }
 
   setupIcons() {

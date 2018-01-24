@@ -1,29 +1,24 @@
-.loading(*ngIf="isLoading; else content")
-  mat-spinner([diameter]='48')
-  p Loading Atlas &amp; Congressional Info
-
-ng-template(#content): div
-  svg(
-    [attr.width]='width',
-    [attr.height]='height',
-  )
-    svg:g.nation([attr.transform]='nationTransform')
-      svg:g.states([ngClass]="{ 'uniform-color': !options.isPartyColoringOn }")
-        svg:g.state-group(
-          *ngFor='let state of stateFeatures',
+svg(
+  [attr.width]='width',
+  [attr.height]='height',
+)
+  svg:g.nation([attr.transform]='nationTransform')
+    svg:g.states([ngClass]="{ 'uniform-color': !options.isPartyColoringOn }")
+      svg:g.state-group(
+        *ngFor='let state of stateFeatures',
+      )
+        svg:path.state-path(
+          [ngClass]="{ 'selected': isSelected(state) }",
+          [attr.d]='state.pathData',
+          [matTooltip]='state.tooltipText',
+          (click)='selectState(state)',
+          [attr.fill]='state.fillColor',
         )
-          svg:path.state-path(
-            [ngClass]="{ 'selected': isSelected(state) }",
-            [attr.d]='state.pathData',
-            [matTooltip]='state.tooltipText',
-            (click)='selectState(state)',
-            [attr.fill]='state.fillColor',
-          )
-          //- svg:text.state-label(
-          //-   [attr.x]='state.centroid.x',
-          //-   [attr.y]='state.centroid.y',
-          //- )
-            | {{ state.seatProportionsByParty.Democrat | percent }}
-            | /
-            | {{ state.seatProportionsByParty.Republican | percent }}
-      svg:path.state-borders([attr.d]='stateBordersPathData')
+        //- svg:text.state-label(
+        //-   [attr.x]='state.centroid.x',
+        //-   [attr.y]='state.centroid.y',
+        //- )
+          | {{ state.seatProportionsByParty.Democrat | percent }}
+          | /
+          | {{ state.seatProportionsByParty.Republican | percent }}
+    svg:path.state-borders([attr.d]='stateBordersPathData')

@@ -4,6 +4,7 @@ import 'rxjs/add/observable/forkJoin';
 
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
+import { PreAppLoaderService } from '../shared/pre-app-loader.service';
 import { UserOptionsService, PartyColoringMode } from '../core/user-options.service';
 import { Logger } from '../core/logger.service';
 import { UsaGeographyService } from '../data/usa-geography.service';
@@ -39,8 +40,6 @@ export class NationMapComponent {
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
 
-  private _isLoading: boolean;
-
   @Input()  selectedState: any;
   @Output() selectedStateChange = new EventEmitter<any>();
 
@@ -49,8 +48,8 @@ export class NationMapComponent {
     private geography: UsaGeographyService,
     private congress: CongressService,
     public options: UserOptionsService,
+    private appLoader: PreAppLoaderService,
   ) {
-    this._isLoading = true;
     this.selectedState = null;
     this.options.partyColoringModeChange.subscribe(() => this.updateStateColors());
     this.options.colorMixModeChange.subscribe(() => this.updateStateColors());
@@ -61,12 +60,8 @@ export class NationMapComponent {
     )
     .subscribe(() => {
       this.computeStateProportions();
-      this._isLoading = false;
+      this.appLoader.remove();
     });
-  }
-
-  public get isLoading(): boolean {
-    return this._isLoading;
   }
 
   public get stateFeatures(): any[] {
