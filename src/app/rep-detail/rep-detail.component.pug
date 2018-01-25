@@ -1,28 +1,27 @@
 div(*ngIf='rep')
 
   section.head
-    div
-      img.image(src='{{ rep.imageUrl }}')
+    img.image(src='{{ rep.imageUrl }}')
     .title
       h2([ngClass]='rep.partyStyleClass') {{ rep.party }}
       h2 {{ rep.titleName }}
-      .contact-buttons
-        .call-button(*ngIf='rep.phone as phone')
-          a.button-icon(
+    .contact-buttons
+      .call-button(*ngIf='rep.phone as phone')
+        a.button-icon(
+          mat-button,
+          [ngClass]='"button-party-" + rep.party.toLowerCase()',
+          href='tel:{{ phone | numbersOnly }}',
+        )
+          mat-icon(svgIcon='phone')
+          span {{ phone }}
+      .social-media
+        span(*ngFor='let medium of rep.availableSocialMedia')
+          a.mat-button(
             mat-button,
-            [ngClass]='"button-party-" + rep.party.toLowerCase()',
-            href='tel:{{ phone | numbersOnly }}',
+            target='_blank',
+            href='{{ medium.url }}',
+            class='button socicon-{{ medium.name }}',
           )
-            mat-icon(svgIcon='phone')
-            span {{ phone }}
-        .social-media
-          span(*ngFor='let medium of rep.availableSocialMedia')
-            a.mat-button(
-              mat-button,
-              target='_blank',
-              href='{{ medium.url }}',
-              class='button socicon-{{ medium.name }}',
-            )
 
   section.meta-details
     .detail-block.district(*ngIf='rep.district !== null')
