@@ -1,6 +1,6 @@
 @import "../theme/globals";
 
-$animationDuration: 3s;
+$animationDuration: 2s;
 $pathCount: 9;
 $maxDelay: $animationDuration / 3;
 $dt: $maxDelay / ($pathCount - 1);
@@ -16,7 +16,7 @@ $dt: $maxDelay / ($pathCount - 1);
 
     @for $n from 1 through $pathCount {
       &:nth-child(#{$n}) {
-        animation-delay: 2s - ($n - 1) * $dt;
+        animation-delay: $maxDelay - ($n - 1) * $dt;
       }
     }
   }
