@@ -15,8 +15,11 @@ header.navbar
       .share
         button.navbar-link((click)='openShareMenu()') Share
       .share-options
-        span(*ngFor='let medium of ["facebook", "twitter"]')
-          a.medium(class='socicon-{{ medium }}')
+        span(*ngFor='let medium of shareMedia')
+          a.medium(
+            [ngClass]='"socicon-" + medium.name',
+            (click)='share(medium)'
+          )
         button.close((click)='closeShareMenu()')
           mat-icon close
 

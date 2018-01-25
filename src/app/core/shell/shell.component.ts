@@ -3,10 +3,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObservableMedia } from '@angular/flex-layout';
 
+import { Logger } from '../logger.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { I18nService } from '../i18n.service';
 import { UserOptionsService } from '../user-options.service';
 
+const log = new Logger('Shell');
+
+interface IShareMedia {
+  name: string;
+}
 
 
 @Component({
@@ -15,11 +21,15 @@ import { UserOptionsService } from '../user-options.service';
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {
+  static readonly ShareMedia: IShareMedia[] = [
+    { name: 'facebook' },
+    { name: 'twitter' },
+    { name: 'pinterest' },
+    { name: 'googleplus' },
+    { name: 'mail' },
+  ];
+
   private isShareOpen: boolean;
-  public readonly isOpen = {
-    more: false,
-    share: false,
-  };
 
   constructor(
     private router: Router,
@@ -32,6 +42,10 @@ export class ShellComponent implements OnInit {
 
   ngOnInit() {
     this.isShareOpen = false;
+  }
+
+  public get shareMedia(): IShareMedia[] {
+    return ShellComponent.ShareMedia;
   }
 
   setLanguage(language: string) {
@@ -74,5 +88,10 @@ export class ShellComponent implements OnInit {
 
   public get isShareMenuOpen(): boolean {
     return this.isShareOpen;
+  }
+
+  public share(medium: IShareMedia): void {
+    log.debug(medium.name);
+    this.closeShareMenu();
   }
 }
