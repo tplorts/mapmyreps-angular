@@ -11,10 +11,13 @@
 
 
 app-nation-map(
-  [(selectedState)]="selectedState"
+  [selectedState]='selectedState',
+  (selectedStateChange)='selectState($event)'
 )
 
-div(*ngIf='selectedState')
+//- state detail gets instered here
+router-outlet
+//- div(*ngIf='selectedState')
   app-state-detail(
     [state]='selectedState',
     (close)='closeState()',

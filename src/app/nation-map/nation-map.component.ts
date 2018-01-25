@@ -7,7 +7,7 @@ import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 import { PreAppLoaderService } from '../shared/pre-app-loader.service';
 import { UserOptionsService, PartyColoringMode } from '../core/user-options.service';
 import { Logger } from '../core/logger.service';
-import { UsaGeographyService } from '../data/usa-geography.service';
+import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
 import { CongressService } from '../data/congress.service';
 import {
   Legislator,
@@ -40,8 +40,8 @@ export class NationMapComponent {
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
 
-  @Input()  selectedState: any;
-  @Output() selectedStateChange = new EventEmitter<any>();
+  @Input()  selectedState: IStateFeature;
+  @Output() selectedStateChange = new EventEmitter<IStateFeature>();
 
 
   constructor(
@@ -64,7 +64,7 @@ export class NationMapComponent {
     });
   }
 
-  public get stateFeatures(): any[] {
+  public get stateFeatures(): Array<IStateFeature | any> {
     return this.geography.stateFeatures;
   }
 
@@ -72,12 +72,12 @@ export class NationMapComponent {
     return this.geography.stateBordersPathData;
   }
 
-  public selectState(state: any) {
+  public selectState(state: IStateFeature) {
     this.selectedState = (!state || this.selectedState === state) ? null : state;
     this.selectedStateChange.emit(this.selectedState);
   }
 
-  public isSelected(state: any): boolean {
+  public isSelected(state: IStateFeature): boolean {
     return state && state === this.selectedState;
   }
 
@@ -120,7 +120,7 @@ export class NationMapComponent {
     this.updateStateColors();
   }
 
-  private computeStateColor(state: any): Color {
+  private computeStateColor(state: IStateFeature): Color {
     if (this.options.partyColoringMode === PartyColoringMode.Majority) {
       return this.majorityColor(state);
     } else if (this.options.partyColoringMode === PartyColoringMode.Proportion) {
@@ -130,13 +130,13 @@ export class NationMapComponent {
     }
   }
 
-  private proportionalColor(state: any): Color {
+  private proportionalColor(state: IStateFeature | any): Color {
     const p = state.seatProportionsByParty[PoliticalParty.Republican];
     const { Democrat, Republican } = NationMapComponent.PartyColors;
     return chromaMix(Democrat, Republican, p, <keyof ColorSpaces> this.options.colorMixMode);
   }
 
-  private majorityColor(state: any): Color {
+  private majorityColor(state: IStateFeature | any): Color {
     const parties = Object.values(PoliticalParty);
     let majorityParty;
     for (const party of parties) {

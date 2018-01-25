@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Subscriber } from 'rxjs/Subscriber';
 
 import { sortBy } from 'lodash';
 
 import { Logger } from '../core/logger.service';
+import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
 import { Legislator, Representative } from '../data/congress';
 import { CongressService } from '../data/congress.service';
 
@@ -25,7 +28,7 @@ interface IRepSet {
   styleUrls: ['./state-detail.component.scss']
 })
 export class StateDetailComponent implements OnInit {
-  private _state: any;
+  private _state: IStateFeature;
   private _allLegislators: Legislator[];
   private _iSelectedLegislator: number;
   private _repSets: IRepSet[];
@@ -36,16 +39,19 @@ export class StateDetailComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private geography: UsaGeographyService,
     private congress: CongressService,
   ) {
   }
 
-  public get state(): any {
+  public get state(): IStateFeature {
     return this._state;
   }
 
   @Input()
-  public set state(s: any) {
+  public set state(s: IStateFeature) {
     this._state = s;
     if (this.isCongressLoading) {
       const onceDone = new Subscriber(null, null, () => this.makeRepSets());
@@ -58,6 +64,8 @@ export class StateDetailComponent implements OnInit {
   ngOnInit() {
     this.selectedRep = null;
     this._iSelectedLegislator = null;
+    const requestedStateAbbreviation = this.route.snapshot.paramMap.get('stateAbbreviation');
+    this.state = this.geography.stateFeatures.find(s => s.abbreviation === requestedStateAbbreviation);
   }
 
   public get stateTitle(): string {
@@ -83,7 +91,8 @@ export class StateDetailComponent implements OnInit {
   }
 
   public goBack(): void {
-    this.close.emit(null);
+    // this.close.emit(null);
+    this.location.back();
   }
 
   public get isCongressLoading(): boolean {

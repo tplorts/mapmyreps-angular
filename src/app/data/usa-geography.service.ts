@@ -14,9 +14,26 @@ import { StaticDataService } from './static-data.service';
 import * as _UsaRegions from 'usa-regions.json';
 const UsaRegions = <UsaRegion[]> _UsaRegions;
 
-
-
 const log = new Logger('USA Geography');
+
+
+
+export interface XYPoint {
+  x: number;
+  y: number;
+}
+
+export interface XYBoundingBox {
+  bottomLeft: XYPoint;
+  topRight: XYPoint;
+}
+
+export interface IStateFeature extends UsaRegion {
+  id: string; // string form of the FIPS code
+  pathData: string;
+  centroid: XYPoint;
+  bounds: XYBoundingBox;
+}
 
 
 
@@ -25,7 +42,7 @@ export class UsaGeographyService {
   private _isLoading: boolean;
   private _dataObservable: Observable<any>;
   private _stateBordersPathData: string;
-  private _stateFeatures: any[];
+  private _stateFeatures: IStateFeature[];
 
   constructor(private dataService: StaticDataService) {
     this._isLoading = true;
@@ -57,11 +74,11 @@ export class UsaGeographyService {
     return this._stateBordersPathData;
   }
 
-  public get stateFeatures(): any[] {
+  public get stateFeatures(): IStateFeature[] {
     return this._stateFeatures;
   }
 
-  setNationalAtlas(atlas: any): any[] {
+  setNationalAtlas(atlas: any): IStateFeature[] {
     const path: GeoPath<any, any> = geoPath();
     const { states } = atlas.objects;
 
@@ -74,7 +91,11 @@ export class UsaGeographyService {
       f.pathData = path(f);
       const [ cx, cy ] = path.centroid(f);
       f.centroid = { x: cx, y: cy };
-      f.bounds = path.bounds(f);
+      const [[x0, y0], [x1, y1]] = path.bounds(f);
+      f.bounds = {
+        bottomLeft: { x: x0, y: y0 },
+        topRight: { x: x1, y: y1 },
+      };
     }
 
     this._stateFeatures = sortBy(features, ['name']);

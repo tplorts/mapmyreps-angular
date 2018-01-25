@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { UsaGeographyService } from '../data/usa-geography.service';
+import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
 
 
 
@@ -10,9 +11,10 @@ import { UsaGeographyService } from '../data/usa-geography.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public selectedState: any;
+  public selectedState: IStateFeature;
 
   constructor(
+    private router: Router,
     private geography: UsaGeographyService,
   ) {
   }
@@ -25,7 +27,12 @@ export class HomeComponent implements OnInit {
     this.selectedState = null;
   }
 
-  public get states(): any[] {
+  public get states(): IStateFeature[] {
     return this.geography.stateFeatures;
+  }
+
+  public selectState(state: IStateFeature): void {
+    this.selectedState = state;
+    this.router.navigate([state.abbreviation]);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { IStateFeature } from '../data/usa-geography.service';
 import { CongressionalDistrictsService } from '../data/congressional-districts.service';
 import { Representative } from '../data/congress';
 
@@ -12,7 +13,7 @@ import { Representative } from '../data/congress';
 })
 export class StateMapComponent implements OnInit {
 
-  @Input() state: any;
+  @Input() state: IStateFeature;
   @Input() houseReps: Representative[];
   @Input() selectedDistrict: number | null;
 
@@ -37,7 +38,10 @@ export class StateMapComponent implements OnInit {
   }
 
   public get stateTransform(): string {
-    const [[x0, y0], [x1, y1]] = this.state.bounds;
+    // const [[x0, y0], [x1, y1]] = this.state.bounds;
+    const { topRight, bottomLeft } = this.state.bounds;
+    const { x: x0, y: y0 } = bottomLeft;
+    const { x: x1, y: y1 } = topRight;
     const [ x, y ] = [ (x0 + x1) / 2, (y0 + y1) / 2 ];
     const stateWidth = x1 - x0;
     const stateHeight = y1 - y0;
