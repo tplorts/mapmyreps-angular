@@ -41,8 +41,8 @@
 
 .state-map {
   position: relative;
-  &:after, 
-  &:before {
+  &::after,
+  &::before {
     content: " ";
     position: absolute;
     top: 0;
@@ -52,12 +52,12 @@
     border: 1px solid $color-black;
     z-index: -1;
   }
-  &:after {
+  &::after {
     top: -5px;
     left: -5px;
     border: 1px solid $color-rep;
   }
-  &:before {
+  &::before {
     top: 5px;
     left: 5px;
     border: 1px solid $color-dem;
@@ -125,10 +125,12 @@ $tile-size: $size + 2 * $ring-thickness;
 }
 
 .rep-nav {
+  display: none;
+
   @media (min-width: 1380px) {
     display: flex;
   }
-  display: none;
+
   position: absolute;
   top: 50%;
   left: 0;
