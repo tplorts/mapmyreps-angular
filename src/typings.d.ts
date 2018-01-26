@@ -10,10 +10,3 @@ declare var module: NodeModule;
 interface NodeModule {
   id: string;
 }
-
-interface UsaRegion {
-  name: string;
-  status: string;
-  fipsCode: number;
-  abbreviation?: string;
-}

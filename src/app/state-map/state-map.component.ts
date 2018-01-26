@@ -31,14 +31,13 @@ export class StateMapComponent implements OnInit {
 
   ngOnInit() {
     this.selectedDistrict = null;
-    const { id, abbreviation } = this.state;
+    const { id, postal } = this.state;
     const { width, height, padding } = this.stateMapOptions;
     const p = 2 * padding;
-    this.districts.fetchState(id, abbreviation, width - p, height - p);
+    this.districts.fetchState(id, postal, width - p, height - p);
   }
 
   public get stateTransform(): string {
-    // const [[x0, y0], [x1, y1]] = this.state.bounds;
     const { topRight, bottomLeft } = this.state.bounds;
     const { x: x0, y: y0 } = bottomLeft;
     const { x: x1, y: y1 } = topRight;

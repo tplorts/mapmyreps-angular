@@ -8,7 +8,7 @@ import 'rxjs/add/observable/forkJoin';
 import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { StaticDataService } from './static-data.service';
-import { UsaGeographyService } from './usa-geography.service';
+import { UsaRegionsService } from './usa-regions.service';
 import {
   Legislator,
   ILegislator,
@@ -40,18 +40,18 @@ export class CongressService {
   private _legislators: Legislator[];
   private _committees: Committee[];
   private _dataObservable: Observable<any>;
-  private _legislatorsByState: { [stateAbbreviation: string]: Legislator[] };
+  private _legislatorsByPostal: { [postal: string]: Legislator[] };
 
-  private static isOfState(state: string) {
-    return (x: Legislator) => state === x.state;
-  }
+  // private static isOfState(state: string) {
+  //   return (x: Legislator) => state === x.state;
+  // }
 
   constructor(
     private dataService: StaticDataService,
-    private geography: UsaGeographyService,
+    private regions: UsaRegionsService,
   ) {
     this.load();
-    this._legislatorsByState = {};
+    this._legislatorsByPostal = {};
   }
 
   public load(): void {
@@ -104,12 +104,8 @@ export class CongressService {
     };
     this._legislators = legislators.map(createLegislator);
 
-    for (const region of this.geography.regions) {
-      const abbr = region.abbreviation;
-      if (abbr) {
-        this._legislatorsByState[abbr] = this.reps.filter(CongressService.isOfState(abbr));
-        // log.debug(abbr, this._legislatorsByState[abbr]);
-      }
+    for (const postal of this.regions.allPostalCodes) {
+      this._legislatorsByPostal[postal] = this.reps.filter(r => r.statePostal === postal);
     }
 
     this._isLoading = false;
@@ -121,7 +117,7 @@ export class CongressService {
     return this._legislators;
   }
 
-  public repsForState(stateAbbreviation: string): Legislator[] {
-    return this._legislatorsByState[stateAbbreviation];
+  public repsForPostal(regionPostal: string): Legislator[] {
+    return this._legislatorsByPostal[regionPostal];
   }
 }

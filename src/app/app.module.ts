@@ -6,14 +6,20 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { HomeModule } from './home/home.module';
-import { AboutModule } from './about/about.module';
-import { LoginModule } from './login/login.module';
+import { DataModule } from './data/data.module';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AppComponent } from './app.component';
+import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
+import { NationMapComponent } from './nation-map/nation-map.component';
+import { StateDetailComponent } from './state-detail/state-detail.component';
+import { StateMapComponent } from './state-map/state-map.component';
+import { RepDetailComponent } from './rep-detail/rep-detail.component';
+
+
 
 @NgModule({
   imports: [
@@ -25,16 +31,20 @@ import { LoginModule } from './login/login.module';
     MaterialModule,
     CoreModule,
     SharedModule,
-    HomeModule,
-    AboutModule,
-    LoginModule,
-    AppRoutingModule
+    DataModule,
+    AppRoutingModule,
   ],
   declarations: [
     AppComponent,
+    AboutComponent,
+    HomeComponent,
+    NationMapComponent,
+    StateDetailComponent,
+    StateMapComponent,
+    RepDetailComponent,
   ],
   providers: [
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ],
 })
 export class AppModule { }

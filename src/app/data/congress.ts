@@ -101,7 +101,7 @@ export interface ILegislatorBio {
 
 export interface ILegislatorTerm extends DatePeriod {
   type: LegislatorType;
-  state: string; // 2-letter abbreviation
+  state: string; // 2-letter postal code
   party: PoliticalParty;
   caucus?: PoliticalParty;
   party_affiliations?: IPartyAffiliation[];
@@ -252,7 +252,7 @@ export class Legislator {
     return this.presentTerm.party;
   }
 
-  public get state(): string {
+  public get statePostal(): string {
     return this.presentTerm.state;
   }
 

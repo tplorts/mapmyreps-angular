@@ -9,8 +9,11 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { Logger } from './core/logger.service';
 import { I18nService } from './core/i18n.service';
+import { PreAppLoaderService } from './shared/pre-app-loader.service';
 
 const log = new Logger('App');
+
+
 
 @Component({
   selector: 'app-root',
@@ -27,6 +30,7 @@ export class AppComponent implements OnInit {
     private i18nService: I18nService,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
+    private appLoader: PreAppLoaderService,
   ) {
     log.info(`API URL: ${environment.serverUrl}`);
   }
@@ -63,6 +67,8 @@ export class AppComponent implements OnInit {
       });
 
       this.setupIcons();
+
+      // this.appLoader.remove();
   }
 
   setupIcons() {

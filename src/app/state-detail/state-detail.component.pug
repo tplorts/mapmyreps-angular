@@ -1,44 +1,39 @@
-.loading(*ngIf="isCongressLoading; else content")
-  mat-spinner([diameter]='48')
-  p Getting info for {{ state.name }}
-
-ng-template(#content)
-  .state-info-content
-    .state-reps-section
-      .state-title
-        button.svg-icon-button.back-button((click)='goBack()')
-          mat-icon(svgIcon='back-to-map')
-        h4 {{ stateTitle }}
-      .state-map.spacer-bottom
-        app-state-map(
-          [state]='state',
-          [houseReps]='houseReps',
-          [selectedDistrict]='selectedRep && selectedRep.district',
-          (onSelectDistrict)='selectRepForDistrict($event)',
-        )
-      .rep-list([ngClass]="{ 'rep-selected': isRepSelected }")
-        .spacer-bottom(*ngFor='let repSet of repSets')
-          h4 {{ repSet.title }}
-          .rep-grid
-            .rep-grid-tile(
-              *ngFor='let rep of repSet.reps',
-              [ngClass]='repTileClass(rep)'
+.state-info-content(*ngIf='isReady')
+  .state-reps-section
+    .state-title
+      button.svg-icon-button.back-button((click)='goBack()')
+        mat-icon(svgIcon='back-to-map')
+      h4 {{ stateTitle }}
+    .state-map.spacer-bottom
+      app-state-map(
+        [state]='state',
+        [houseReps]='houseReps',
+        [selectedDistrict]='selectedRep && selectedRep.district',
+        (onSelectDistrict)='selectRepForDistrict($event)',
+      )
+    .rep-list([ngClass]="{ 'rep-selected': isRepSelected }")
+      .spacer-bottom(*ngFor='let repSet of repSets')
+        h4 {{ repSet.title }}
+        .rep-grid
+          .rep-grid-tile(
+            *ngFor='let rep of repSet.reps',
+            [ngClass]='repTileClass(rep)'
+          )
+            .rep-image(
+              [ngStyle]='repImageStyle(rep)',
+              (click)='selectRep(rep)',
+              [matTooltip]='rep.fullName',
             )
-              .rep-image(
-                [ngStyle]='repImageStyle(rep)',
-                (click)='selectRep(rep)',
-                [matTooltip]='rep.fullName',
-              )
-    .rep-info-section
-      app-rep-detail([rep]='selectedRep')
-      .rep-nav(*ngIf="isRepSelected")
-        button.svg-icon-button(
-          (click)="priorRep()",
-          [disabled]="isOnFirstRep",
-        )
-          mat-icon(svgIcon='arrow-left')
-        button.svg-icon-button(
-          (click)="nextRep()",
-          [disabled]="isOnLastRep",
-        )
-          mat-icon(svgIcon='arrow-right')
+  .rep-info-section
+    app-rep-detail([rep]='selectedRep')
+    .rep-nav(*ngIf="isRepSelected")
+      button.svg-icon-button(
+        (click)="priorRep()",
+        [disabled]="isOnFirstRep",
+      )
+        mat-icon(svgIcon='arrow-left')
+      button.svg-icon-button(
+        (click)="nextRep()",
+        [disabled]="isOnLastRep",
+      )
+        mat-icon(svgIcon='arrow-right')

@@ -9,6 +9,7 @@ import { CongressService } from './congress.service';
 import { UsaGeographyService } from './usa-geography.service';
 import { CongressionalDistrictsService } from './congressional-districts.service';
 import { D3GeoStatePlaneService } from './d3-geo-state-plane.service';
+import { UsaRegionsService } from './usa-regions.service';
 
 
 
@@ -26,6 +27,7 @@ import { D3GeoStatePlaneService } from './d3-geo-state-plane.service';
     UsaGeographyService,
     CongressionalDistrictsService,
     D3GeoStatePlaneService,
+    UsaRegionsService,
   ]
 })
 export class DataModule { }

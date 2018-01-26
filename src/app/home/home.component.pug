@@ -1,3 +1,4 @@
+//- TODO: create a separate component for the mini state selector
 .mini-state-selector
   mat-select(
     placeholder='State',
@@ -11,9 +12,9 @@
 
 
 app-nation-map(
-  [selectedState]='selectedState',
-  (selectedStateChange)='selectState($event)'
+  [(selectedState)]='selectedState',
 )
+  //- (selectedStateChange)='selectState($event)'
 
 //- state detail gets instered here
 router-outlet

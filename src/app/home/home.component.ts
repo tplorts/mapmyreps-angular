@@ -11,7 +11,7 @@ import { UsaGeographyService, IStateFeature } from '../data/usa-geography.servic
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public selectedState: IStateFeature;
+  private _selectedState: IStateFeature;
 
   constructor(
     private router: Router,
@@ -20,19 +20,23 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedState = null;
+    this._selectedState = null;
   }
 
-  public closeState(): void {
-    this.selectedState = null;
-  }
+  // public closeState(): void {
+  //   this.selectedState = null;
+  // }
 
   public get states(): IStateFeature[] {
     return this.geography.stateFeatures;
   }
 
-  public selectState(state: IStateFeature): void {
-    this.selectedState = state;
-    this.router.navigate([state.abbreviation]);
+  public get selectedState(): IStateFeature {
+    return this._selectedState;
+  }
+
+  public set selectedState(state: IStateFeature) {
+    this._selectedState = state;
+    this.router.navigate([state.postal]);
   }
 }

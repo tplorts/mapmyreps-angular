@@ -1,407 +1,407 @@
 [
   {
     "name": "Alabama",
-    "abbreviation": "AL",
-    "fipsCode": 1,
+    "postal": "AL",
+    "fips": 1,
     "status": "State"
   },
   {
     "name": "Alaska",
-    "abbreviation": "AK",
-    "fipsCode": 2,
+    "postal": "AK",
+    "fips": 2,
     "status": "State"
   },
   {
     "name": "Arizona",
-    "abbreviation": "AZ",
-    "fipsCode": 4,
+    "postal": "AZ",
+    "fips": 4,
     "status": "State"
   },
   {
     "name": "Arkansas",
-    "abbreviation": "AR",
-    "fipsCode": 5,
+    "postal": "AR",
+    "fips": 5,
     "status": "State"
   },
   {
     "name": "California",
-    "abbreviation": "CA",
-    "fipsCode": 6,
+    "postal": "CA",
+    "fips": 6,
     "status": "State"
   },
   {
     "name": "Colorado",
-    "abbreviation": "CO",
-    "fipsCode": 8,
+    "postal": "CO",
+    "fips": 8,
     "status": "State"
   },
   {
     "name": "Connecticut",
-    "abbreviation": "CT",
-    "fipsCode": 9,
+    "postal": "CT",
+    "fips": 9,
     "status": "State"
   },
   {
     "name": "Delaware",
-    "abbreviation": "DE",
-    "fipsCode": 10,
+    "postal": "DE",
+    "fips": 10,
     "status": "State"
   },
   {
     "name": "District of Columbia",
-    "abbreviation": "DC",
-    "fipsCode": 11,
+    "postal": "DC",
+    "fips": 11,
     "status": "Federal district"
   },
   {
     "name": "Florida",
-    "abbreviation": "FL",
-    "fipsCode": 12,
+    "postal": "FL",
+    "fips": 12,
     "status": "State"
   },
   {
     "name": "Georgia",
-    "abbreviation": "GA",
-    "fipsCode": 13,
+    "postal": "GA",
+    "fips": 13,
     "status": "State"
   },
   {
     "name": "Hawaii",
-    "abbreviation": "HI",
-    "fipsCode": 15,
+    "postal": "HI",
+    "fips": 15,
     "status": "State"
   },
   {
     "name": "Idaho",
-    "abbreviation": "ID",
-    "fipsCode": 16,
+    "postal": "ID",
+    "fips": 16,
     "status": "State"
   },
   {
     "name": "Illinois",
-    "abbreviation": "IL",
-    "fipsCode": 17,
+    "postal": "IL",
+    "fips": 17,
     "status": "State"
   },
   {
     "name": "Indiana",
-    "abbreviation": "IN",
-    "fipsCode": 18,
+    "postal": "IN",
+    "fips": 18,
     "status": "State"
   },
   {
     "name": "Iowa",
-    "abbreviation": "IA",
-    "fipsCode": 19,
+    "postal": "IA",
+    "fips": 19,
     "status": "State"
   },
   {
     "name": "Kansas",
-    "abbreviation": "KS",
-    "fipsCode": 20,
+    "postal": "KS",
+    "fips": 20,
     "status": "State"
   },
   {
     "name": "Kentucky",
-    "abbreviation": "KY",
-    "fipsCode": 21,
+    "postal": "KY",
+    "fips": 21,
     "status": "State"
   },
   {
     "name": "Louisiana",
-    "abbreviation": "LA",
-    "fipsCode": 22,
+    "postal": "LA",
+    "fips": 22,
     "status": "State"
   },
   {
     "name": "Maine",
-    "abbreviation": "ME",
-    "fipsCode": 23,
+    "postal": "ME",
+    "fips": 23,
     "status": "State"
   },
   {
     "name": "Maryland",
-    "abbreviation": "MD",
-    "fipsCode": 24,
+    "postal": "MD",
+    "fips": 24,
     "status": "State"
   },
   {
     "name": "Massachusetts",
-    "abbreviation": "MA",
-    "fipsCode": 25,
+    "postal": "MA",
+    "fips": 25,
     "status": "State"
   },
   {
     "name": "Michigan",
-    "abbreviation": "MI",
-    "fipsCode": 26,
+    "postal": "MI",
+    "fips": 26,
     "status": "State"
   },
   {
     "name": "Minnesota",
-    "abbreviation": "MN",
-    "fipsCode": 27,
+    "postal": "MN",
+    "fips": 27,
     "status": "State"
   },
   {
     "name": "Mississippi",
-    "abbreviation": "MS",
-    "fipsCode": 28,
+    "postal": "MS",
+    "fips": 28,
     "status": "State"
   },
   {
     "name": "Missouri",
-    "abbreviation": "MO",
-    "fipsCode": 29,
+    "postal": "MO",
+    "fips": 29,
     "status": "State"
   },
   {
     "name": "Montana",
-    "abbreviation": "MT",
-    "fipsCode": 30,
+    "postal": "MT",
+    "fips": 30,
     "status": "State"
   },
   {
     "name": "Nebraska",
-    "abbreviation": "NE",
-    "fipsCode": 31,
+    "postal": "NE",
+    "fips": 31,
     "status": "State"
   },
   {
     "name": "Nevada",
-    "abbreviation": "NV",
-    "fipsCode": 32,
+    "postal": "NV",
+    "fips": 32,
     "status": "State"
   },
   {
     "name": "New Hampshire",
-    "abbreviation": "NH",
-    "fipsCode": 33,
+    "postal": "NH",
+    "fips": 33,
     "status": "State"
   },
   {
     "name": "New Jersey",
-    "abbreviation": "NJ",
-    "fipsCode": 34,
+    "postal": "NJ",
+    "fips": 34,
     "status": "State"
   },
   {
     "name": "New Mexico",
-    "abbreviation": "NM",
-    "fipsCode": 35,
+    "postal": "NM",
+    "fips": 35,
     "status": "State"
   },
   {
     "name": "New York",
-    "abbreviation": "NY",
-    "fipsCode": 36,
+    "postal": "NY",
+    "fips": 36,
     "status": "State"
   },
   {
     "name": "North Carolina",
-    "abbreviation": "NC",
-    "fipsCode": 37,
+    "postal": "NC",
+    "fips": 37,
     "status": "State"
   },
   {
     "name": "North Dakota",
-    "abbreviation": "ND",
-    "fipsCode": 38,
+    "postal": "ND",
+    "fips": 38,
     "status": "State"
   },
   {
     "name": "Ohio",
-    "abbreviation": "OH",
-    "fipsCode": 39,
+    "postal": "OH",
+    "fips": 39,
     "status": "State"
   },
   {
     "name": "Oklahoma",
-    "abbreviation": "OK",
-    "fipsCode": 40,
+    "postal": "OK",
+    "fips": 40,
     "status": "State"
   },
   {
     "name": "Oregon",
-    "abbreviation": "OR",
-    "fipsCode": 41,
+    "postal": "OR",
+    "fips": 41,
     "status": "State"
   },
   {
     "name": "Pennsylvania",
-    "abbreviation": "PA",
-    "fipsCode": 42,
+    "postal": "PA",
+    "fips": 42,
     "status": "State"
   },
   {
     "name": "Rhode Island",
-    "abbreviation": "RI",
-    "fipsCode": 44,
+    "postal": "RI",
+    "fips": 44,
     "status": "State"
   },
   {
     "name": "South Carolina",
-    "abbreviation": "SC",
-    "fipsCode": 45,
+    "postal": "SC",
+    "fips": 45,
     "status": "State"
   },
   {
     "name": "South Dakota",
-    "abbreviation": "SD",
-    "fipsCode": 46,
+    "postal": "SD",
+    "fips": 46,
     "status": "State"
   },
   {
     "name": "Tennessee",
-    "abbreviation": "TN",
-    "fipsCode": 47,
+    "postal": "TN",
+    "fips": 47,
     "status": "State"
   },
   {
     "name": "Texas",
-    "abbreviation": "TX",
-    "fipsCode": 48,
+    "postal": "TX",
+    "fips": 48,
     "status": "State"
   },
   {
     "name": "Utah",
-    "abbreviation": "UT",
-    "fipsCode": 49,
+    "postal": "UT",
+    "fips": 49,
     "status": "State"
   },
   {
     "name": "Vermont",
-    "abbreviation": "VT",
-    "fipsCode": 50,
+    "postal": "VT",
+    "fips": 50,
     "status": "State"
   },
   {
     "name": "Virginia",
-    "abbreviation": "VA",
-    "fipsCode": 51,
+    "postal": "VA",
+    "fips": 51,
     "status": "State"
   },
   {
     "name": "Washington",
-    "abbreviation": "WA",
-    "fipsCode": 53,
+    "postal": "WA",
+    "fips": 53,
     "status": "State"
   },
   {
     "name": "West Virginia",
-    "abbreviation": "WV",
-    "fipsCode": 54,
+    "postal": "WV",
+    "fips": 54,
     "status": "State"
   },
   {
     "name": "Wisconsin",
-    "abbreviation": "WI",
-    "fipsCode": 55,
+    "postal": "WI",
+    "fips": 55,
     "status": "State"
   },
   {
     "name": "Wyoming",
-    "abbreviation": "WY",
-    "fipsCode": 56,
+    "postal": "WY",
+    "fips": 56,
     "status": "State"
   },
   {
     "name": "American Samoa",
-    "abbreviation": "AS",
-    "fipsCode": 60,
+    "postal": "AS",
+    "fips": 60,
     "status": "Outlying area under U.S. sovereignty"
   },
   {
     "name": "Federated States of Micronesia",
-    "abbreviation": "FM",
-    "fipsCode": 64,
+    "postal": "FM",
+    "fips": 64,
     "status": "Freely Associated State"
   },
   {
     "name": "Guam",
-    "abbreviation": "GU",
-    "fipsCode": 66,
+    "postal": "GU",
+    "fips": 66,
     "status": "Outlying area under U.S. sovereignty"
   },
   {
     "name": "Johnston Atoll",
-    "fipsCode": 67,
+    "fips": 67,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Marshall Islands",
-    "abbreviation": "MH",
-    "fipsCode": 68,
+    "postal": "MH",
+    "fips": 68,
     "status": "Freely Associated State"
   },
   {
     "name": "Northern Mariana Islands",
-    "abbreviation": "MP",
-    "fipsCode": 69,
+    "postal": "MP",
+    "fips": 69,
     "status": "Outlying area under U.S. sovereignty"
   },
   {
     "name": "Palau",
-    "abbreviation": "PW",
-    "fipsCode": 70,
+    "postal": "PW",
+    "fips": 70,
     "status": "Freely Associated State"
   },
   {
     "name": "Midway Islands",
-    "fipsCode": 71,
+    "fips": 71,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Puerto Rico",
-    "abbreviation": "PR",
-    "fipsCode": 72,
+    "postal": "PR",
+    "fips": 72,
     "status": "Outlying area under U.S. sovereignty"
   },
   {
     "name": "U.S. Minor Outlying Islands",
-    "abbreviation": "UM",
-    "fipsCode": 74,
+    "postal": "UM",
+    "fips": 74,
     "status": "Minor outlying island territories (aggregated)"
   },
   {
     "name": "Navassa Island",
-    "fipsCode": 76,
+    "fips": 76,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Virgin Islands of the U.S.",
-    "abbreviation": "VI",
-    "fipsCode": 78,
+    "postal": "VI",
+    "fips": 78,
     "status": "Outlying area under U.S. sovereignty"
   },
   {
     "name": "Wake Island",
-    "fipsCode": 79,
+    "fips": 79,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Baker Island",
-    "fipsCode": 81,
+    "fips": 81,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Howland Island",
-    "fipsCode": 84,
+    "fips": 84,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Jarvis Island",
-    "fipsCode": 86,
+    "fips": 86,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Kingman Reef",
-    "fipsCode": 89,
+    "fips": 89,
     "status": "Minor outlying island territory"
   },
   {
     "name": "Palmyra Atoll",
-    "fipsCode": 95,
+    "fips": 95,
     "status": "Minor outlying island territory"
   }
 ]

@@ -26,8 +26,8 @@ export class D3GeoStatePlaneService {
 
   constructor() { }
 
-  public projection(stateAbbreviation: string, width: number, height: number) {
-    const def = StatePlanes[stateAbbreviation];
+  public projection(statePostal: string, width: number, height: number) {
+    const def = StatePlanes[statePostal];
     if (!def) {
       return geoAlbersUsa();
     }

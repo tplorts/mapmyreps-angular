@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { toNumber, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 
 import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
@@ -10,9 +10,7 @@ import { feature, mesh } from 'topojson';
 import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { StaticDataService } from './static-data.service';
-
-import * as _UsaRegions from 'usa-regions.json';
-const UsaRegions = <UsaRegion[]> _UsaRegions;
+import { UsaRegion, UsaRegionsService } from './usa-regions.service';
 
 const log = new Logger('USA Geography');
 
@@ -29,7 +27,7 @@ export interface XYBoundingBox {
 }
 
 export interface IStateFeature extends UsaRegion {
-  id: string; // string form of the FIPS code
+  id: string; // string form of the FIPS identifier
   pathData: string;
   centroid: XYPoint;
   bounds: XYBoundingBox;
@@ -44,7 +42,10 @@ export class UsaGeographyService {
   private _stateBordersPathData: string;
   private _stateFeatures: IStateFeature[];
 
-  constructor(private dataService: StaticDataService) {
+  constructor(
+    private regions: UsaRegionsService,
+    private dataService: StaticDataService,
+  ) {
     this._isLoading = true;
     const dir = environment.geographyDataDirectory;
     this._dataObservable = new Observable<any>(observer => {
@@ -56,10 +57,6 @@ export class UsaGeographyService {
         () => observer.complete(),
       );
     });
-  }
-
-  public get regions(): UsaRegion[] {
-    return UsaRegions;
   }
 
   public get isLoading(): boolean {
@@ -86,7 +83,7 @@ export class UsaGeographyService {
 
     const features = feature(atlas, states).features;
     for (const f of features) {
-      const region = UsaRegions.find(r => r.fipsCode === toNumber(f.id));
+      const region = this.regions.findByFips(f.id);
       Object.assign(f, region);
       f.pathData = path(f);
       const [ cx, cy ] = path.centroid(f);

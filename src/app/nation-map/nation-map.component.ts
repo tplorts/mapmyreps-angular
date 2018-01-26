@@ -4,7 +4,7 @@ import 'rxjs/add/observable/forkJoin';
 
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
-import { PreAppLoaderService } from '../shared/pre-app-loader.service';
+// import { PreAppLoaderService } from '../shared/pre-app-loader.service';
 import { UserOptionsService, PartyColoringMode } from '../core/user-options.service';
 import { Logger } from '../core/logger.service';
 import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
@@ -48,7 +48,7 @@ export class NationMapComponent {
     private geography: UsaGeographyService,
     private congress: CongressService,
     public options: UserOptionsService,
-    private appLoader: PreAppLoaderService,
+    // private appLoader: PreAppLoaderService,
   ) {
     this.selectedState = null;
     this.options.partyColoringModeChange.subscribe(() => this.updateStateColors());
@@ -60,7 +60,7 @@ export class NationMapComponent {
     )
     .subscribe(() => {
       this.computeStateProportions();
-      this.appLoader.remove();
+      // this.appLoader.remove();
     });
   }
 
@@ -101,7 +101,7 @@ export class NationMapComponent {
   private computeStateProportions() {
     const parties = Object.values(PoliticalParty);
     for (const state of this.stateFeatures) {
-      const reps = this.congress.repsForState(state.abbreviation);
+      const reps = this.congress.repsForPostal(state.postal);
       if (!reps) {
         log.warn('got no reps for state', state);
       }
@@ -114,7 +114,7 @@ export class NationMapComponent {
       state.seatProportionsByParty = seatProportionsByParty;
       const dem = state.seatProportionsByParty.Democrat;
       const rep = state.seatProportionsByParty.Republican;
-      state.tooltipText = `${state.abbreviation} ${Math.round(100 * dem)}-${Math.round(100 * rep)}`;
+      state.tooltipText = `${state.postal} ${Math.round(100 * dem)}-${Math.round(100 * rep)}`;
     }
 
     this.updateStateColors();

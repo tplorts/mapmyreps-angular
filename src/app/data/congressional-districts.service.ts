@@ -11,9 +11,7 @@ import { environment } from '../../environments/environment';
 import { Logger } from '../core/logger.service';
 import { StaticDataService } from './static-data.service';
 import { D3GeoStatePlaneService } from './d3-geo-state-plane.service';
-
-import * as _UsaRegions from 'usa-regions.json';
-const UsaRegions = <UsaRegion[]> _UsaRegions;
+// import { UsaRegionsService } from './usa-regions.service';
 
 
 
@@ -35,6 +33,7 @@ export class CongressionalDistrictsService {
   private _features: any[];
 
   constructor(
+    // private regions: UsaRegionsService,
     private dataService: StaticDataService,
     private statePlane: D3GeoStatePlaneService,
   ) {

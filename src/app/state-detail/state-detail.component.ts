@@ -53,9 +53,8 @@ export class StateDetailComponent implements OnInit {
   @Input()
   public set state(s: IStateFeature) {
     this._state = s;
-    if (this.isCongressLoading) {
-      const onceDone = new Subscriber(null, null, () => this.makeRepSets());
-      this.congress.dataObservable.subscribe(onceDone);
+    if (this.congress.isLoading) {
+      this.congress.dataObservable.subscribe(null, null, () => this.makeRepSets());
     } else {
       this.makeRepSets();
     }
@@ -64,13 +63,22 @@ export class StateDetailComponent implements OnInit {
   ngOnInit() {
     this.selectedRep = null;
     this._iSelectedLegislator = null;
-    const requestedStateAbbreviation = this.route.snapshot.paramMap.get('stateAbbreviation');
-    this.state = this.geography.stateFeatures.find(s => s.abbreviation === requestedStateAbbreviation);
+    log.debug(this.route.snapshot.url[0].path);
+    const requestedPostal = this.route.snapshot.url[0].path.toUpperCase();
+    if (this.geography.isLoading) {
+      this.geography.dataObservable.subscribe(null, null, () => this.setStatePostal(requestedPostal));
+    } else {
+      this.setStatePostal(requestedPostal);
+    }
+  }
+
+  private setStatePostal(postal: string) {
+    this.state = this.geography.stateFeatures.find(s => s.postal === postal);
   }
 
   public get stateTitle(): string {
     const {state} = this;
-    return state && `${state.name} (${state.abbreviation})`;
+    return state && `${state.name} (${state.postal})`;
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -95,12 +103,16 @@ export class StateDetailComponent implements OnInit {
     this.location.back();
   }
 
-  public get isCongressLoading(): boolean {
-    return this.congress.isLoading;
+  public get isLoading(): boolean {
+    return this.congress.isLoading || this.geography.isLoading || !this.state || !this.repSets;
+  }
+
+  public get isReady(): boolean {
+    return !!this.repSets;
   }
 
   private stateLegislators(): Legislator[] {
-    return this.congress.repsForState(this.state.abbreviation);
+    return this.congress.repsForPostal(this.state.postal);
   }
 
   private makeRepSets() {
