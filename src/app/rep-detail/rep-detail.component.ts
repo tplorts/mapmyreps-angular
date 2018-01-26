@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute, RouterEvent } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 import { Legislator, Committee } from '../data/congress';
 
@@ -14,9 +16,14 @@ export class RepDetailComponent implements OnInit {
 
   public committeesExpanded: { [thomasId: string]: boolean };
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {
+  }
 
   ngOnInit() {
+    this.rep = this.route.snapshot.data.rep;
   }
 
   @Input()

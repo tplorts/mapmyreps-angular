@@ -41,12 +41,13 @@ export class StateDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedRep = null;
-    this._iSelectedLegislator = null;
     const { regionFeature, regionReps } = this.route.snapshot.data;
     this._state = regionFeature;
     this._allLegislators = regionReps;
     this.makeRepSets();
+    const repViewSnapshot = this.route.snapshot.firstChild;
+    this.selectedRep = repViewSnapshot ? repViewSnapshot.data.rep : null;
+    this._iSelectedLegislator = this.indexOfRep(this.selectedRep);
   }
 
   public get stateTitle(): string {
@@ -73,10 +74,17 @@ export class StateDetailComponent implements OnInit {
 
   private makeRepSets() {
     const reps = this._allLegislators;
+    // The list of legislators is already sorted such that senators come before
+    // all of the house representatives.
+    // Even though there will almost always be 2 Senators, there may be a temporary
+    // vacancy; also consider DC, with no senators and one rep in the house.
+    // const iHouseReps = reps.findIndex(r => r.isRepresentative());
+    // this._houseReps = <Representative[]> reps.slice(iHouseReps);
     this._houseReps = <Representative[]> reps.filter(z => z.isRepresentative());
     this._repSets = [
       {
         title: 'Senators',
+        // reps: reps.slice(0, iHouseReps),
         reps: reps.filter(z => z.isSenator()),
       },
       {
@@ -100,19 +108,35 @@ export class StateDetailComponent implements OnInit {
     };
   }
 
+  private indexOfRep(rep: Legislator): number {
+    if (!rep) {
+      return null;
+    }
+    const { bioguide } = rep.identifiers;
+    const byBioguideId = (r: Legislator) => r.identifiers.bioguide === bioguide;
+    return this._allLegislators.findIndex(byBioguideId);
+  }
+
   public selectRep(rep: Legislator): void {
     this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
-    if (this.selectedRep) {
-      const byBioguideId = (r: Legislator) => r.identifiers.bioguide === this.selectedRep.identifiers.bioguide;
-      this._iSelectedLegislator = this._allLegislators.findIndex(byBioguideId);
-    } else {
-      this._iSelectedLegislator = null;
-    }
+    this._iSelectedLegislator = this.indexOfRep(this.selectedRep);
+    this.navigateToSelectedRep();
   }
 
   public selectRepByIndex(index: number) {
     this._iSelectedLegislator = index;
     this.selectedRep = this._allLegislators[index];
+    this.navigateToSelectedRep();
+  }
+
+  private async navigateToSelectedRep() {
+    const repSegment = this.isRepSelected ? this.selectedRep.urlSegment : '.';
+    try {
+      await this.router.navigate(['.'], { relativeTo: this.route });
+      const success = await this.router.navigate([ repSegment ], { relativeTo: this.route });
+    } catch (err) {
+      log.warn(err);
+    }
   }
 
   public get isRepSelected(): boolean {
@@ -120,8 +144,7 @@ export class StateDetailComponent implements OnInit {
   }
 
   public selectRepForDistrict(district: number) {
-    const { reps } = this.repSets.find(s => s.title === 'Representatives');
-    const rep = reps.find(r => r.district === district);
+    const rep = this.houseReps.find(r => r.district === district);
     if (rep) {
       this.selectRep(rep);
     }

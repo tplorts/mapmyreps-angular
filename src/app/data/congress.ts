@@ -248,6 +248,10 @@ export class Legislator {
     return `${this.title} ${this.fullName}`;
   }
 
+  public get urlSegment(): string {
+    return this.fullName.replace(/([^A-Z])+/ig, '-');
+  }
+
   public get party(): PoliticalParty {
     return this.presentTerm.party;
   }

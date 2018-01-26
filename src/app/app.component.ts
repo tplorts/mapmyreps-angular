@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private appLoader: PreAppLoaderService,
   ) {
-    log.info(`API URL: ${environment.serverUrl}`);
+    // log.info(`API URL: ${environment.serverUrl}`);
   }
 
   ngOnInit() {

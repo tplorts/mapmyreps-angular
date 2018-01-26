@@ -1,4 +1,5 @@
 .state-info-content
+
   .state-reps-section
     .state-title
       a.svg-icon-button.back-button(routerLink='/')
@@ -24,8 +25,11 @@
               (click)='selectRep(rep)',
               [matTooltip]='rep.fullName',
             )
+
   .rep-info-section
-    app-rep-detail([rep]='selectedRep')
+    //- Outlet for Rep Detail view
+    router-outlet
+
     .rep-nav(*ngIf="isRepSelected")
       button.svg-icon-button(
         (click)="priorRep()",
