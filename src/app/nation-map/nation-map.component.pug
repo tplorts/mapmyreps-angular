@@ -8,17 +8,9 @@ svg(
         *ngFor='let state of stateFeatures',
       )
         svg:path.state-path(
-          [ngClass]="{ 'selected': isSelected(state) }",
           [attr.d]='state.pathData',
           [matTooltip]='state.tooltipText',
           (click)='selectState(state)',
           [attr.fill]='state.fillColor',
         )
-        //- svg:text.state-label(
-        //-   [attr.x]='state.centroid.x',
-        //-   [attr.y]='state.centroid.y',
-        //- )
-          | {{ state.seatProportionsByParty.Democrat | percent }}
-          | /
-          | {{ state.seatProportionsByParty.Republican | percent }}
     svg:path.state-borders([attr.d]='stateBordersPathData')

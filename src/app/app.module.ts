@@ -21,6 +21,9 @@ import { RepDetailComponent } from './rep-detail/rep-detail.component';
 
 import { RegionFeatureResolver } from './region-feature-resolver.service';
 import { RegionRepsResolver } from './region-reps-resolver.service';
+import { NationFeaturesResolver } from './nation-features-resolver.service';
+import { CongressResolver } from './congress-resolver.service';
+
 
 
 @NgModule({
@@ -46,6 +49,8 @@ import { RegionRepsResolver } from './region-reps-resolver.service';
     RepDetailComponent,
   ],
   providers: [
+    NationFeaturesResolver,
+    CongressResolver,
     RegionFeatureResolver,
     RegionRepsResolver,
   ],

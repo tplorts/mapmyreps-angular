@@ -1,10 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
-// import { PreAppLoaderService } from '../shared/pre-app-loader.service';
 import { UserOptionsService, PartyColoringMode } from '../core/user-options.service';
 import { Logger } from '../core/logger.service';
 import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
@@ -27,7 +24,7 @@ const log = new Logger('MapViewComponent');
   templateUrl: './nation-map.component.pug',
   styleUrls: ['./nation-map.component.scss']
 })
-export class NationMapComponent {
+export class NationMapComponent implements OnInit {
 
   // TODO: find a way to grab these color definitions from the
   // scss theme files
@@ -40,28 +37,19 @@ export class NationMapComponent {
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
 
-  @Input()  selectedState: IStateFeature;
-  @Output() selectedStateChange = new EventEmitter<IStateFeature>();
+  @Output() onSelectState = new EventEmitter<IStateFeature>();
 
 
   constructor(
     private geography: UsaGeographyService,
     private congress: CongressService,
     public options: UserOptionsService,
-    // private appLoader: PreAppLoaderService,
-  ) {
-    this.selectedState = null;
+  ) { }
+
+  ngOnInit() {
     this.options.partyColoringModeChange.subscribe(() => this.updateStateColors());
     this.options.colorMixModeChange.subscribe(() => this.updateStateColors());
-
-    Observable.forkJoin(
-      this.congress.dataObservable,
-      this.geography.dataObservable,
-    )
-    .subscribe(() => {
-      this.computeStateProportions();
-      // this.appLoader.remove();
-    });
+    this.computeStateProportions();
   }
 
   public get stateFeatures(): Array<IStateFeature | any> {
@@ -73,12 +61,7 @@ export class NationMapComponent {
   }
 
   public selectState(state: IStateFeature) {
-    this.selectedState = (!state || this.selectedState === state) ? null : state;
-    this.selectedStateChange.emit(this.selectedState);
-  }
-
-  public isSelected(state: IStateFeature): boolean {
-    return state && state === this.selectedState;
+    this.onSelectState.emit(state);
   }
 
   public get width(): number {

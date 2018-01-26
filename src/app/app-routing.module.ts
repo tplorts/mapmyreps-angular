@@ -12,6 +12,8 @@ import { Route } from './core/route.service';
 import { UsaRegionsService } from './data/usa-regions.service';
 import { RegionFeatureResolver } from './region-feature-resolver.service';
 import { RegionRepsResolver } from './region-reps-resolver.service';
+import { NationFeaturesResolver } from './nation-features-resolver.service';
+import { CongressResolver } from './congress-resolver.service';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
@@ -45,6 +47,10 @@ const routes: Routes = Route.withShell([
   {
     path: '',
     component: HomeComponent,
+    resolve: {
+      geography: NationFeaturesResolver,
+      congress: CongressResolver,
+    },
     children: [
       {
         matcher: stateMatcher,
