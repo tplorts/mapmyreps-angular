@@ -1,7 +1,7 @@
 .state-info-content(*ngIf='isReady')
   .state-reps-section
     .state-title
-      button.svg-icon-button.back-button((click)='goBack()')
+      a.svg-icon-button.back-button(routerLink='/')
         mat-icon(svgIcon='back-to-map')
       h4 {{ stateTitle }}
     .state-map.spacer-bottom
