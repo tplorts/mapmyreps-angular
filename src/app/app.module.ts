@@ -19,6 +19,8 @@ import { StateDetailComponent } from './state-detail/state-detail.component';
 import { StateMapComponent } from './state-map/state-map.component';
 import { RepDetailComponent } from './rep-detail/rep-detail.component';
 
+import { RegionFeatureResolver } from './region-feature-resolver.service';
+import { RegionRepsResolver } from './region-reps-resolver.service';
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { RepDetailComponent } from './rep-detail/rep-detail.component';
     RepDetailComponent,
   ],
   providers: [
+    RegionFeatureResolver,
+    RegionRepsResolver,
   ],
   bootstrap: [ AppComponent ],
 })

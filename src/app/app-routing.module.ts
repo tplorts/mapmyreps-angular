@@ -10,6 +10,8 @@ import {
 import { Logger } from './core/logger.service';
 import { Route } from './core/route.service';
 import { UsaRegionsService } from './data/usa-regions.service';
+import { RegionFeatureResolver } from './region-feature-resolver.service';
+import { RegionRepsResolver } from './region-reps-resolver.service';
 
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
@@ -17,6 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { StateDetailComponent } from './state-detail/state-detail.component';
 
 const log = new Logger('Routing');
+
 
 
 // TODO: can we use the regions service instance to use isPostal()?
@@ -31,6 +34,7 @@ export function stateMatcher(segments: UrlSegment[], group: UrlSegmentGroup, rou
 }
 
 
+
 const routes: Routes = Route.withShell([
   // Fallback when no prior route is matched
   // { path: '**', redirectTo: '', pathMatch: 'full' }
@@ -43,13 +47,18 @@ const routes: Routes = Route.withShell([
     component: HomeComponent,
     children: [
       {
-        // path: ':statePostal',
         matcher: stateMatcher,
         component: StateDetailComponent,
+        resolve: {
+          regionFeature: RegionFeatureResolver,
+          regionReps: RegionRepsResolver,
+        }
       },
     ],
   },
 ]);
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

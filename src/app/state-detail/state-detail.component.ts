@@ -1,14 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { Subscriber } from 'rxjs/Subscriber';
-
-import { sortBy } from 'lodash';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Logger } from '../core/logger.service';
-import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
+import { IStateFeature } from '../data/usa-geography.service';
 import { Legislator, Representative } from '../data/congress';
-import { CongressService } from '../data/congress.service';
 
 
 const log = new Logger('State Detail');
@@ -36,44 +31,22 @@ export class StateDetailComponent implements OnInit {
 
   public selectedRep: Legislator;
 
-  @Output() close: EventEmitter<any> = new EventEmitter();
-
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private location: Location,
-    private geography: UsaGeographyService,
-    private congress: CongressService,
-  ) {
-  }
+  ) { }
 
   public get state(): IStateFeature {
     return this._state;
   }
 
-  @Input()
-  public set state(s: IStateFeature) {
-    this._state = s;
-    if (this.congress.isLoading) {
-      this.congress.dataObservable.subscribe(null, null, () => this.makeRepSets());
-    } else {
-      this.makeRepSets();
-    }
-  }
-
   ngOnInit() {
     this.selectedRep = null;
     this._iSelectedLegislator = null;
-    log.debug(this.route.snapshot.url[0].path);
-    const requestedPostal = this.route.snapshot.url[0].path.toUpperCase();
-    if (this.geography.isLoading) {
-      this.geography.dataObservable.subscribe(null, null, () => this.setStatePostal(requestedPostal));
-    } else {
-      this.setStatePostal(requestedPostal);
-    }
-  }
-
-  private setStatePostal(postal: string) {
-    this.state = this.geography.stateFeatures.find(s => s.postal === postal);
+    const { regionFeature, regionReps } = this.route.snapshot.data;
+    this._state = regionFeature;
+    this._allLegislators = regionReps;
+    this.makeRepSets();
   }
 
   public get stateTitle(): string {
@@ -85,7 +58,7 @@ export class StateDetailComponent implements OnInit {
   handleKeyboardEvent(event: KeyboardEvent) {
     switch (event.key) {
       case 'Escape':
-        this.goBack();
+        this.router.navigate(['/']);
         break;
       case 'ArrowLeft':
         this.priorRep();
@@ -98,38 +71,19 @@ export class StateDetailComponent implements OnInit {
     }
   }
 
-  public goBack(): void {
-    // this.close.emit(null);
-    this.location.back();
-  }
-
-  public get isLoading(): boolean {
-    return this.congress.isLoading || this.geography.isLoading || !this.state || !this.repSets;
-  }
-
-  public get isReady(): boolean {
-    return !!this.repSets;
-  }
-
-  private stateLegislators(): Legislator[] {
-    return this.congress.repsForPostal(this.state.postal);
-  }
-
   private makeRepSets() {
-    const reps = this._allLegislators = sortBy(this.stateLegislators(), ['sortingDistrict']);
-    if (reps) {
-      this._houseReps = <Representative[]> reps.filter(z => z.isRepresentative());
-      this._repSets = [
-        {
-          title: 'Senators',
-          reps: reps.filter(z => z.isSenator()),
-        },
-        {
-          title: 'Representatives',
-          reps: this._houseReps,
-        }
-      ];
-    }
+    const reps = this._allLegislators;
+    this._houseReps = <Representative[]> reps.filter(z => z.isRepresentative());
+    this._repSets = [
+      {
+        title: 'Senators',
+        reps: reps.filter(z => z.isSenator()),
+      },
+      {
+        title: 'Representatives',
+        reps: this._houseReps,
+      }
+    ];
   }
 
   public get repSets(): IRepSet[] {
