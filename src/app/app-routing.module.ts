@@ -19,17 +19,16 @@ import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { StateDetailComponent } from './state-detail/state-detail.component';
+import { RepDetailComponent } from './rep-detail/rep-detail.component';
+
 
 const log = new Logger('Routing');
 
 
 
-// TODO: can we use the regions service instance to use isPostal()?
-export function stateMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route: Route): UrlMatchResult {
-  // const consumed = new Array<UrlSegment>();
-  if (segments.length > 0 && UsaRegionsService.PostalExp.test(segments[0].path)) {
+export function stateMatcher(segments: UrlSegment[]): UrlMatchResult {
+  if (segments.length > 0 && UsaRegionsService.isPostal(segments[0].path)) {
     log.debug('state', segments[0].path);
-    // consumed.push(segments[0]);
     return { consumed: [segments[0]] };
   }
   return null;
@@ -38,12 +37,11 @@ export function stateMatcher(segments: UrlSegment[], group: UrlSegmentGroup, rou
 
 
 const routes: Routes = Route.withShell([
-  // Fallback when no prior route is matched
-  // { path: '**', redirectTo: '', pathMatch: 'full' }
   {
     path: 'about',
     component: AboutComponent,
   },
+
   {
     path: '',
     component: HomeComponent,
@@ -58,10 +56,19 @@ const routes: Routes = Route.withShell([
         resolve: {
           regionFeature: RegionFeatureResolver,
           regionReps: RegionRepsResolver,
-        }
+        },
+        children: [
+          {
+            path: ':repSegment',
+            component: RepDetailComponent,
+          }
+        ],
       },
     ],
   },
+
+  // Fallback when no prior route is matched
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ]);
 
 

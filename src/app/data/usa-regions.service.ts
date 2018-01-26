@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { toNumber, sortBy } from 'lodash';
 
-import * as _UsaRegions from 'usa-regions.json';
+import * as _UsaRegionsJson from 'usa-regions.json';
 
 
 
@@ -12,34 +12,38 @@ export interface UsaRegion {
   postal?: string;
 }
 
+const getPostal = (x: UsaRegion) => x.postal;
 
 
 @Injectable()
 export class UsaRegionsService {
   public static readonly PostalExp = /^[A-Z]{2}$/i;
+  public static readonly All = <UsaRegion[]> _UsaRegionsJson;
+  public static readonly AllPostalCodes = UsaRegionsService.All.filter(getPostal).map(getPostal);
+  public static readonly SetOfAllPostalCodes = new Set(UsaRegionsService.AllPostalCodes);
 
-  public readonly all = <UsaRegion[]> _UsaRegions;
-  public readonly allPostalCodes: string[];
-  private readonly _allPostalCodesSet: Set<string>;
-
+  public static isPostal(str: string) {
+    return UsaRegionsService.PostalExp.test(str) && UsaRegionsService.SetOfAllPostalCodes.has(str.toUpperCase());
+  }
 
   constructor() {
-    const regionsWithPostal = this.all.filter(r => r.postal);
-    this.allPostalCodes = regionsWithPostal.map(r => r.postal);
-    this._allPostalCodesSet = new Set<string>(this.allPostalCodes);
+  }
+
+  public get allPostalCodes(): Array<string> {
+    return UsaRegionsService.AllPostalCodes;
   }
 
   public findByFips(fips: string | number): UsaRegion {
     const fipsId = toNumber(fips);
-    return this.all.find(r => r.fips === fipsId);
+    return UsaRegionsService.All.find(r => r.fips === fipsId);
   }
 
   public findByPostal(postal: string): UsaRegion {
     const postalUpper = postal.toUpperCase();
-    return this.all.find(r => r.postal === postalUpper);
+    return UsaRegionsService.All.find(r => r.postal === postalUpper);
   }
 
   public isPostal(str: string) {
-    return UsaRegionsService.PostalExp.test(str) && this._allPostalCodesSet.has(str);
+    return UsaRegionsService.isPostal(str);
   }
 }
