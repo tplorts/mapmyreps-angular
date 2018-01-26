@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { ObservableMedia } from '@angular/flex-layout';
 
 import { Logger } from '../logger.service';
-import { AuthenticationService } from '../authentication/authentication.service';
-import { I18nService } from '../i18n.service';
+// import { AuthenticationService } from '../authentication/authentication.service';
+// import { I18nService } from '../i18n.service';
 import { UserOptionsService } from '../user-options.service';
 
 const log = new Logger('Shell');
@@ -35,8 +35,8 @@ export class ShellComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private media: ObservableMedia,
-    private authenticationService: AuthenticationService,
-    private i18nService: I18nService,
+    // private authenticationService: AuthenticationService,
+    // private i18nService: I18nService,
     private options: UserOptionsService,
   ) { }
 
@@ -48,27 +48,27 @@ export class ShellComponent implements OnInit {
     return ShellComponent.ShareMedia;
   }
 
-  setLanguage(language: string) {
-    this.i18nService.language = language;
-  }
+  // setLanguage(language: string) {
+  //   this.i18nService.language = language;
+  // }
 
-  logout() {
-    this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
-  }
+  // logout() {
+  //   this.authenticationService.logout()
+  //     .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+  // }
 
-  get isAuthenticated(): boolean {
-    return this.authenticationService.isAuthenticated();
-  }
+  // get isAuthenticated(): boolean {
+  //   return this.authenticationService.isAuthenticated();
+  // }
 
-  get username(): string | null {
-    const credentials = this.authenticationService.credentials;
-    return credentials ? credentials.username : null;
-  }
+  // get username(): string | null {
+  //   const credentials = this.authenticationService.credentials;
+  //   return credentials ? credentials.username : null;
+  // }
 
-  get languages(): string[] {
-    return this.i18nService.supportedLanguages;
-  }
+  // get languages(): string[] {
+  //   return this.i18nService.supportedLanguages;
+  // }
 
   get isMobile(): boolean {
     return this.media.isActive('xs') || this.media.isActive('sm');
