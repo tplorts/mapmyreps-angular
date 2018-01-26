@@ -1,14 +1,9 @@
 //- TODO: create a separate component for the mini state selector
 .mini-state-selector
-  mat-select(
-    placeholder='State',
-    [(value)]='selectedState',
-  )
-    mat-option None
-    mat-option(
-      *ngFor='let state of states',
-      [value]='state',
-    ) {{ state.name }}
+  div(
+    *ngFor='let state of states',
+    (click)='selectState(state)',
+  ) {{ state.name }}
 
 
 app-nation-map(
