@@ -20,7 +20,7 @@ const log = new Logger('Routing');
 
 
 // TODO: can we use the regions service instance to use isPostal()?
-const stateMatcher = (segments: UrlSegment[], group: UrlSegmentGroup, route: Route): UrlMatchResult => {
+export function stateMatcher(segments: UrlSegment[], group: UrlSegmentGroup, route: Route): UrlMatchResult {
   // const consumed = new Array<UrlSegment>();
   if (segments.length > 0 && UsaRegionsService.PostalExp.test(segments[0].path)) {
     log.debug('state', segments[0].path);
@@ -28,7 +28,7 @@ const stateMatcher = (segments: UrlSegment[], group: UrlSegmentGroup, route: Rou
     return { consumed: [segments[0]] };
   }
   return null;
-};
+}
 
 
 const routes: Routes = Route.withShell([
