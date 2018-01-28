@@ -249,7 +249,7 @@ export class Legislator {
   }
 
   public get urlSegment(): string {
-    return this.fullName.replace(/([^A-Z])+/ig, '-');
+    return this.fullName.replace(/([.,\/#!$%\^&\*;:{}=\-_'"`~()]|\s)+/ig, '-');
   }
 
   public get party(): PoliticalParty {
