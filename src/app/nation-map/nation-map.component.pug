@@ -4,13 +4,12 @@ svg(
 )
   svg:g.nation([attr.transform]='nationTransform')
     svg:g.states([ngClass]="{ 'uniform-color': !options.isPartyColoringOn }")
-      svg:g.state-group(
+      svg:path.state-path(
         *ngFor='let state of stateFeatures',
+        [attr.d]='state.pathData',
+        [attr.fill]='state.fillColor',
+        [matTooltip]='state.tooltipText',
+        [routerLink]='state.urlSegment',
+        routerLinkActive='selected',
       )
-        svg:path.state-path(
-          [attr.d]='state.pathData',
-          [matTooltip]='state.tooltipText',
-          (click)='selectState(state)',
-          [attr.fill]='state.fillColor',
-        )
     svg:path.state-borders([attr.d]='stateBordersPathData')

@@ -1,14 +1,13 @@
 //- TODO: create a separate component for the mini state selector
 .mini-state-selector
-  div(
+  a(
     *ngFor='let state of states',
-    (click)='selectState(state)',
+    mat-button
+    [routerLink]='state.urlSegment',
+    routerLinkActive='selected',
   ) {{ state.name }}
 
-
-app-nation-map(
-  (onSelectState)='selectState($event)',
-)
+app-nation-map
 
 //- state detail gets instered here
 router-outlet

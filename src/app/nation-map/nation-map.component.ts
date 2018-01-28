@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
@@ -37,9 +37,6 @@ export class NationMapComponent implements OnInit {
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
 
-  @Output() onSelectState = new EventEmitter<IStateFeature>();
-
-
   constructor(
     private geography: UsaGeographyService,
     private congress: CongressService,
@@ -58,10 +55,6 @@ export class NationMapComponent implements OnInit {
 
   public get stateBordersPathData(): string {
     return this.geography.stateBordersPathData;
-  }
-
-  public selectState(state: IStateFeature) {
-    this.onSelectState.emit(state);
   }
 
   public get width(): number {

@@ -33,6 +33,25 @@ export interface IStateFeature extends UsaRegion {
   bounds: XYBoundingBox;
 }
 
+export class StateFeature implements IStateFeature {
+  name: string;
+  status: string;
+  fips: number;
+  postal: string;
+  id: string;
+  pathData: string;
+  centroid: XYPoint;
+  bounds: XYBoundingBox;
+
+  constructor(_feature: IStateFeature) {
+    Object.assign(this, _feature);
+  }
+
+  public get urlSegment(): string {
+    return this.postal || '';
+  }
+}
+
 
 
 @Injectable()
@@ -40,7 +59,7 @@ export class UsaGeographyService {
   private _isLoading: boolean;
   private _dataObservable: Observable<any>;
   private _stateBordersPathData: string;
-  private _stateFeatures: IStateFeature[];
+  private _stateFeatures: StateFeature[];
 
   constructor(
     private regions: UsaRegionsService,
@@ -71,11 +90,11 @@ export class UsaGeographyService {
     return this._stateBordersPathData;
   }
 
-  public get stateFeatures(): IStateFeature[] {
+  public get stateFeatures(): StateFeature[] {
     return this._stateFeatures;
   }
 
-  setNationalAtlas(atlas: any): IStateFeature[] {
+  setNationalAtlas(atlas: any): StateFeature[] {
     const path: GeoPath<any, any> = geoPath();
     const { states } = atlas.objects;
 
@@ -95,7 +114,7 @@ export class UsaGeographyService {
       };
     }
 
-    this._stateFeatures = sortBy(features, ['name']);
+    this._stateFeatures = sortBy(features, ['name']).map(f => new StateFeature(f));
 
     this._isLoading = false;
 

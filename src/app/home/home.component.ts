@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
 
@@ -10,23 +9,10 @@ import { UsaGeographyService, IStateFeature } from '../data/usa-geography.servic
   templateUrl: './home.component.pug',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  // private _selectedState: IStateFeature;
-
-  constructor(
-    private router: Router,
-    private geography: UsaGeographyService,
-  ) {
-  }
-
-  ngOnInit() {
-  }
+export class HomeComponent {
+  constructor(private geography: UsaGeographyService) {}
 
   public get states(): IStateFeature[] {
     return this.geography.stateFeatures;
-  }
-
-  public selectState(state: IStateFeature) {
-    this.router.navigate([state.postal]);
   }
 }
