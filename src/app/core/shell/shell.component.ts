@@ -12,7 +12,13 @@ const log = new Logger('Shell');
 
 interface IShareMedia {
   name: string;
+  link?: string;
 }
+
+const shareUrl = 'http://mapmyreps.us';
+const shareMessage = 'Map My Reps lets you easily see your state\'s congressional representatives';
+
+
 
 
 @Component({
@@ -21,13 +27,14 @@ interface IShareMedia {
   styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent implements OnInit {
-  static readonly ShareMedia: IShareMedia[] = [
-    { name: 'facebook' },
-    { name: 'twitter' },
-    { name: 'pinterest' },
-    { name: 'googleplus' },
-    { name: 'mail' },
-  ];
+  static readonly ShareMedia = [ 'facebook', 'twitter', 'pinterest', 'googleplus', 'mail' ];
+  private static readonly ShareUrls = {
+    twitter: `https://twitter.com/intent/tweet?text=${shareMessage}&url=${shareUrl}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&t=${shareMessage}`,
+    pinterest: `https://www.pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareMessage}`,
+    googleplus: `https://plus.google.com/share?url=${shareUrl}`,
+    mail: `mailto:?subject=Check out Map My Reps&body=${shareMessage}\n${shareUrl}`,
+  };
 
   private isShareOpen: boolean;
 
@@ -44,8 +51,12 @@ export class ShellComponent implements OnInit {
     this.isShareOpen = false;
   }
 
-  public get shareMedia(): IShareMedia[] {
+  public get shareMedia(): string[] {
     return ShellComponent.ShareMedia;
+  }
+
+  public shareUrl(mediaName: string) {
+    return encodeURI(ShellComponent.ShareUrls[mediaName]);
   }
 
   // setLanguage(language: string) {

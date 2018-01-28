@@ -9,9 +9,11 @@ header.navbar
         button.navbar-link((click)='openShareMenu()') Share
       .share-options
         span(*ngFor='let medium of shareMedia')
-          a.medium(
-            [ngClass]='"socicon-" + medium.name',
-            (click)='share(medium)'
+          a.share-link(
+            [ngClass]='"socicon-" + medium',
+            (click)='closeShareMenu()',
+            [href]='shareUrl(medium)',
+            target='_blank',
           )
         button.close((click)='closeShareMenu()')
           mat-icon close
