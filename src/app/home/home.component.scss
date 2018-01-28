@@ -7,30 +7,31 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  @media (max-width: 767px) {
-    justify-content: flex-start;
-  }
 }
 
 .mini-state-selector {
+  display: none;
   align-self: center;
   max-width: 16rem;
-  margin: 2rem;
-}
+  margin: 1rem;
+  flex-direction: column;
 
-@media (max-width: 767px) {
-  app-nation-map {
-    display: none;
+  .state-link {
+    margin: 0.5rem;
   }
 }
 
-@media (min-width: 768px) {
-  .mini-state-selector {
-    display: none;
-  }
+.override-option {
+  margin-bottom: 3rem;
 }
 
-.blur {
-  filter: blur(3px);
+:host(:not(.map-view-override)) {
+  @media (max-width: 767px) {
+    app-nation-map {
+      display: none;
+    }
+    .mini-state-selector {
+      display: flex;
+    }
+  }
 }

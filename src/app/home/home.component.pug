@@ -1,8 +1,13 @@
 //- TODO: create a separate component for the mini state selector
 .mini-state-selector
-  a(
+  .override-option
+    p The map view works best on larger screens, like tablets and laptops.
+    button(
+      mat-button,
+      (click)='useMapView()'
+    ) Use the map view anyway
+  a.state-link(
     *ngFor='let state of states',
-    mat-button
     [routerLink]='state.urlSegment',
     routerLinkActive='selected',
   ) {{ state.name }}
