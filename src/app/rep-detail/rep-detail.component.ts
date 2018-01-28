@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute, RouterEvent } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
+import { Logger } from '../core/logger.service';
 import { Legislator, Committee } from '../data/congress';
+import { RepStatusService } from '../rep-status.service';
+
+const log = new Logger('Rep Detail');
 
 
 
@@ -19,11 +22,20 @@ export class RepDetailComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private repStatus: RepStatusService,
   ) {
   }
 
   ngOnInit() {
-    this.rep = this.route.snapshot.data.rep;
+    // An OK way for now to avoid ExpressionChangedAfterItHasBeenCheckedError.
+    // This will only delay (unnoticably) the update when the rep detail view
+    // is first shown for a state.
+    Promise.resolve().then(() => {
+      this.route.data.subscribe(nextData => {
+        this.rep = nextData.rep;
+        this.repStatus.select(this.rep);
+      });
+    });
   }
 
   @Input()

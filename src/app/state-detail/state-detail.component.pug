@@ -9,35 +9,38 @@
       app-state-map(
         [state]='state',
         [houseReps]='houseReps',
-        [selectedDistrict]='selectedRep && selectedRep.district',
-        (onSelectDistrict)='selectRepForDistrict($event)',
       )
-    .rep-list([ngClass]="{ 'rep-selected': isRepSelected }")
+    .rep-list(
+      [ngClass]='{ "rep-selected": isRepSelected }',
+    )
       .spacer-bottom(*ngFor='let repSet of repSets')
         h4 {{ repSet.title }}
         .rep-grid
           .rep-grid-tile(
             *ngFor='let rep of repSet.reps',
-            [ngClass]='repTileClass(rep)'
+            [ngClass]='rep.partyStyleClass',
           )
-            .rep-image(
-              [ngStyle]='repImageStyle(rep)',
-              (click)='selectRep(rep)',
-              [matTooltip]='rep.fullName',
+            a.rep-link(
+              [routerLink]='rep.urlSegment',
+              routerLinkActive='selected',
             )
+              .rep-image(
+                [ngStyle]='repImageStyle(rep)',
+                [matTooltip]='rep.fullName',
+              )
 
   .rep-info-section
     //- Outlet for Rep Detail view
     router-outlet
 
-    .rep-nav(*ngIf="isRepSelected")
+    .rep-nav(*ngIf='isRepSelected')
       button.svg-icon-button(
-        (click)="priorRep()",
-        [disabled]="isOnFirstRep",
+        (click)='priorRep()',
+        [disabled]='isOnFirstRep',
       )
         mat-icon(svgIcon='arrow-left')
       button.svg-icon-button(
-        (click)="nextRep()",
-        [disabled]="isOnLastRep",
+        (click)='nextRep()',
+        [disabled]='isOnLastRep',
       )
         mat-icon(svgIcon='arrow-right')

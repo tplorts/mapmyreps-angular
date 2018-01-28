@@ -19,11 +19,11 @@ svg(
     g.districts
       path.district-path(
         *ngFor='let district of districtFeatures',
-        [ngClass]="{ 'selected': isSelected(district) }",
         [attr.d]='district.pathData',
         [matTooltip]='district.districtId | districtOrdinal',
-        (click)='selectDistrict(district)',
         [attr.party]='party(district)',
+        [routerLink]='repLink(district)',
+        routerLinkActive='selected',
       )
     path.district-borders([attr.d]='districtBorders')
   ng-template(#stateOnly)

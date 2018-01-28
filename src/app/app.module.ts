@@ -24,6 +24,7 @@ import { RegionRepsResolver } from './region-reps-resolver.service';
 import { NationFeaturesResolver } from './nation-features-resolver.service';
 import { CongressResolver } from './congress-resolver.service';
 import { RepResolver } from './rep-resolver.service';
+import { RepStatusService } from './rep-status.service';
 
 
 
@@ -55,6 +56,7 @@ import { RepResolver } from './rep-resolver.service';
     RegionFeatureResolver,
     RegionRepsResolver,
     RepResolver,
+    RepStatusService,
   ],
   bootstrap: [ AppComponent ],
 })

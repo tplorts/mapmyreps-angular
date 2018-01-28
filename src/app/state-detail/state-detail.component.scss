@@ -115,11 +115,13 @@ $tile-size: $size + 2 * $ring-thickness;
       box-shadow: 0 0 0 $ring-thickness $color;
     }
   }
+}
 
+.rep-link {
+  display: block;
   transition: opacity 0.2s;
   opacity: 1;
-
-  .rep-selected &:not(.selected-rep) {
+  .rep-selected &:not(.selected) {
     opacity: 0.5;
   }
 }

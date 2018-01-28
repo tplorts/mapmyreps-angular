@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { IStateFeature } from '../data/usa-geography.service';
 import { CongressionalDistrictsService } from '../data/congressional-districts.service';
-import { Representative } from '../data/congress';
+import { Legislator, Representative } from '../data/congress';
 
 
 
@@ -15,9 +15,6 @@ export class StateMapComponent implements OnInit {
 
   @Input() state: IStateFeature;
   @Input() houseReps: Representative[];
-  @Input() selectedDistrict: number | null;
-
-  @Output() onSelectDistrict: EventEmitter<number> = new EventEmitter();
 
   public stateMapOptions = {
     width: 320,
@@ -30,7 +27,6 @@ export class StateMapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.selectedDistrict = null;
     const { id, postal } = this.state;
     const { width, height, padding } = this.stateMapOptions;
     const p = 2 * padding;
@@ -73,17 +69,18 @@ export class StateMapComponent implements OnInit {
     return `translate(${padding}, ${padding})`;
   }
 
-  public isSelected(district: any): boolean {
-    return this.selectedDistrict === district.districtId;
+  public repLink(district: any): string {
+    const rep = this.districtRep(district);
+    return rep && rep.urlSegment;
   }
 
-  public selectDistrict(district: any): void {
-    this.onSelectDistrict.emit(district.districtId);
+  private districtRep(district: any): Legislator {
+    const { districtId } = district;
+    return this.houseReps.find(r => r.district === districtId);
   }
 
   private districtParty(district: any): string {
-    const { districtId } = district;
-    const rep = this.houseReps.find(r => r.district === districtId);
+    const rep = this.districtRep(district);
     return rep && rep.party;
   }
 

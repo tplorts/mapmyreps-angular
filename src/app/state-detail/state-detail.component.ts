@@ -1,10 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  HostListener,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscriber } from 'rxjs/Subscriber';
+import { isNumber } from 'lodash';
 
 import { Logger } from '../core/logger.service';
 import { IStateFeature } from '../data/usa-geography.service';
 import { Legislator, Representative } from '../data/congress';
-
+import { RepStatusService } from '../rep-status.service';
 
 const log = new Logger('State Detail');
 
@@ -22,22 +29,20 @@ interface IRepSet {
   templateUrl: './state-detail.component.pug',
   styleUrls: ['./state-detail.component.scss']
 })
-export class StateDetailComponent implements OnInit {
+export class StateDetailComponent implements OnInit, OnDestroy {
   private _state: IStateFeature;
   private _allLegislators: Legislator[];
-  private _iSelectedLegislator: number;
   private _repSets: IRepSet[];
   private _houseReps: Representative[];
-
-  public selectedRep: Legislator;
+  private iSelectedRep: number;
+  private selectionSubscriber: Subscriber<Legislator>;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
-
-  public get state(): IStateFeature {
-    return this._state;
+    private repStatus: RepStatusService,
+  ) {
+    this.selectionSubscriber = new Subscriber<Legislator>(nextRep => this.setSelectedRep(nextRep));
   }
 
   ngOnInit() {
@@ -45,9 +50,15 @@ export class StateDetailComponent implements OnInit {
     this._state = regionFeature;
     this._allLegislators = regionReps;
     this.makeRepSets();
-    const repViewSnapshot = this.route.snapshot.firstChild;
-    this.selectedRep = repViewSnapshot ? repViewSnapshot.data.rep : null;
-    this._iSelectedLegislator = this.indexOfRep(this.selectedRep);
+    this.repStatus.selection.subscribe(this.selectionSubscriber);
+  }
+
+  ngOnDestroy() {
+    this.selectionSubscriber.unsubscribe();
+  }
+
+  public get state(): IStateFeature {
+    return this._state;
   }
 
   public get stateTitle(): string {
@@ -108,6 +119,11 @@ export class StateDetailComponent implements OnInit {
     };
   }
 
+  private setSelectedRep(rep: Legislator) {
+    this.iSelectedRep = this.indexOfRep(rep);
+    log.debug(this.iSelectedRep, rep && rep.fullName);
+  }
+
   private indexOfRep(rep: Legislator): number {
     if (!rep) {
       return null;
@@ -117,61 +133,34 @@ export class StateDetailComponent implements OnInit {
     return this._allLegislators.findIndex(byBioguideId);
   }
 
-  public selectRep(rep: Legislator): void {
-    this.selectedRep = (!rep || this.selectedRep === rep) ? null : rep;
-    this._iSelectedLegislator = this.indexOfRep(this.selectedRep);
-    this.navigateToSelectedRep();
-  }
-
-  public selectRepByIndex(index: number) {
-    this._iSelectedLegislator = index;
-    this.selectedRep = this._allLegislators[index];
-    this.navigateToSelectedRep();
-  }
-
-  private async navigateToSelectedRep() {
-    const repSegment = this.isRepSelected ? this.selectedRep.urlSegment : '.';
-    try {
-      await this.router.navigate(['.'], { relativeTo: this.route });
-      const success = await this.router.navigate([ repSegment ], { relativeTo: this.route });
-    } catch (err) {
-      log.warn(err);
-    }
-  }
-
   public get isRepSelected(): boolean {
-    return !!this.selectedRep;
+    return isNumber(this.iSelectedRep);
   }
 
-  public selectRepForDistrict(district: number) {
-    const rep = this.houseReps.find(r => r.district === district);
+  private selectRepByIndex(index: number) {
+    const rep = this._allLegislators[index];
     if (rep) {
-      this.selectRep(rep);
+      this.router.navigate([ rep.urlSegment ], { relativeTo: this.route });
     }
-  }
-
-  public repTileClass(rep: Legislator): string {
-    const selected = rep === this.selectedRep ? 'selected-rep' : '';
-    return rep.partyStyleClass + ' ' + selected;
   }
 
   public get isOnFirstRep(): boolean {
-    return this._iSelectedLegislator === 0;
+    return this.iSelectedRep === 0;
   }
 
   public get isOnLastRep(): boolean {
-    return this._iSelectedLegislator === this._allLegislators.length - 1;
+    return this.iSelectedRep === this._allLegislators.length - 1;
   }
 
   public nextRep(): void {
     if (this.isRepSelected && !this.isOnLastRep) {
-      this.selectRepByIndex(this._iSelectedLegislator + 1);
+      this.selectRepByIndex(this.iSelectedRep + 1);
     }
   }
 
   public priorRep(): void {
     if (this.isRepSelected && !this.isOnFirstRep) {
-      this.selectRepByIndex(this._iSelectedLegislator - 1);
+      this.selectRepByIndex(this.iSelectedRep - 1);
     }
   }
 }
