@@ -134,6 +134,8 @@ export interface ILegislatorLeadershipRole extends DatePeriod {
 
 
 export class Legislator {
+  private static readonly PunctuationExp = /[.,\/#!$%\^&\*;:{}=\-_'"`~()]/g;
+
   static SocialMedia = [
     { name: 'twitter', urlGetter: 'twitterUrl' },
     { name: 'facebook', urlGetter: 'facebookUrl' },
@@ -249,7 +251,8 @@ export class Legislator {
   }
 
   public get urlSegment(): string {
-    return this.fullName.replace(/([.,\/#!$%\^&\*;:{}=\-_'"`~()]|\s)+/ig, '-');
+    const punctless = this.fullName.replace(Legislator.PunctuationExp, ' ');
+    return punctless.trim().replace(/\s+/g, '-');
   }
 
   public get party(): PoliticalParty {
