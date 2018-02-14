@@ -6405,9 +6405,9 @@ rxjs@^5.5.2:
   dependencies:
     symbol-observable "1.0.1"
 
-s3-deploy@^0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/s3-deploy/-/s3-deploy-0.8.0.tgz#8365c80a356227eeaa88739a6ca3fe8c949b4056"
+s3-deploy@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/s3-deploy/-/s3-deploy-0.9.0.tgz#e69129a3ab110e9f027676ce593c13969d2759d5"
   dependencies:
     aws-sdk "2.3.19"
     babel-polyfill "^6.7.2"
@@ -7972,9 +7972,13 @@ xmlbuilder@8.2.2:
   version "8.2.2"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
 
-xmlbuilder@>=1.0.0, xmlbuilder@>=2.4.6, xmlbuilder@~9.0.1:
+xmlbuilder@>=1.0.0, xmlbuilder@~9.0.1:
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.4.tgz#519cb4ca686d005a8420d3496f3f0caeecca580f"
+
+xmlbuilder@>=2.4.6:
+  version "9.0.7"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
 
 xmlhttprequest-ssl@1.5.3:
   version "1.5.3"
