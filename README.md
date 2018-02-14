@@ -1,21 +1,21 @@
 # Map My Reps
 
-This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
-version 3.1.1
 
 # Getting started
 
 1. Install [yarn](https://yarnpkg.com/) if you don't already have it.
 
 2. Go to project folder and install dependencies:
- ```sh
- yarn install
- ```
+
+```sh
+yarn install
+```
  
 3. Launch development server, and open `localhost:4200` in your browser:
- ```sh
- yarn start
- ```
+
+```sh
+yarn start
+```
  
 # Project structure
 
@@ -82,7 +82,10 @@ you can also use the command `ng generate` directly.
 Tasks are mostly based on the `angular-cli` tool. Use `ng help` to get more help or go check out the
 [Angular-CLI README](https://github.com/angular/angular-cli).
 
-# What's in the box
+# Project Generation
+
+This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
+version 3.1.1
 
 The app template is based on [HTML5](http://whatwg.org/html), [TypeScript](http://www.typescriptlang.org) and
 [Sass](http://sass-lang.com). The translation files use the common [JSON](http://www.json.org) format.
