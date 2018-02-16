@@ -1,0 +1,27 @@
+
+
+mat-form-field
+  input(
+    matInput,
+    type='text',
+    placeholder='Search for state',
+    [(ngModel)]='stateSearchPattern',
+  )
+  button(
+    mat-button,
+    matSuffix,
+    mat-icon-button,
+    *ngIf='stateSearchPattern',
+    aria-label='Clear',
+    (click)="stateSearchPattern=''",
+  )
+    mat-icon clear
+
+mat-list
+  a.state-item(
+    mat-list-item
+    *ngFor='let state of states',
+    [routerLink]='state.urlSegment',
+    routerLinkActive='selected',
+  )
+    | {{ state.name }}

@@ -6,11 +6,8 @@
       mat-button,
       (click)='useMapView()'
     ) Use the map view anyway
-  a.state-link(
-    *ngFor='let state of states',
-    [routerLink]='state.urlSegment',
-    routerLinkActive='selected',
-  ) {{ state.name }}
+
+  app-state-list
 
 app-nation-map
 

@@ -25,6 +25,7 @@ import { NationFeaturesResolver } from './nation-features-resolver.service';
 import { CongressResolver } from './congress-resolver.service';
 import { RepResolver } from './rep-resolver.service';
 import { RepStatusService } from './rep-status.service';
+import { StateListComponent } from './state-list/state-list.component';
 
 
 
@@ -49,6 +50,7 @@ import { RepStatusService } from './rep-status.service';
     StateDetailComponent,
     StateMapComponent,
     RepDetailComponent,
+    StateListComponent,
   ],
   providers: [
     NationFeaturesResolver,
