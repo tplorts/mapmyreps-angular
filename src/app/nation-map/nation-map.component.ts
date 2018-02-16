@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
+import {
+  Color,
+  hex as hexToColor,
+  mix as chromaMix,
+  ColorSpaces
+} from 'chroma-js';
 
 import { UserOptionsService, PartyColoringMode } from '@app/core/user-options.service';
 import { Logger } from '@app/core/logger.service';
@@ -10,7 +15,9 @@ import {
   Senator,
   Representative,
   PoliticalParty,
+  AllPoliticalParties,
 } from '@usa-data/congress';
+import { PoliticalStatsService, RegionalPoliticalStats } from '@app/data/political-stats.service';
 
 const log = new Logger('NationMap');
 
@@ -25,28 +32,33 @@ export class NationMapComponent implements OnInit {
 
   // TODO: find a way to grab these color definitions from the
   // scss theme files
-  private static readonly PartyColors = {
-    Republican: '#BC2929',
-    Democrat: '#5586EF',
-    Independent: '#3BAC69',
+  private static readonly PartyColors: { [party: string]: Color } = {
+    Republican: hexToColor('#BC2929'),
+    Democrat: hexToColor('#5586EF'),
+    Independent: hexToColor('#3BAC69'),
   };
 
   private readonly WidthLimits = { min: 768, max: 1200 };
   private readonly MapSize = { width: 960, height: 600 };
 
+  private _stateFillColors: { [postal: string]: Color };
+
+
   constructor(
     private geography: UsaGeographyService,
     private congress: CongressService,
+    private stats: PoliticalStatsService,
     public options: UserOptionsService,
   ) { }
 
   ngOnInit() {
     this.options.partyColoringModeChange.subscribe(() => this.updateStateColors());
     this.options.colorMixModeChange.subscribe(() => this.updateStateColors());
-    this.computeStateProportions();
+    this.stats.compute();
+    this.updateStateColors();
   }
 
-  public get stateFeatures(): Array<IStateFeature | any> {
+  public get stateFeatures(): IStateFeature[] {
     return this.geography.stateFeatures;
   }
 
@@ -71,49 +83,27 @@ export class NationMapComponent implements OnInit {
     return Math.min(this.WidthLimits.max, Math.max(this.WidthLimits.min, window.innerWidth));
   }
 
-  private computeStateProportions() {
-    const parties = Object.values(PoliticalParty);
-    for (const state of this.stateFeatures) {
-      const reps = this.congress.repsForPostal(state.postal);
-      if (!reps) {
-        log.warn('got no reps for state', state);
-      }
-      state.repCount = reps.length;
-      const seatProportionsByParty = {};
-      for (const party of parties) {
-        const seats = reps.filter(r => r.party === party);
-        seatProportionsByParty[party] = seats.length / state.repCount;
-      }
-      state.seatProportionsByParty = seatProportionsByParty;
-      const dem = state.seatProportionsByParty.Democrat;
-      const rep = state.seatProportionsByParty.Republican;
-      state.tooltipText = `${state.postal} ${Math.round(100 * dem)}-${Math.round(100 * rep)}`;
-    }
-
-    this.updateStateColors();
-  }
-
-  private computeStateColor(state: IStateFeature): Color {
+  private computeStateColor(stateStats: RegionalPoliticalStats): Color {
     if (this.options.partyColoringMode === PartyColoringMode.Majority) {
-      return this.majorityColor(state);
+      return this.majorityColor(stateStats);
     } else if (this.options.partyColoringMode === PartyColoringMode.Proportion) {
-      return this.proportionalColor(state);
+      return this.proportionalColor(stateStats);
     } else {
       return null;
     }
   }
 
-  private proportionalColor(state: IStateFeature | any): Color {
-    const p = state.seatProportionsByParty[PoliticalParty.Republican];
+  private proportionalColor(stateStats: RegionalPoliticalStats): Color {
+    const p = stateStats.seatProportionsPerParty[PoliticalParty.Republican];
     const { Democrat, Republican } = NationMapComponent.PartyColors;
     return chromaMix(Democrat, Republican, p, <keyof ColorSpaces> this.options.colorMixMode);
   }
 
-  private majorityColor(state: IStateFeature | any): Color {
-    const parties = Object.values(PoliticalParty);
+  private majorityColor(state: RegionalPoliticalStats): Color {
+    const parties = AllPoliticalParties;
     let majorityParty;
     for (const party of parties) {
-      const p = state.seatProportionsByParty[party];
+      const p = state.seatProportionsPerParty[party];
       if (p === 0.5) {
         return this.proportionalColor(state);
       } else if (p > 0.5) {
@@ -124,8 +114,16 @@ export class NationMapComponent implements OnInit {
   }
 
   private updateStateColors() {
-    for (const state of this.stateFeatures) {
-      state.fillColor = this.computeStateColor(state);
+    if (!this._stateFillColors) {
+      this._stateFillColors = {};
     }
+    for (const state of this.stateFeatures) {
+      const color = this.computeStateColor(this.stats.ofState(state.postal));
+      this._stateFillColors[state.postal] = color;
+    }
+  }
+
+  public fillColor(state: IStateFeature): Color {
+    return this._stateFillColors && this._stateFillColors[state.postal];
   }
 }

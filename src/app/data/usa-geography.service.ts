@@ -80,6 +80,7 @@ export class UsaGeographyService {
     return this._isLoading;
   }
 
+  // TODO: change all 'dataObservables' to subjects
   public get dataObservable(): Observable<any> {
     return this._dataObservable;
   }

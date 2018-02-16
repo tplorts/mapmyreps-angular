@@ -24,6 +24,8 @@ export enum PoliticalParty {
   Democrat = 'Democrat',
 }
 
+export const AllPoliticalParties: string[] = Object.values(PoliticalParty);
+
 export enum LegislativeChamber {
   House = 'house',
   Senate = 'senate',
