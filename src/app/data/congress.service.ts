@@ -5,8 +5,8 @@ import { map } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
 
-import { environment } from '../../environments/environment';
-import { Logger } from '../core/logger.service';
+import { environment } from '@env/environment';
+import { Logger } from '@app/core/logger.service';
 import { StaticDataService } from './static-data.service';
 import { UsaRegionsService } from './usa-regions.service';
 import {
@@ -21,7 +21,6 @@ import {
   SocialMediaMap,
   ILegislatorSocialMedia,
 } from './congress';
-
 
 const log = new Logger('CongressService');
 

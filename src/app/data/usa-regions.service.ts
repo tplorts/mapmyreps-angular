@@ -15,6 +15,7 @@ export interface UsaRegion {
 const getPostal = (x: UsaRegion) => x.postal;
 
 
+
 @Injectable()
 export class UsaRegionsService {
   public static readonly PostalExp = /^[A-Z]{2}$/i;

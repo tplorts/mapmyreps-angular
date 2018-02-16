@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
-import { CongressService } from './data/congress.service';
+import { CongressService } from '@usa-data/congress.service';
 
 
 

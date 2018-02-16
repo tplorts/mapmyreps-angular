@@ -1,21 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-
 import { toNumber, sortBy } from 'lodash';
-
 import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
 
-import { environment } from '../../environments/environment';
-import { Logger } from '../core/logger.service';
+import { environment } from '@env/environment';
+import { Logger } from '@app/core/logger.service';
 import { StaticDataService } from './static-data.service';
 import { D3GeoStatePlaneService } from './d3-geo-state-plane.service';
-// import { UsaRegionsService } from './usa-regions.service';
-
-
 
 const log = new Logger('Congressional Districts');
+
+
 
 interface ITopologyFeature {
   pathData: string;
@@ -26,6 +23,8 @@ interface IMappableTopology {
   features: ITopologyFeature[];
 }
 
+
+
 @Injectable()
 export class CongressionalDistrictsService {
   private _isLoading: boolean;
@@ -33,7 +32,6 @@ export class CongressionalDistrictsService {
   private _features: any[];
 
   constructor(
-    // private regions: UsaRegionsService,
     private dataService: StaticDataService,
     private statePlane: D3GeoStatePlaneService,
   ) {

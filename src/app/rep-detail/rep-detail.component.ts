@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Logger } from '../core/logger.service';
-import { Legislator, Committee } from '../data/congress';
-import { RepStatusService } from '../rep-status.service';
+import { Logger } from '@app/core/logger.service';
+import { Legislator, Committee } from '@usa-data/congress';
+import { RepStatusService } from '@app/rep-status.service';
 
 const log = new Logger('Rep Detail');
 

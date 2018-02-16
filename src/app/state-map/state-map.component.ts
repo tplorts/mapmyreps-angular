@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { IStateFeature } from '../data/usa-geography.service';
-import { CongressionalDistrictsService } from '../data/congressional-districts.service';
-import { Legislator, Representative } from '../data/congress';
+import { IStateFeature } from '@usa-data/usa-geography.service';
+import { CongressionalDistrictsService } from '@usa-data/congressional-districts.service';
+import { Legislator, Representative } from '@usa-data/congress';
 
 
 

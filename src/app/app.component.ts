@@ -6,7 +6,7 @@ import { MatIconRegistry } from '@angular/material';
 import { merge } from 'rxjs/observable/merge';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
-import { environment } from '../environments/environment';
+import { environment } from '@env/environment';
 import { Logger } from './core/logger.service';
 // import { I18nService } from './core/i18n.service';
 import { PreAppLoaderService } from './shared/pre-app-loader.service';

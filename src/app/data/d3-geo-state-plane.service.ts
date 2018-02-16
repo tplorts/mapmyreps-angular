@@ -1,7 +1,6 @@
 // Origin: https://github.com/gka/d3-geo-state-plane
 
 import { Injectable } from '@angular/core';
-
 import {
   geoAlbersUsa,
   geoAlbers,

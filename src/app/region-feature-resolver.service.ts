@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 
-import { UsaGeographyService, IStateFeature } from './data/usa-geography.service';
+import { UsaGeographyService, IStateFeature } from '@usa-data/usa-geography.service';
 
 
 

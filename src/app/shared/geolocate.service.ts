@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-
 import { isEqual } from 'lodash';
 
-import { Logger } from '../core/logger.service';
-
+import { Logger } from '@app/core/logger.service';
 
 const log = new Logger('Geolocate');
 

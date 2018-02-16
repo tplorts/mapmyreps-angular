@@ -15,13 +15,11 @@ import { RegionRepsResolver } from './region-reps-resolver.service';
 import { NationFeaturesResolver } from './nation-features-resolver.service';
 import { CongressResolver } from './congress-resolver.service';
 import { RepResolver } from './rep-resolver.service';
-
 import { AppComponent } from './app.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { StateDetailComponent } from './state-detail/state-detail.component';
 import { RepDetailComponent } from './rep-detail/rep-detail.component';
-
 
 const log = new Logger('Routing');
 

@@ -1,5 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Legislator } from './data/congress';
+
+import { Legislator } from '@usa-data/congress';
+
+
 
 @Injectable()
 export class RepStatusService {

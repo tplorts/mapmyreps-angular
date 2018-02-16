@@ -5,8 +5,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 import { sortBy } from 'lodash';
 
-import { Legislator } from './data/congress';
-import { CongressService } from './data/congress.service';
+import { Legislator } from '@usa-data/congress';
+import { CongressService } from '@usa-data/congress.service';
 
 
 

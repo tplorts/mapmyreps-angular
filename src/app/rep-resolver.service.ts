@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { Legislator } from './data/congress';
+import { Legislator } from '@usa-data/congress';
 
 
 

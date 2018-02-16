@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
+import { UsaGeographyService, IStateFeature } from '@usa-data/usa-geography.service';
 
 
 

@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Color, mix as chromaMix, ColorSpaces } from 'chroma-js';
 
-import { UserOptionsService, PartyColoringMode } from '../core/user-options.service';
-import { Logger } from '../core/logger.service';
-import { UsaGeographyService, IStateFeature } from '../data/usa-geography.service';
-import { CongressService } from '../data/congress.service';
+import { UserOptionsService, PartyColoringMode } from '@app/core/user-options.service';
+import { Logger } from '@app/core/logger.service';
+import { UsaGeographyService, IStateFeature } from '@usa-data/usa-geography.service';
+import { CongressService } from '@usa-data/congress.service';
 import {
   Legislator,
   Senator,
   Representative,
   PoliticalParty,
-} from '../data/congress';
+} from '@usa-data/congress';
 
-
-
-const log = new Logger('MapViewComponent');
+const log = new Logger('NationMap');
 
 
 

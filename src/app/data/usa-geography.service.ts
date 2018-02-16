@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-
 import { sortBy } from 'lodash';
-
 import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
 
-import { environment } from '../../environments/environment';
-import { Logger } from '../core/logger.service';
+import { environment } from '@env/environment';
+import { Logger } from '@app/core/logger.service';
 import { StaticDataService } from './static-data.service';
 import { UsaRegion, UsaRegionsService } from './usa-regions.service';
 

@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 
-import { Logger } from '../core/logger.service';
-import { environment } from '../../environments/environment';
+import { Logger } from '@app/core/logger.service';
+import { environment } from '@env/environment';
 
 
-const log = new Logger('Backend');
 
 @Injectable()
 export class StaticDataService {

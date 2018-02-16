@@ -8,12 +8,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscriber } from 'rxjs/Subscriber';
 import { isNumber } from 'lodash';
 
-import { Logger } from '../core/logger.service';
-import { IStateFeature } from '../data/usa-geography.service';
-import { Legislator, Representative } from '../data/congress';
-import { RepStatusService } from '../rep-status.service';
+import { Logger } from '@app/core/logger.service';
+import { IStateFeature } from '@usa-data/usa-geography.service';
+import { Legislator, Representative } from '@usa-data/congress';
+import { RepStatusService } from '@app/rep-status.service';
 
-const log = new Logger('State Detail');
+const log = new Logger('StateDetail');
 
 
 
@@ -21,8 +21,6 @@ interface IRepSet {
   title: string;
   reps: Legislator[];
 }
-
-
 
 @Component({
   selector: 'app-state-detail',
