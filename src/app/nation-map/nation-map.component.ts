@@ -94,9 +94,12 @@ export class NationMapComponent implements OnInit {
   }
 
   private proportionalColor(stateStats: RegionalPoliticalStats): Color {
-    const p = stateStats.seatProportionsPerParty[PoliticalParty.Republican];
-    const { Democrat, Republican } = NationMapComponent.PartyColors;
-    return chromaMix(Democrat, Republican, p, <keyof ColorSpaces> this.options.colorMixMode);
+    const pRepub = stateStats.seatProportionsPerParty[PoliticalParty.Republican];
+    const pInde = stateStats.seatProportionsPerParty[PoliticalParty.Independent];
+    const { Democrat, Republican, Independent } = NationMapComponent.PartyColors;
+    const mixMode = <keyof ColorSpaces> this.options.colorMixMode;
+    const twoPartyMixture = chromaMix(Democrat, Republican, pRepub, mixMode);
+    return chromaMix(twoPartyMixture, Independent, pInde);
   }
 
   private majorityColor(state: RegionalPoliticalStats): Color {
