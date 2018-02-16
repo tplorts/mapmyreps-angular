@@ -1,7 +1,7 @@
 @import "src/theme/globals";
 
-// Horizontally centers the map
 :host {
+  flex: 1;
   display: flex;
   justify-content: center;
 }
