@@ -15,7 +15,7 @@
       ],
       "index": "index.html",
       "main": "main.ts",
-      "serviceWorker": true,
+      "serviceWorker": false,
       "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
