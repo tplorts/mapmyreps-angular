@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
 import { sortBy } from 'lodash';
 
 import { Legislator } from '@usa-data/congress';
@@ -17,12 +16,7 @@ export class RegionRepsResolver implements Resolve<Legislator[]> {
   resolve(route: ActivatedRouteSnapshot): Observable<Legislator[]> {
     const [ rootSegment ] = route.url;
     const postal = rootSegment.path.toUpperCase();
-
-    if (this.congress.isLoading) {
-      return this.congress.dataObservable.take(1).map(() => this.repsForPostal(postal));
-    } else {
-      return Observable.of(this.repsForPostal(postal));
-    }
+    return this.congress.ready.map(() => this.repsForPostal(postal));
   }
 
   private repsForPostal(postal: string): Legislator[] {

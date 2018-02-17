@@ -27,7 +27,7 @@ export class PoliticalStatsService {
     private congress: CongressService,
     public options: UserOptionsService,
   ) {
-    this.geography.dataObservable.subscribe(() => this.compute());
+    this.geography.ready.subscribe(() => this.compute());
   }
 
   public ofState(postal: string) {

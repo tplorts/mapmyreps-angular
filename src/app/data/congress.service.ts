@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subscriber } from 'rxjs/Subscriber';
+import { Subject } from 'rxjs/Subject';
+import { AsyncSubject } from 'rxjs/AsyncSubject';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/forkJoin';
 
@@ -36,14 +36,10 @@ export class CongressService {
   ];
 
   private _isLoading: boolean;
+  private _ready: Subject<boolean>;
   private _legislators: Legislator[];
   private _committees: Committee[];
-  private _dataObservable: Observable<any>;
   private _legislatorsByPostal: { [postal: string]: Legislator[] };
-
-  // private static isOfState(state: string) {
-  //   return (x: Legislator) => state === x.state;
-  // }
 
   constructor(
     private dataService: StaticDataService,
@@ -57,23 +53,27 @@ export class CongressService {
     this._isLoading = true;
     const dir = environment.congressDataDirectory;
     const fetches = CongressService.DataFiles.map(f => this.dataService.fetch(`${dir}/${f}.json`));
-    this._dataObservable = new Observable<any>(observer => {
-      Observable.forkJoin(...fetches)
-      .pipe(map((results: any[]) => this.setData(results)))
+    this._ready = new AsyncSubject<boolean>();
+    Observable.forkJoin(...fetches)
       .subscribe(
-        (value: any) => observer.next(value),
-        e => log.error(e),
-        () => observer.complete(),
+        (results: any[]) => {
+          this.setData(results);
+          this.ready.next(true);
+        },
+        err => {
+          log.error(err);
+          this.ready.next(false);
+        },
+        () => this.ready.complete(),
       );
-    });
   }
 
   public get isLoading(): boolean {
     return this._isLoading;
   }
 
-  public get dataObservable(): Observable<any> {
-    return this._dataObservable;
+  public get ready(): Subject<boolean> {
+    return this._ready;
   }
 
   setData(data: any[]): Legislator[] {

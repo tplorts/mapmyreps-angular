@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs/Subject';
+import { AsyncSubject } from 'rxjs/AsyncSubject';
 import { sortBy } from 'lodash';
 import { GeoPath, geoPath } from 'd3-geo';
 import { feature, mesh } from 'topojson';
@@ -55,7 +55,7 @@ export class StateFeature implements IStateFeature {
 @Injectable()
 export class UsaGeographyService {
   private _isLoading: boolean;
-  private _dataObservable: Observable<any>;
+  private _ready: Subject<boolean>;
   private _stateBordersPathData: string;
   private _stateFeatures: StateFeature[];
 
@@ -65,24 +65,29 @@ export class UsaGeographyService {
   ) {
     this._isLoading = true;
     const dir = environment.geographyDataDirectory;
-    this._dataObservable = new Observable<any>(observer => {
-      this.dataService.fetch(`${dir}/us-atlas-10m.json`)
-      .pipe(map((atlasJson: any) => this.setNationalAtlas(atlasJson)))
-      .subscribe(
-        (value: any) => observer.next(value),
-        e => log.error(e),
-        () => observer.complete(),
-      );
-    });
+    this._ready = new AsyncSubject<boolean>();
+
+    this.dataService.fetch(`${dir}/us-atlas-10m.json`)
+    .subscribe(
+      (atlasJson: any) => {
+        this.setNationalAtlas(atlasJson);
+        this.ready.next(true);
+      },
+      err => {
+        log.error(err);
+        this.ready.next(false);
+      },
+      () => this.ready.complete(),
+    );
+
   }
 
   public get isLoading(): boolean {
     return this._isLoading;
   }
 
-  // TODO: change all 'dataObservables' to subjects
-  public get dataObservable(): Observable<any> {
-    return this._dataObservable;
+  public get ready(): Subject<boolean> {
+    return this._ready;
   }
 
   public get stateBordersPathData(): string {
@@ -93,7 +98,7 @@ export class UsaGeographyService {
     return this._stateFeatures;
   }
 
-  setNationalAtlas(atlas: any): StateFeature[] {
+  private setNationalAtlas(atlas: any): StateFeature[] {
     const path: GeoPath<any, any> = geoPath();
     const { states } = atlas.objects;
 
