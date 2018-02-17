@@ -22,15 +22,46 @@ export class UserOptionsService {
   public static readonly AllPartyColoringModes = Object.values(PartyColoringMode);
   public static readonly AllColorMixModes = Object.values(ColorMixMode);
 
-  public isPartyColoringOn = true;
 
-  private _partyColoringMode = PartyColoringMode.Proportion;
+  private _isPartyColoringOn: boolean;
+  public readonly partyColoringOnChange = new EventEmitter<boolean>();
+
+  private _partyColoringMode: PartyColoringMode;
   public readonly partyColoringModeChange = new EventEmitter<PartyColoringMode>();
 
-  private _colorMixMode = ColorMixMode.lab;
+  private _colorMixMode: ColorMixMode;
   public readonly colorMixModeChange = new EventEmitter<ColorMixMode>();
 
-  constructor() { }
+
+  constructor() {
+    this.isPartyColoringOn = this.initial('isPartyColoringOn', true);
+    this.partyColoringMode = this.initial('partyColoringMode', PartyColoringMode.Proportion);
+    this.colorMixMode = this.initial('colorMixMode', ColorMixMode.lab);
+  }
+
+  private initial<T>(key: string, defaultValue: T): T {
+    const value = this.load(key);
+    return value === null ? defaultValue : value;
+  }
+
+  private load(key: string) {
+    const value = localStorage.getItem(key);
+    return value && JSON.parse(value);
+  }
+
+  private save(key: string, value: any) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  public get isPartyColoringOn(): boolean {
+    return this._isPartyColoringOn;
+  }
+
+  public set isPartyColoringOn(on: boolean) {
+    this._isPartyColoringOn = on;
+    this.save('isPartyColoringOn', on);
+    this.partyColoringOnChange.emit(on);
+  }
 
   public get partyColoringMode(): PartyColoringMode {
     return this._partyColoringMode;
@@ -38,6 +69,7 @@ export class UserOptionsService {
 
   public set partyColoringMode(v: PartyColoringMode) {
     this._partyColoringMode = v;
+    this.save('partyColoringMode', v);
     this.partyColoringModeChange.emit(v);
   }
 
@@ -47,6 +79,7 @@ export class UserOptionsService {
 
   public set colorMixMode(v: ColorMixMode) {
     this._colorMixMode = v;
+    this.save('colorMixMode', v);
     this.colorMixModeChange.emit(v);
   }
 }
