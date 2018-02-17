@@ -24,4 +24,14 @@ mat-list
     [routerLink]='state.urlSegment',
     routerLinkActive='selected',
   )
-    | {{ state.name }}
+    .state-name {{ state.name }}
+    .state-seats(
+      *ngIf='seatsPerParty(state) as seats'
+    )
+      .party-seats(
+        *ngFor='let party of parties',
+        [ngStyle]='{ flex: seats[party] }',
+        [ngClass]='party.toLowerCase()',
+      )
+        span(*ngIf='seats[party] as seatCount') {{ seatCount }}
+

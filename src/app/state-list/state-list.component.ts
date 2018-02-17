@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { UsaGeographyService, IStateFeature } from '@usa-data/usa-geography.service';
+import { PoliticalStatsService } from '@usa-data/political-stats.service';
+import { AllPoliticalParties } from '@usa-data/congress';
 
 
 
@@ -14,6 +17,7 @@ export class StateListComponent implements OnInit {
 
   constructor(
     private geography: UsaGeographyService,
+    private stats: PoliticalStatsService,
   ) { }
 
   ngOnInit() {
@@ -40,5 +44,13 @@ export class StateListComponent implements OnInit {
     } else {
       this.matchingStates = this.allStates;
     }
+  }
+
+  public seatsPerParty(state: IStateFeature) {
+    return this.stats.ofState(state.postal).seatsPerParty;
+  }
+
+  public get parties(): string[] {
+    return AllPoliticalParties;
   }
 }

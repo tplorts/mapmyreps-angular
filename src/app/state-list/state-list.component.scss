@@ -1,0 +1,39 @@
+@import "src/theme/globals";
+
+
+.state-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.state-seats {
+  flex: 2;
+  height: 2em;
+  display: flex;
+  color: $color-grey-light;
+  transition: color 0.2s;
+
+  .party-seats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.state-item {
+  text-decoration: none;
+  transition: background-color 0.2s;
+  &:hover {
+    background-color: $color-offwhite;
+    .state-seats {
+      color: $color-offwhite;
+    }
+  }
+}
+
+@each $party, $color in $political-party-colors {
+  .#{$party} {
+    background-color: $color;
+  }
+}
