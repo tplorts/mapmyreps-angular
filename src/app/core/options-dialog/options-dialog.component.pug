@@ -2,6 +2,12 @@ h2 Options
 
 section
   mat-slide-toggle(
+    [checked]='!options.alwaysShowMap',
+    (change)='options.alwaysShowMap = !options.alwaysShowMap',
+  ) Use list view instead of map on narrow screens
+
+section
+  mat-slide-toggle(
     [checked]='options.isPartyColoringOn',
     (change)='options.isPartyColoringOn = !options.isPartyColoringOn',
   ) Color-code states by party

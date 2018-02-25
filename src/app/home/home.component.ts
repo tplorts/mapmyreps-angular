@@ -1,4 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
+import { UserOptionsService } from '@app/core/user-options.service';
 
 
 @Component({
@@ -7,18 +8,18 @@ import { Component, HostBinding } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  private _mapViewOverride: boolean;
 
-  constructor() {
-    this._mapViewOverride = false;
+  constructor(
+    public options: UserOptionsService,
+  ) {
   }
 
   @HostBinding('class.map-view-override')
   public get mapViewOverride(): boolean {
-    return this._mapViewOverride;
+    return this.options.alwaysShowMap;
   }
 
   public useMapView() {
-    this._mapViewOverride = true;
+    this.options.alwaysShowMap = true;
   }
 }

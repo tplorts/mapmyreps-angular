@@ -2,6 +2,13 @@
   a.svg-icon-button(routerLink='/')
     mat-icon(svgIcon='back-to-map')
 
+  section.options
+    h2 Advanced Options
+    button(
+      mat-button,
+      (click)='openOptionsDialog()',
+    ) Show Options
+
   section.authors
     h2 Authors
     ul
@@ -36,10 +43,3 @@
     h2 Technology
     p.
       Map My Reps is a single-page application written in #[a(href='https://angular.io/') Angular] (v5) using #[a(href='https://www.typescriptlang.org') TypeScript], #[a(href='http://sass-lang.com/') Sass], and #[a(href='https://pugjs.org') Pug] among many other tools. Thanks to #[a(href='http://ngx-rocket.com/') ngX-Rocket] for providing #[a(href='https://github.com/ngx-rocket/generator-ngx-rocket') this superb project generator], which came with many useful tools setup and ready to go.
-
-  section.options
-    h2 Advanced Map Options
-    button(
-      mat-button,
-      (click)='openOptionsDialog()',
-    ) Show Options

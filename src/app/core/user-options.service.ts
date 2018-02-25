@@ -32,11 +32,15 @@ export class UserOptionsService {
   private _colorMixMode: ColorMixMode;
   public readonly colorMixModeChange = new EventEmitter<ColorMixMode>();
 
+  private _alwaysShowMap: boolean;
+  public readonly alwaysShowMapChange = new EventEmitter<boolean>();
+
 
   constructor() {
     this.isPartyColoringOn = this.initial('isPartyColoringOn', true);
     this.partyColoringMode = this.initial('partyColoringMode', PartyColoringMode.Proportion);
     this.colorMixMode = this.initial('colorMixMode', ColorMixMode.lab);
+    this.alwaysShowMap = this.initial('alwaysShowMap', false);
   }
 
   private initial<T>(key: string, defaultValue: T): T {
@@ -81,5 +85,15 @@ export class UserOptionsService {
     this._colorMixMode = v;
     this.save('colorMixMode', v);
     this.colorMixModeChange.emit(v);
+  }
+
+  public get alwaysShowMap(): boolean {
+    return this._alwaysShowMap;
+  }
+
+  public set alwaysShowMap(v: boolean) {
+    this._alwaysShowMap = v;
+    this.save('alwaysShowMap', v);
+    this.alwaysShowMapChange.emit(v);
   }
 }
